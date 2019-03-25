@@ -11,7 +11,8 @@ public:
 	~Quote(void);
 
 	void SetAPI(ITapQuoteAPI* pAPI);
-	void RunTest();
+	void Run();
+	void  ConnectRedis();
 
 public:
 	//对ITapQuoteAPINotify的实现

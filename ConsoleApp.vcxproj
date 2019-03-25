@@ -149,6 +149,7 @@
     <ClInclude Include="hiredis.h" />
     <ClInclude Include="net.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Quote.h" />
     <ClInclude Include="QuoteConfig.h" />
     <ClInclude Include="read.h" />
     <ClInclude Include="sds.h" />
