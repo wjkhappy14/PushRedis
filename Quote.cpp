@@ -180,7 +180,7 @@ void TAP_CDECL Quote::OnRtnQuote(const TapAPIQuoteWhole *info)
 {
 	if (NULL != info)
 	{
-		redisCommand(redisCTX, "set  QLastPrice %s", "123");
+		redisReply* reply=(redisReply*)redisCommand(redisCTX, "set  QLastPrice %s", "123");
 		cout << "行情更新:"
 			<< info->DateTimeStamp << " "
 			<< info->Contract.Commodity.ExchangeNo << " "
