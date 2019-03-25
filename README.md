@@ -390,9 +390,3 @@ This should be done only in order to maximize performances when working with
 large payloads. The context should be set back to `REDIS_READER_MAX_BUF` again
 as soon as possible in order to prevent allocation of useless memory.
 
-## AUTHORS
-
-Hiredis was written by Salvatore Sanfilippo (antirez at gmail) and
-Pieter Noordhuis (pcnoordhuis at gmail) and is released under the BSD license.  
-Hiredis is currently maintained by Matt Stancliff (matt at genges dot com) and
-Jan-Erik Rediger (janerik at fnordig dot com)

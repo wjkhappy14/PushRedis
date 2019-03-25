@@ -160,9 +160,11 @@
     <ClInclude Include="win32.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CHANGELOG.md" />
     <None Include="cpp-redis.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
