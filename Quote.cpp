@@ -29,7 +29,7 @@ void Quote::ConnectRedis()
 
 	redisReply *reply;
 	const char *password = "123456";
-	const char *hostname = "127.0.0.1"; //114.67.236.124
+	const char *hostname = "114.67.236.124"; //114.67.236.124
 	int port = 6379;
 
 	struct timeval timeout = { 1, 500000 }; // 1.5 seconds
@@ -180,8 +180,31 @@ void TAP_CDECL Quote::OnRtnQuote(const TapAPIQuoteWhole *info)
 {
 	if (NULL != info)
 	{
-		redisReply* reply = (redisReply*)redisCommand(redisCTX, "set  QLastPrice  123");
-		redisReply *pubReply = (redisReply*)redisCommand(redisCTX, "publish time 12312224");
+		char buff[100];
+		snprintf(buff, sizeof(buff), "%s", "Hello");
+		std::string buffAsStdStr = buff;
+
+		auto str =(info->Contract.Commodity.ExchangeNo);
+
+		const char *hostname = info->DateTimeStamp;
+
+		redisReply* reply = (redisReply*)redisCommand(redisCTX, "SET QLastPrice %s", info->DateTimeStamp,(size_t)24);
+
+		redisReply *pubReply = (redisReply*)redisCommand(redisCTX, "publish QLastPrice %s ", info->DateTimeStamp,24);
+
+		char hkey[] = "123456";
+		char hset[] = "hset";
+		char key[] = "testkey";
+		char hvalue[] = "3210";
+		int argc = 4;
+		char *argv[] = { hset,key,hkey,hvalue };
+		size_t argvlen[] = { 4,6,4,3 };
+
+		//redisCommandArgv(redisCTX, argc, argv, argvlen);
+
+		//每一次执行完Redis命令后需要清空redisReply 以免对下一次的Redis操作造成影响
+		freeReplyObject(reply);
+
 		cout << "行情更新:"
 			<< info->DateTimeStamp << " "
 			<< info->Contract.Commodity.ExchangeNo << " "

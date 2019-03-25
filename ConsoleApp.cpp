@@ -15,6 +15,10 @@ using namespace std;
 
 int main(int argc, char **argv) {
 
+	auto hello = std::string{ "Hello!" };
+
+
+
 	cout << GetTapQuoteAPIVersion() << endl;
 
 	TAPIINT32 iResult = TAPIERROR_SUCCEED;
