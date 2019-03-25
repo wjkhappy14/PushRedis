@@ -25,17 +25,17 @@ void Quote::SetAPI(ITapQuoteAPI *pAPI)
 void Quote::ConnectRedis()
 {
 	unsigned int j;
-	redisContext *c;
+	redisContext *redisCTX;
 	redisReply *reply;
 	const char *password = "123456";
 	const char *hostname = "114.67.236.124";
 	int port = 6379;
 
 	struct timeval timeout = { 1, 500000 }; // 1.5 seconds
-	c = redisConnectWithTimeout(hostname, port, timeout);
-	if (c == NULL || c->err) {
-		if (c) {
-			printf("Connection error: %s\n", c->errstr);
+	redisCTX = redisConnectWithTimeout(hostname, port, timeout);
+	if (redisCTX == NULL || redisCTX->err) {
+		if (redisCTX) {
+			printf("Connection error: %s\n", redisCTX->errstr);
 			//redisFree(c);
 		}
 		else {
@@ -46,10 +46,11 @@ void Quote::ConnectRedis()
 	{
 		cout << "Á¬½Óµ½ Redis" << hostname << ":" << port << endl;
 	}
-	int retval = redisAppendCommand(c, "SET Name Angkor");
+	int retval = redisAppendCommand(redisCTX, "SET Name Angkor");
 }
 void Quote::Run()
 {
+	ConnectRedis();
 	if (NULL == m_pAPI) {
 		cout << "Error: m_pAPI is NULL." << endl;
 		return;
