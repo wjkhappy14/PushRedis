@@ -1,0 +1,9 @@
+/debug
+/*.o
+/*.so
+/*.dylib
+/*.a
+/*.pc
+.vs
+bin
+obj
