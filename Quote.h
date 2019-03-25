@@ -4,6 +4,7 @@
 #include "TapQuoteAPI.h"
 #include "SimpleEvent.h"
 
+
 class Quote : public ITapQuoteAPINotify
 {
 public:
@@ -12,7 +13,7 @@ public:
 
 	void SetAPI(ITapQuoteAPI* pAPI);
 	void Run();
-	void  ConnectRedis();
+	static	void  ConnectRedis();
 
 public:
 	//对ITapQuoteAPINotify的实现
@@ -26,10 +27,12 @@ public:
 	virtual void TAP_CDECL OnRtnQuote(const TapAPIQuoteWhole *info);
 
 private:
+
 	ITapQuoteAPI* m_pAPI;
 	TAPIUINT32	m_uiSessionID;
 	SimpleEvent m_Event;
 	bool		m_bIsAPIReady;
+
 };
 
 #endif // QUOTE_H

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <hiredis.h>
 using namespace std;
+static redisContext *redisCTX;
 
 Quote::Quote(void) :
 	m_pAPI(NULL),
@@ -25,11 +26,11 @@ void Quote::SetAPI(ITapQuoteAPI *pAPI)
 void Quote::ConnectRedis()
 {
 	unsigned int j;
-	redisContext *redisCTX;
+
 	redisReply *reply;
 	const char *password = "123456";
 	const char *hostname = "114.67.236.124";
-	int port = 6379;
+	int port = 6378;
 
 	struct timeval timeout = { 1, 500000 }; // 1.5 seconds
 	redisCTX = redisConnectWithTimeout(hostname, port, timeout);
@@ -46,7 +47,7 @@ void Quote::ConnectRedis()
 	{
 		cout << "连接到 Redis" << hostname << ":" << port << endl;
 	}
-	int retval = redisAppendCommand(redisCTX, "SET Name Angkor");
+	int retval = redisAppendCommand(redisCTX, "SET X-Name XXXX-Angkor");
 }
 void Quote::Run()
 {
@@ -113,9 +114,10 @@ void Quote::Run()
 void TAP_CDECL Quote::OnRspLogin(TAPIINT32 errorCode, const TapAPIQuotLoginRspInfo *info)
 {
 	if (TAPIERROR_SUCCEED == errorCode) {
-		cout << "登录成功，等待API初始化..." << endl;
+		cout << "登录成功，等待API初始化...LastLoginIP:" << info->LastLoginIP << endl;
 		m_bIsAPIReady = true;
-
+		redisReply *reply;
+		redisCommand(redisCTX, "set  LastLoginIP %s", info->LastLoginIP);
 	}
 	else {
 		cout << "登录失败，错误码:" << errorCode << endl;
@@ -178,6 +180,7 @@ void TAP_CDECL Quote::OnRtnQuote(const TapAPIQuoteWhole *info)
 {
 	if (NULL != info)
 	{
+		redisCommand(redisCTX, "set  QLastPrice %s", "123");
 		cout << "行情更新:"
 			<< info->DateTimeStamp << " "
 			<< info->Contract.Commodity.ExchangeNo << " "
