@@ -29,8 +29,8 @@ void Quote::ConnectRedis()
 
 	redisReply *reply;
 	const char *password = "123456";
-	const char *hostname = "114.67.236.124";
-	int port = 6378;
+	const char *hostname = "127.0.0.1"; //114.67.236.124
+	int port = 6379;
 
 	struct timeval timeout = { 1, 500000 }; // 1.5 seconds
 	redisCTX = redisConnectWithTimeout(hostname, port, timeout);
@@ -180,7 +180,7 @@ void TAP_CDECL Quote::OnRtnQuote(const TapAPIQuoteWhole *info)
 {
 	if (NULL != info)
 	{
-		redisReply* reply=(redisReply*)redisCommand(redisCTX, "set  QLastPrice %s", "123");
+		redisReply* reply = (redisReply*)redisCommand(redisCTX, "set  QLastPrice  123");
 		cout << "行情更新:"
 			<< info->DateTimeStamp << " "
 			<< info->Contract.Commodity.ExchangeNo << " "
