@@ -34,7 +34,6 @@ int main(int argc, char **argv) {
 		cout << "........" << iResult << endl;
 		//	return -1;
 	}
-
 	Quote objQuote;
 	pAPI->SetAPINotify(&objQuote);
 

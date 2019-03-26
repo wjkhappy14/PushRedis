@@ -29,8 +29,6 @@ namespace QuotePushRedis
 
 	void Quote::ConnectRedis()
 	{
-		unsigned int j;
-
 		redisReply *reply;
 		const char *password = "123456";
 		const char *hostname = "114.67.236.124"; //114.67.236.124
@@ -51,7 +49,6 @@ namespace QuotePushRedis
 		{
 			cout << "连接到 Redis" << hostname << ":" << port << endl;
 		}
-		int retval = redisAppendCommand(redisCTX, "SET X-Name XXXX-Angkor");
 	}
 	void Quote::Run()
 	{
@@ -85,13 +82,13 @@ namespace QuotePushRedis
 		if (!m_bIsAPIReady) {
 			return;
 		}
-
 		m_uiSessionID = 0;
 		TapAPICommodity com;
 		memset(&com, 0, sizeof(com));
 		strcpy(com.ExchangeNo, DEFAULT_EXCHANGE_NO);
 		strcpy(com.CommodityNo, DEFAULT_COMMODITY_NO);
 		com.CommodityType = DEFAULT_COMMODITY_TYPE;
+		m_pAPI->QryCommodity(&m_uiSessionID);
 		m_pAPI->QryContract(&m_uiSessionID, &com);
 
 		//订阅行情
@@ -109,26 +106,23 @@ namespace QuotePushRedis
 			cout << "SubscribeQuote Error:" << iErr << endl;
 			return;
 		}
-
 		while (true) {
 			m_Event.WaitEvent();
 		}
 	}
-
 	void TAP_CDECL Quote::OnRspLogin(TAPIINT32 errorCode, const TapAPIQuotLoginRspInfo *info)
 	{
 		if (TAPIERROR_SUCCEED == errorCode) {
-			cout << "登录成功，等待API初始化...LastLoginIP:" << info->LastLoginIP << endl;
+			cout << "登录成功，等待API初始化...UserNo:" << info->StartTime << endl;
+			redisReply* reply = (redisReply*)redisCommand(redisCTX, "SET Login_UserNo %s", info->UserNo, 20);
+			freeReplyObject(reply);
 			m_bIsAPIReady = true;
-			redisReply *reply;
-			redisCommand(redisCTX, "set  LastLoginIP %s", info->LastLoginIP);
 		}
 		else {
 			cout << "登录失败，错误码:" << errorCode << endl;
 			m_Event.SignalEvent();
 		}
 	}
-
 	void TAP_CDECL Quote::OnAPIReady()
 	{
 		cout << "API初始化完成" << endl;
@@ -143,6 +137,16 @@ namespace QuotePushRedis
 	void TAP_CDECL Quote::OnRspQryCommodity(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteCommodityInfo *info)
 	{
 		cout << __FUNCTION__ << " is called." << endl;
+		std::string exchangeNo(info->Commodity.ExchangeNo);
+		std::string commodityNo(info->Commodity.CommodityNo);
+		std::string commodityEngName(info->CommodityEngName);
+
+		std::string exchange_commodity_key = exchangeNo + commodityNo;
+		std::string exchange_commodity_value = exchangeNo + commodityNo + commodityEngName;
+		std::string keyvalue_cmd = "SET " + exchange_commodity_key + "   " + exchange_commodity_value;
+
+		redisReply* reply = (redisReply*)redisCommand(redisCTX, keyvalue_cmd.c_str());
+		cout << exchange_commodity_key << endl;
 	}
 
 	void TAP_CDECL Quote::OnRspQryContract(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteContractInfo *info)
@@ -160,14 +164,13 @@ namespace QuotePushRedis
 			cout << "行情订阅成功 ";
 			if (NULL != info)
 			{
-				cout << info->DateTimeStamp << " "
-					<< info->Contract.Commodity.ExchangeNo << " "
-					<< info->Contract.Commodity.CommodityType << " "
-					<< info->Contract.Commodity.CommodityNo << " "
-					<< info->Contract.ContractNo1 << " "
-					<< info->QLastPrice
-					// ...		
-					<< endl;
+				std::string dateTimeStamp(info->DateTimeStamp);
+				std::string exchangeNo(info->Contract.Commodity.ExchangeNo);
+				std::string commodityNo(info->Contract.Commodity.CommodityNo);
+				std::string contractNo1(info->Contract.ContractNo1);
+				std::string exchange_contract = exchangeNo + commodityNo + contractNo1;
+				redisReply* reply = (redisReply*)redisCommand(redisCTX, "SET SubscribeQuote %s", exchange_contract, 10);
+				cout << exchange_contract << endl;
 			}
 		}
 		else {
@@ -188,15 +191,19 @@ namespace QuotePushRedis
 			snprintf(buff, sizeof(buff), "%s", "Hello");
 			std::string buffAsStdStr = buff;
 
-			auto str = (info->Contract.Commodity.ExchangeNo);
+			std::string dateTimeStamp(info->DateTimeStamp);
+			std::string commodityNo(info->Contract.Commodity.CommodityNo);
+			std::string contractNo1(info->Contract.ContractNo1);
+			std::string contractKey = commodityNo + contractNo1;
 
-			const char *hostname = info->DateTimeStamp;
-
-			auto price = info->QLastPrice;
 			auto lastPrice = QuotePushRedis::Helper::to_string(info->QLastPrice);
-			redisReply* reply = (redisReply*)redisCommand(redisCTX, "publish LastPrice %s", lastPrice);
+			std::string  publish_cmd = "publish " + contractKey + " " + lastPrice;
+			redisReply* reply = (redisReply*)redisCommand(redisCTX, publish_cmd.c_str());
 
-			redisReply *pubReply = (redisReply*)redisCommand(redisCTX, "publish DateTimeStamp %s ", info->DateTimeStamp, 24);
+			std::string LastPricecmd = "SET LastPrice  " + lastPrice;
+			reply = (redisReply*)redisCommand(redisCTX, LastPricecmd.c_str());
+
+			redisReply *pubReply = (redisReply*)redisCommand(redisCTX, "SET DateTimeStamp %s ", info->DateTimeStamp, 24);
 
 			char hkey[] = "123456";
 			char hset[] = "hset";
