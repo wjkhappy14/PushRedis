@@ -166,9 +166,9 @@ namespace QuotePushRedis
 				cout << "SubscribeQuote Error:" << iErr << endl;
 				return;
 			}
-			while (true) {
+			/*while (true) {
 				m_Event.WaitEvent();
-			}
+			}*/
 		}
 	}
 	void TAP_CDECL Quote::OnRspSubscribeQuote(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteWhole *info)
