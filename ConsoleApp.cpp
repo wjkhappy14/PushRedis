@@ -12,12 +12,16 @@
 
 #include"ConsoleApp.h"
 using namespace std;
+using namespace QuotePushRedis;
+
 
 int main(int argc, char **argv) {
-
 	auto hello = std::string{ "Hello!" };
+	char* numbers[10] = {  };
+	std::string s = "How are you ";
 
-
+	auto str = hello.c_str();
+	TAPISTR_10 str10 = "Hello";
 
 	cout << GetTapQuoteAPIVersion() << endl;
 
