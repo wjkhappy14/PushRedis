@@ -83,32 +83,7 @@ namespace QuotePushRedis
 			return;
 		}
 		m_uiSessionID = 0;
-		TapAPICommodity com;
-		memset(&com, 0, sizeof(com));
-		strcpy(com.ExchangeNo, DEFAULT_EXCHANGE_NO);
-		strcpy(com.CommodityNo, DEFAULT_COMMODITY_NO);
-		com.CommodityType = DEFAULT_COMMODITY_TYPE;
 		m_pAPI->QryCommodity(&m_uiSessionID);
-		m_pAPI->QryContract(&m_uiSessionID, &com);
-
-		//订阅行情
-		TapAPIContract stContract;
-		memset(&stContract, 0, sizeof(stContract));
-		strcpy(stContract.Commodity.ExchangeNo, DEFAULT_EXCHANGE_NO);
-		stContract.Commodity.CommodityType = DEFAULT_COMMODITY_TYPE;
-		strcpy(stContract.Commodity.CommodityNo, DEFAULT_COMMODITY_NO);
-		strcpy(stContract.ContractNo1, DEFAULT_CONTRACT_NO);
-		stContract.CallOrPutFlag1 = TAPI_CALLPUT_FLAG_NONE;
-		stContract.CallOrPutFlag2 = TAPI_CALLPUT_FLAG_NONE;
-		m_uiSessionID = 0;
-		iErr = m_pAPI->SubscribeQuote(&m_uiSessionID, &stContract);
-		if (TAPIERROR_SUCCEED != iErr) {
-			cout << "SubscribeQuote Error:" << iErr << endl;
-			return;
-		}
-		while (true) {
-			m_Event.WaitEvent();
-		}
 	}
 	void TAP_CDECL Quote::OnRspLogin(TAPIINT32 errorCode, const TapAPIQuotLoginRspInfo *info)
 	{
@@ -146,17 +121,56 @@ namespace QuotePushRedis
 		std::string keyvalue_cmd = "SET " + exchange_commodity_key + "   " + exchange_commodity_value;
 
 		redisReply* reply = (redisReply*)redisCommand(redisCTX, keyvalue_cmd.c_str());
+
+		TapAPICommodity com;
+		memset(&com, 0, sizeof(com));
+		strcpy(com.ExchangeNo, info->Commodity.ExchangeNo);
+		strcpy(com.CommodityNo, info->Commodity.CommodityNo);
+		com.CommodityType = info->Commodity.CommodityType;
+
+		m_pAPI->QryContract(&m_uiSessionID, &com);
+
 		cout << exchange_commodity_key << endl;
 	}
-
+	//订阅行情
 	void TAP_CDECL Quote::OnRspQryContract(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteContractInfo *info)
 	{
+		TAPIINT32 iErr = TAPIERROR_SUCCEED;
 		cout << __FUNCTION__ << " is called." << endl;
+		if (NULL != info)
+		{
+			cout << "合约:" << info->Contract.Commodity.CommodityNo << info->Contract.ContractNo1 << endl;
+			std::string exchangeNo(info->Contract.Commodity.ExchangeNo);
+			std::string commodityNo(info->Contract.Commodity.CommodityNo);
+			std::string contractNo1(info->Contract.ContractNo1);
 
-		cout << "合约:" << info->Contract.Commodity.CommodityNo << info->Contract.ContractNo1 << endl;
+			std::string exchange_commodity_key = exchangeNo + commodityNo + contractNo1;
+			std::string exchange_commodity_value = exchangeNo + commodityNo + contractNo1;
+			std::string keyvalue_cmd = "SET " + exchange_commodity_key + "   " + exchange_commodity_value;
+
+			redisReply* reply = (redisReply*)redisCommand(redisCTX, keyvalue_cmd.c_str());
+
+			TapAPIContract stContract;
+			memset(&stContract, 0, sizeof(stContract));
+
+			strcpy(stContract.Commodity.ExchangeNo, info->Contract.Commodity.ExchangeNo);
+			stContract.Commodity.CommodityType = info->Contract.Commodity.CommodityType;
+			strcpy(stContract.Commodity.CommodityNo, info->Contract.Commodity.CommodityNo);
+
+			strcpy(stContract.ContractNo1, info->Contract.ContractNo1);
+			stContract.CallOrPutFlag1 = TAPI_CALLPUT_FLAG_NONE;
+			stContract.CallOrPutFlag2 = TAPI_CALLPUT_FLAG_NONE;
+			m_uiSessionID = 0;
+			iErr = m_pAPI->SubscribeQuote(&m_uiSessionID, &stContract);
+			if (TAPIERROR_SUCCEED != iErr) {
+				cout << "SubscribeQuote Error:" << iErr << endl;
+				return;
+			}
+			while (true) {
+				m_Event.WaitEvent();
+			}
+		}
 	}
-
-
 	void TAP_CDECL Quote::OnRspSubscribeQuote(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteWhole *info)
 	{
 		if (TAPIERROR_SUCCEED == errorCode)
