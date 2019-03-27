@@ -162,10 +162,34 @@ namespace QuotePushRedis
 			stContract.CallOrPutFlag2 = TAPI_CALLPUT_FLAG_NONE;
 			m_uiSessionID = 0;
 			iErr = m_pAPI->SubscribeQuote(&m_uiSessionID, &stContract);
-			if (TAPIERROR_SUCCEED != iErr) {
-				cout << "SubscribeQuote Error:" << iErr << endl;
-				return;
+			std::string msg("订阅行情");
+			switch (iErr)
+			{
+			case TAPIERROR_SUBSCRIBEQUOTE_MAX:
+				msg += "超过行情最大总订阅数";
+				break;
+			case TAPIERROR_SUBSCRIBEQUOTE_EXCHANGE_MAX:
+				msg += "超过该交易所行情最大订阅数";
+				break;
+			case TAPIERROR_SUBSCRIBEQUOTE_NO_RIGHT:
+				msg += "没有该行情的订阅权限";
+				break;
+			case TAPIERROR_SUBSCRIBEQUOTE_NO_EXCHANGE_RIGHT:
+				msg += "没有该交易所下行情的订阅权限";
+				break;
+			case TAPIERROR_SUBSCRIBEQUOTE_COMMODITY_NOT_EXIST:
+				msg += "品种不存在";
+				break;
+			case TAPIERROR_SUBSCRIBEQUOTE_CONTRACT_MAY_NOT_EXIST:
+				msg += "合约可能不存在";
+				break;
+			case TAPIERROR_QUOTEFRONT_UNKNOWN_PROTOCOL:
+				msg += "不支持的行情协议";
+				break;
+			default:
+				break;
 			}
+			cout << msg << iErr << endl;
 			/*while (true) {
 				m_Event.WaitEvent();
 			}*/
@@ -183,7 +207,9 @@ namespace QuotePushRedis
 				std::string commodityNo(info->Contract.Commodity.CommodityNo);
 				std::string contractNo1(info->Contract.ContractNo1);
 				std::string exchange_contract = exchangeNo + commodityNo + contractNo1;
-				redisReply* reply = (redisReply*)redisCommand(redisCTX, "SET SubscribeQuote %s", exchange_contract, 10);
+				std::string keyvalue_cmd = "SET SubscribeQuote:" + exchangeNo + ":" + commodityNo + "  " + commodityNo + contractNo1;
+
+				redisReply* reply = (redisReply*)redisCommand(redisCTX, keyvalue_cmd.c_str());
 				cout << exchange_contract << endl;
 			}
 		}
@@ -206,6 +232,7 @@ namespace QuotePushRedis
 			std::string buffAsStdStr = buff;
 
 			std::string dateTimeStamp(info->DateTimeStamp);
+			std::string exchangeNo(info->Contract.Commodity.ExchangeNo);
 			std::string commodityNo(info->Contract.Commodity.CommodityNo);
 			std::string contractNo1(info->Contract.ContractNo1);
 			std::string contractKey = commodityNo + contractNo1;
