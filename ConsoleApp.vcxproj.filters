@@ -85,5 +85,6 @@
     <None Include="cpp-redis.htm" />
     <None Include="CHANGELOG.md" />
     <None Include="README.md" />
+    <None Include="redis.htm" />
   </ItemGroup>
 </Project>

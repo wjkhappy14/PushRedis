@@ -83,7 +83,58 @@ namespace QuotePushRedis
 			return;
 		}
 		m_uiSessionID = 0;
-		m_pAPI->QryCommodity(&m_uiSessionID);
+		//m_pAPI->QryCommodity(&m_uiSessionID);
+		SubscribeItems();
+	}
+
+	void Quote::SubscribeItems()
+	{
+		TAPIINT32 iErr = TAPIERROR_SUCCEED;
+		m_uiSessionID = 0;
+		TapAPIContract items[1];
+		TapAPIContract stContract;
+		memset(&stContract, 0, sizeof(stContract));
+
+
+		strcpy(stContract.Commodity.ExchangeNo, std::string("HKEX").c_str());
+		stContract.Commodity.CommodityType = TAPI_COMMODITY_TYPE_FUTURES;
+		strcpy(stContract.Commodity.CommodityNo, std::string("HSI").c_str());
+		strcpy(stContract.ContractNo1, std::string("1904").c_str());
+
+		stContract.CallOrPutFlag1 = TAPI_CALLPUT_FLAG_NONE;
+		stContract.CallOrPutFlag2 = TAPI_CALLPUT_FLAG_NONE;
+		m_uiSessionID = 0;
+
+		items[0] = stContract;
+		iErr = m_pAPI->SubscribeQuote(&m_uiSessionID, &items[0]);
+		std::string msg("订阅行情");
+		switch (iErr)
+		{
+		case TAPIERROR_SUBSCRIBEQUOTE_MAX:
+			msg += "超过行情最大总订阅数";
+			break;
+		case TAPIERROR_SUBSCRIBEQUOTE_EXCHANGE_MAX:
+			msg += "超过该交易所行情最大订阅数";
+			break;
+		case TAPIERROR_SUBSCRIBEQUOTE_NO_RIGHT:
+			msg += "没有该行情的订阅权限";
+			break;
+		case TAPIERROR_SUBSCRIBEQUOTE_NO_EXCHANGE_RIGHT:
+			msg += "没有该交易所下行情的订阅权限";
+			break;
+		case TAPIERROR_SUBSCRIBEQUOTE_COMMODITY_NOT_EXIST:
+			msg += "品种不存在";
+			break;
+		case TAPIERROR_SUBSCRIBEQUOTE_CONTRACT_MAY_NOT_EXIST:
+			msg += "合约可能不存在";
+			break;
+		case TAPIERROR_QUOTEFRONT_UNKNOWN_PROTOCOL:
+			msg += "不支持的行情协议";
+			break;
+		default:
+			break;
+		}
+		cout << msg << iErr << endl;
 	}
 	void TAP_CDECL Quote::OnRspLogin(TAPIINT32 errorCode, const TapAPIQuotLoginRspInfo *info)
 	{
@@ -207,7 +258,7 @@ namespace QuotePushRedis
 				std::string commodityNo(info->Contract.Commodity.CommodityNo);
 				std::string contractNo1(info->Contract.ContractNo1);
 				std::string exchange_contract = exchangeNo + commodityNo + contractNo1;
-				std::string keyvalue_cmd = "SET SubscribeQuote:" + exchangeNo + ":" + commodityNo + "  " + commodityNo + contractNo1;
+				std::string keyvalue_cmd = "SET " + exchangeNo + ":Sub:" + commodityNo + "  " + commodityNo + contractNo1;
 
 				redisReply* reply = (redisReply*)redisCommand(redisCTX, keyvalue_cmd.c_str());
 				cout << exchange_contract << endl;
@@ -227,24 +278,21 @@ namespace QuotePushRedis
 	{
 		if (NULL != info)
 		{
-			char buff[100];
-			snprintf(buff, sizeof(buff), "%s", "Hello");
-			std::string buffAsStdStr = buff;
-
 			std::string dateTimeStamp(info->DateTimeStamp);
 			std::string exchangeNo(info->Contract.Commodity.ExchangeNo);
 			std::string commodityNo(info->Contract.Commodity.CommodityNo);
 			std::string contractNo1(info->Contract.ContractNo1);
-			std::string contractKey = commodityNo + contractNo1;
 
-			auto lastPrice = QuotePushRedis::Helper::to_string(info->QLastPrice);
-			std::string  publish_cmd = "publish " + contractKey + " " + lastPrice;
-			redisReply* reply = (redisReply*)redisCommand(redisCTX, publish_cmd.c_str());
+			//auto lastPrice = QuotePushRedis::Helper::to_string(info->QLastPrice);
+			std::string   pub_tickKey = "  " + exchangeNo + ":" + commodityNo + ":" + contractNo1 + "  ";
+			std::string   set_tickKey = "  " + exchangeNo + ":" + commodityNo + ":" + contractNo1 + std::to_string(info->QTotalQty) + "  ";
+			std::string   tickValue = std::to_string(info->QLastPrice) + "," + std::to_string(info->QTotalQty);
 
-			std::string LastPricecmd = "SET LastPrice  " + lastPrice;
-			reply = (redisReply*)redisCommand(redisCTX, LastPricecmd.c_str());
+			std::string  publish_cmd = "PUBLISH " + pub_tickKey + tickValue;
+			redisReply* pubReply = (redisReply*)redisCommand(redisCTX, publish_cmd.c_str());
 
-			redisReply *pubReply = (redisReply*)redisCommand(redisCTX, "SET DateTimeStamp %s ", info->DateTimeStamp, 24);
+			std::string set_tick_cmd = "SET  " + set_tickKey + tickValue;
+			redisReply*	setReply = (redisReply*)redisCommand(redisCTX, set_tick_cmd.c_str());
 
 			char hkey[] = "123456";
 			char hset[] = "hset";
@@ -257,17 +305,9 @@ namespace QuotePushRedis
 			//redisCommandArgv(redisCTX, argc, argv, argvlen);
 
 			//每一次执行完Redis命令后需要清空redisReply 以免对下一次的Redis操作造成影响
-			freeReplyObject(reply);
-
-			cout << "行情更新:"
-				<< info->DateTimeStamp << " "
-				<< info->Contract.Commodity.ExchangeNo << " "
-				<< info->Contract.Commodity.CommodityType << " "
-				<< info->Contract.Commodity.CommodityNo << " "
-				<< info->Contract.ContractNo1 << " "
-				<< info->QLastPrice
-				// ...		
-				<< endl;
+			freeReplyObject(pubReply);
+			freeReplyObject(setReply);
+			cout << "行情更新:" << publish_cmd << " " << endl;
 		}
 	}
 }

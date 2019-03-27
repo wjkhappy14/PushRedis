@@ -22,6 +22,7 @@ namespace QuotePushRedis
 
 		void SetAPI(ITapQuoteAPI* pAPI);
 		void Run();
+		void SubscribeItems();
 		static	void  ConnectRedis();
 
 	public:
