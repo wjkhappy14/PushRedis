@@ -1,22 +1,22 @@
-<HTML>
+ï»¿<HTML>
 <HEAD>
     <META NAME="GENERATOR" Content="Microsoft Visual Studio">
     <TITLE></TITLE>
 </HEAD>
 <BODY>
     https://www.cnblogs.com/my_life/articles/5733545.html
-    redisCommandArgvº¯Êý
-    º¯ÊýÔ­ÐÍ
+    redisCommandArgvå‡½æ•°
+    å‡½æ•°åŽŸåž‹
 
 
     void *redisCommandArgv(redisContext *c, int argc, const char **argv, const size_t *argvlen);
-    ²ÎÊýËµÃ÷
+    å‚æ•°è¯´æ˜Ž
 
-    argvlenÕâ¸öÊý×é´æ´¢ÁËÃüÁî²ÎÊýÖÐ£¬Ã¿Ò»¸ö²ÎÊýµÄ³¤¶È£¬°üº¬ÃüÁî±¾Éí£¬±ÈÈç set foo bar Ôòargvlen ={3,3,3},Èç¹ûargvlenÎª¿Õ£¬ÄÇÃ´Õâ¸öº¯ÊýÄÚ²¿»á×Ô¶¯µ÷ÓÃstrlenº¯Êý¶ÔÃ¿¸ö²ÎÊý½øÐÐÇó³¤¶È¡£
-    argv ´æ·ÅÃ¿¸öÃüÁî²ÎÊýµÄÖ¸Õë£¬argv={"set","foo","bar"}
-    argc ´æ·ÅÃüÁî²ÎÊýµÄ¸öÊýÉÏÃæµÄÀý×ÓÖÐargc=3
-    c ÎªredisContext¶ÔÏó¡£
-    ÎªÃ¿Ò»¸ö²ÎÊýÖ¸¶¨³¤¶È£¬¿ÉÒÔÊÇ¶þ½øÖÆ°²È«µÄº¯Êý¡£º¯Êý»á°´×Å³¤¶ÈÀ´¾ö¶¨×Ö·û´®µÄÖÕÖ¹£¬¶ø²»ÊÇ'\0'.
+    argvlenè¿™ä¸ªæ•°ç»„å­˜å‚¨äº†å‘½ä»¤å‚æ•°ä¸­ï¼Œæ¯ä¸€ä¸ªå‚æ•°çš„é•¿åº¦ï¼ŒåŒ…å«å‘½ä»¤æœ¬èº«ï¼Œæ¯”å¦‚ set foo bar åˆ™argvlen ={3,3,3},å¦‚æžœargvlenä¸ºç©ºï¼Œé‚£ä¹ˆè¿™ä¸ªå‡½æ•°å†…éƒ¨ä¼šè‡ªåŠ¨è°ƒç”¨strlenå‡½æ•°å¯¹æ¯ä¸ªå‚æ•°è¿›è¡Œæ±‚é•¿åº¦ã€‚
+    argv å­˜æ”¾æ¯ä¸ªå‘½ä»¤å‚æ•°çš„æŒ‡é’ˆï¼Œargv={"set","foo","bar"}
+    argc å­˜æ”¾å‘½ä»¤å‚æ•°çš„ä¸ªæ•°ä¸Šé¢çš„ä¾‹å­ä¸­argc=3
+    c ä¸ºredisContextå¯¹è±¡ã€‚
+    ä¸ºæ¯ä¸€ä¸ªå‚æ•°æŒ‡å®šé•¿åº¦ï¼Œå¯ä»¥æ˜¯äºŒè¿›åˆ¶å®‰å…¨çš„å‡½æ•°ã€‚å‡½æ•°ä¼šæŒ‰ç€é•¿åº¦æ¥å†³å®šå­—ç¬¦ä¸²çš„ç»ˆæ­¢ï¼Œè€Œä¸æ˜¯'\0'.
 
     char hkey[] = "123456";
     char hset[] = "hset";
@@ -27,7 +27,7 @@
     size_t argvlen[] = {4,6,4,3};
     redisCommandArgv(context,argc,argv,argvlen);
     > hgetall testkey
-    »áµÃµ½321²¢²»»áµÃµ½ºÍhvalueÒ»ÑùµÄÖµ"3210"£¬ÒòÎªÔÚhsetÃüÁîÖÐÖ¸¶¨ÁË³¤¶È£¬Ö»»á¶ÁÈ¡Ç°ÃæµÄÈý¸ö×Ö·û¡£
+    ä¼šå¾—åˆ°321å¹¶ä¸ä¼šå¾—åˆ°å’Œhvalueä¸€æ ·çš„å€¼"3210"ï¼Œå› ä¸ºåœ¨hsetå‘½ä»¤ä¸­æŒ‡å®šäº†é•¿åº¦ï¼Œåªä¼šè¯»å–å‰é¢çš„ä¸‰ä¸ªå­—ç¬¦ã€‚
 
 
     <a href="https://docs.jdcloud.com/cn/jcs-for-redis/corcplusplus-connect-to-redis-instance">Redis client for C++</a>

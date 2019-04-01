@@ -1,4 +1,4 @@
-#ifndef QUOTE_H
+ï»¿#ifndef QUOTE_H
 #define QUOTE_H
 
 #include "TapQuoteAPI.h"
@@ -26,7 +26,7 @@ namespace QuotePushRedis
 		static	void  ConnectRedis();
 
 	public:
-		//¶ÔITapQuoteAPINotifyµÄÊµÏÖ
+		//å¯¹ITapQuoteAPINotifyçš„å®žçŽ°
 		virtual void TAP_CDECL OnRspLogin(TAPIINT32 errorCode, const TapAPIQuotLoginRspInfo *info);
 		virtual void TAP_CDECL OnAPIReady();
 		virtual void TAP_CDECL OnDisconnect(TAPIINT32 reasonCode);

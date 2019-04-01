@@ -1,4 +1,4 @@
-#include "Quote.h"
+ï»¿#include "Quote.h"
 #include <algorithm>
 #include "TapAPIError.h"
 #include "QuoteConfig.h"
@@ -48,7 +48,7 @@ namespace QuotePushRedis
 		}
 		else
 		{
-			cout << "Á¬½Óµ½ Redis" << hostname << ":" << port << endl;
+			cout << "è¿æ¥åˆ° Redis" << hostname << ":" << port << endl;
 		}
 	}
 	void Quote::Run()
@@ -60,13 +60,13 @@ namespace QuotePushRedis
 		}
 		TAPIINT32 iErr = TAPIERROR_SUCCEED;
 
-		//Éè¶¨·şÎñÆ÷IP¡¢¶Ë¿Ú
+		//è®¾å®šæœåŠ¡å™¨IPã€ç«¯å£
 		iErr = m_pAPI->SetHostAddress(DEFAULT_IP, DEFAULT_PORT);
 		if (TAPIERROR_SUCCEED != iErr) {
 			cout << "SetHostAddress Error:" << iErr << endl;
 			return;
 		}
-		//µÇÂ¼·şÎñÆ÷
+		//ç™»å½•æœåŠ¡å™¨
 		TapAPIQuoteLoginAuth stLoginAuth;
 		memset(&stLoginAuth, 0, sizeof(stLoginAuth));
 		strcpy(stLoginAuth.UserNo, DEFAULT_USERNAME);
@@ -78,7 +78,7 @@ namespace QuotePushRedis
 			cout << "Login Error:" << iErr << endl;
 			return;
 		}
-		//µÈ´ıAPIReady
+		//ç­‰å¾…APIReady
 		m_Event.WaitEvent();
 		if (!m_bIsAPIReady) {
 			return;
@@ -108,29 +108,29 @@ namespace QuotePushRedis
 
 		items[0] = stContract;
 		iErr = m_pAPI->SubscribeQuote(&m_uiSessionID, &items[0]);
-		std::string msg("¶©ÔÄĞĞÇé");
+		std::string msg("è®¢é˜…è¡Œæƒ…");
 		switch (iErr)
 		{
 		case TAPIERROR_SUBSCRIBEQUOTE_MAX:
-			msg += "³¬¹ıĞĞÇé×î´ó×Ü¶©ÔÄÊı";
+			msg += "è¶…è¿‡è¡Œæƒ…æœ€å¤§æ€»è®¢é˜…æ•°";
 			break;
 		case TAPIERROR_SUBSCRIBEQUOTE_EXCHANGE_MAX:
-			msg += "³¬¹ı¸Ã½»Ò×ËùĞĞÇé×î´ó¶©ÔÄÊı";
+			msg += "è¶…è¿‡è¯¥äº¤æ˜“æ‰€è¡Œæƒ…æœ€å¤§è®¢é˜…æ•°";
 			break;
 		case TAPIERROR_SUBSCRIBEQUOTE_NO_RIGHT:
-			msg += "Ã»ÓĞ¸ÃĞĞÇéµÄ¶©ÔÄÈ¨ÏŞ";
+			msg += "æ²¡æœ‰è¯¥è¡Œæƒ…çš„è®¢é˜…æƒé™";
 			break;
 		case TAPIERROR_SUBSCRIBEQUOTE_NO_EXCHANGE_RIGHT:
-			msg += "Ã»ÓĞ¸Ã½»Ò×ËùÏÂĞĞÇéµÄ¶©ÔÄÈ¨ÏŞ";
+			msg += "æ²¡æœ‰è¯¥äº¤æ˜“æ‰€ä¸‹è¡Œæƒ…çš„è®¢é˜…æƒé™";
 			break;
 		case TAPIERROR_SUBSCRIBEQUOTE_COMMODITY_NOT_EXIST:
-			msg += "Æ·ÖÖ²»´æÔÚ";
+			msg += "å“ç§ä¸å­˜åœ¨";
 			break;
 		case TAPIERROR_SUBSCRIBEQUOTE_CONTRACT_MAY_NOT_EXIST:
-			msg += "ºÏÔ¼¿ÉÄÜ²»´æÔÚ";
+			msg += "åˆçº¦å¯èƒ½ä¸å­˜åœ¨";
 			break;
 		case TAPIERROR_QUOTEFRONT_UNKNOWN_PROTOCOL:
-			msg += "²»Ö§³ÖµÄĞĞÇéĞ­Òé";
+			msg += "ä¸æ”¯æŒçš„è¡Œæƒ…åè®®";
 			break;
 		default:
 			break;
@@ -140,25 +140,25 @@ namespace QuotePushRedis
 	void TAP_CDECL Quote::OnRspLogin(TAPIINT32 errorCode, const TapAPIQuotLoginRspInfo *info)
 	{
 		if (TAPIERROR_SUCCEED == errorCode) {
-			cout << "µÇÂ¼³É¹¦£¬µÈ´ıAPI³õÊ¼»¯...UserNo:" << info->StartTime << endl;
+			cout << "ç™»å½•æˆåŠŸï¼Œç­‰å¾…APIåˆå§‹åŒ–...UserNo:" << info->StartTime << endl;
 			redisReply* reply = (redisReply*)redisCommand(redisCTX, "SET Login_UserNo %s", info->UserNo, 20);
 			freeReplyObject(reply);
 			m_bIsAPIReady = true;
 		}
 		else {
-			cout << "µÇÂ¼Ê§°Ü£¬´íÎóÂë:" << errorCode << endl;
+			cout << "ç™»å½•å¤±è´¥ï¼Œé”™è¯¯ç :" << errorCode << endl;
 			m_Event.SignalEvent();
 		}
 	}
 	void TAP_CDECL Quote::OnAPIReady()
 	{
-		cout << "API³õÊ¼»¯Íê³É" << endl;
+		cout << "APIåˆå§‹åŒ–å®Œæˆ" << endl;
 		m_Event.SignalEvent();
 	}
 
 	void TAP_CDECL Quote::OnDisconnect(TAPIINT32 reasonCode)
 	{
-		cout << "API¶Ï¿ª,¶Ï¿ªÔ­Òò:" << reasonCode << endl;
+		cout << "APIæ–­å¼€,æ–­å¼€åŸå› :" << reasonCode << endl;
 	}
 
 	void TAP_CDECL Quote::OnRspQryCommodity(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteCommodityInfo *info)
@@ -184,14 +184,14 @@ namespace QuotePushRedis
 
 		cout << exchange_commodity_key << endl;
 	}
-	//¶©ÔÄĞĞÇé
+	//è®¢é˜…è¡Œæƒ…
 	void TAP_CDECL Quote::OnRspQryContract(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteContractInfo *info)
 	{
 		TAPIINT32 iErr = TAPIERROR_SUCCEED;
 		cout << __FUNCTION__ << " is called." << endl;
 		if (NULL != info)
 		{
-			cout << "ºÏÔ¼:" << info->Contract.Commodity.CommodityNo << info->Contract.ContractNo1 << endl;
+			cout << "åˆçº¦:" << info->Contract.Commodity.CommodityNo << info->Contract.ContractNo1 << endl;
 			std::string exchangeNo(info->Contract.Commodity.ExchangeNo);
 			std::string commodityNo(info->Contract.Commodity.CommodityNo);
 			std::string contractNo1(info->Contract.ContractNo1);
@@ -214,29 +214,29 @@ namespace QuotePushRedis
 			stContract.CallOrPutFlag2 = TAPI_CALLPUT_FLAG_NONE;
 			m_uiSessionID = 0;
 			iErr = m_pAPI->SubscribeQuote(&m_uiSessionID, &stContract);
-			std::string msg("¶©ÔÄĞĞÇé");
+			std::string msg("è®¢é˜…è¡Œæƒ…");
 			switch (iErr)
 			{
 			case TAPIERROR_SUBSCRIBEQUOTE_MAX:
-				msg += "³¬¹ıĞĞÇé×î´ó×Ü¶©ÔÄÊı";
+				msg += "è¶…è¿‡è¡Œæƒ…æœ€å¤§æ€»è®¢é˜…æ•°";
 				break;
 			case TAPIERROR_SUBSCRIBEQUOTE_EXCHANGE_MAX:
-				msg += "³¬¹ı¸Ã½»Ò×ËùĞĞÇé×î´ó¶©ÔÄÊı";
+				msg += "è¶…è¿‡è¯¥äº¤æ˜“æ‰€è¡Œæƒ…æœ€å¤§è®¢é˜…æ•°";
 				break;
 			case TAPIERROR_SUBSCRIBEQUOTE_NO_RIGHT:
-				msg += "Ã»ÓĞ¸ÃĞĞÇéµÄ¶©ÔÄÈ¨ÏŞ";
+				msg += "æ²¡æœ‰è¯¥è¡Œæƒ…çš„è®¢é˜…æƒé™";
 				break;
 			case TAPIERROR_SUBSCRIBEQUOTE_NO_EXCHANGE_RIGHT:
-				msg += "Ã»ÓĞ¸Ã½»Ò×ËùÏÂĞĞÇéµÄ¶©ÔÄÈ¨ÏŞ";
+				msg += "æ²¡æœ‰è¯¥äº¤æ˜“æ‰€ä¸‹è¡Œæƒ…çš„è®¢é˜…æƒé™";
 				break;
 			case TAPIERROR_SUBSCRIBEQUOTE_COMMODITY_NOT_EXIST:
-				msg += "Æ·ÖÖ²»´æÔÚ";
+				msg += "å“ç§ä¸å­˜åœ¨";
 				break;
 			case TAPIERROR_SUBSCRIBEQUOTE_CONTRACT_MAY_NOT_EXIST:
-				msg += "ºÏÔ¼¿ÉÄÜ²»´æÔÚ";
+				msg += "åˆçº¦å¯èƒ½ä¸å­˜åœ¨";
 				break;
 			case TAPIERROR_QUOTEFRONT_UNKNOWN_PROTOCOL:
-				msg += "²»Ö§³ÖµÄĞĞÇéĞ­Òé";
+				msg += "ä¸æ”¯æŒçš„è¡Œæƒ…åè®®";
 				break;
 			default:
 				break;
@@ -251,7 +251,7 @@ namespace QuotePushRedis
 	{
 		if (TAPIERROR_SUCCEED == errorCode)
 		{
-			cout << "ĞĞÇé¶©ÔÄ³É¹¦ ";
+			cout << "è¡Œæƒ…è®¢é˜…æˆåŠŸ ";
 			if (NULL != info)
 			{
 				std::string dateTimeStamp(info->DateTimeStamp);
@@ -266,7 +266,7 @@ namespace QuotePushRedis
 			}
 		}
 		else {
-			cout << "ĞĞÇé¶©ÔÄÊ§°Ü£¬´íÎóÂë£º" << errorCode << endl;
+			cout << "è¡Œæƒ…è®¢é˜…å¤±è´¥ï¼Œé”™è¯¯ç ï¼š" << errorCode << endl;
 		}
 	}
 
@@ -306,10 +306,10 @@ namespace QuotePushRedis
 
 			//redisCommandArgv(redisCTX, argc, argv, argvlen);
 
-			//Ã¿Ò»´ÎÖ´ĞĞÍêRedisÃüÁîºóĞèÒªÇå¿ÕredisReply ÒÔÃâ¶ÔÏÂÒ»´ÎµÄRedis²Ù×÷Ôì³ÉÓ°Ïì
+			//æ¯ä¸€æ¬¡æ‰§è¡Œå®ŒRediså‘½ä»¤åéœ€è¦æ¸…ç©ºredisReply ä»¥å…å¯¹ä¸‹ä¸€æ¬¡çš„Redisæ“ä½œé€ æˆå½±å“
 			freeReplyObject(pubReply);
 			freeReplyObject(setReply);
-			cout << "ĞĞÇé¸üĞÂ:" << dateTimeStamp << ":" << publish_cmd << " " << endl;
+			cout << "è¡Œæƒ…æ›´æ–°:" << dateTimeStamp << ":" << publish_cmd << " " << endl;
 		}
 	}
 }
