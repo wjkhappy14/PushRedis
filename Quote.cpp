@@ -31,7 +31,7 @@ namespace QuotePushRedis
 	void Quote::ConnectRedis()
 	{
 		redisReply *reply;
-		const char *password = "123456";
+		const char *password = "1234QWERasdf";
 		const char *hostname = "114.67.236.124"; //114.67.236.124
 		int port = 6379;
 
@@ -50,6 +50,7 @@ namespace QuotePushRedis
 		{
 			cout << "连接到 Redis" << hostname << ":" << port << endl;
 		}
+		reply = (redisReply *)redisCommand(redisCTX, "AUTH %s", password);
 	}
 	void Quote::Run()
 	{
