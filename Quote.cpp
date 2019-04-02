@@ -286,6 +286,7 @@ namespace QuotePushRedis
 			std::string contractNo1(info->Contract.ContractNo1);
 			std::replace(dateTimeStamp.begin(), dateTimeStamp.end(), ' ', ':');
 			std::replace(dateTimeStamp.begin(), dateTimeStamp.end(), '-', ':');
+			std::replace(dateTimeStamp.begin(), dateTimeStamp.end(), '.', ':');
 			//auto lastPrice = QuotePushRedis::Helper::to_string(info->QLastPrice);
 			std::string   pub_tickKey = "  " + exchangeNo + ":" + commodityNo + ":" + contractNo1 + "  ";
 			std::string   set_tickKey = "  " + exchangeNo + ":" + commodityNo + ":" + contractNo1 + ":" + dateTimeStamp + "  ";
@@ -308,8 +309,14 @@ namespace QuotePushRedis
 			//redisCommandArgv(redisCTX, argc, argv, argvlen);
 
 			//每一次执行完Redis命令后需要清空redisReply 以免对下一次的Redis操作造成影响
-			freeReplyObject(pubReply);
-			freeReplyObject(setReply);
+			if (pubReply != NULL)
+			{
+				freeReplyObject(pubReply);
+			}
+			if (setReply != NULL)
+			{
+				freeReplyObject(setReply);
+			}
 			cout << "行情更新:" << dateTimeStamp << ":" << publish_cmd << " " << endl;
 		}
 	}
