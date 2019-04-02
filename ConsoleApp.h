@@ -1,5 +1,5 @@
 #pragma once
 namespace ConsoleApp
 {
-	int Pi = 246789975422222;
+	int pi = 246789975;
 }

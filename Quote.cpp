@@ -2,8 +2,7 @@
 #include <algorithm>
 #include "TapAPIError.h"
 #include "QuoteConfig.h"
-//#include <Windows.h>
-
+#include<time.h>
 #include <iostream>
 #include <string.h>
 #include <hiredis.h>
@@ -34,7 +33,6 @@ namespace QuotePushRedis
 		const char *password = "1234QWERasdf";
 		const char *hostname = "114.67.236.124"; //114.67.236.124
 		int port = 6379;
-
 		struct timeval timeout = { 1, 500000 }; // 1.5 seconds
 		redisCTX = redisConnectWithTimeout(hostname, port, timeout);
 		if (redisCTX == NULL || redisCTX->err) {
@@ -96,7 +94,6 @@ namespace QuotePushRedis
 		TapAPIContract items[1];
 		TapAPIContract stContract;
 		memset(&stContract, 0, sizeof(stContract));
-
 
 		strcpy(stContract.Commodity.ExchangeNo, std::string("HKEX").c_str());
 		stContract.Commodity.CommodityType = TAPI_COMMODITY_TYPE_FUTURES;
@@ -275,9 +272,17 @@ namespace QuotePushRedis
 	{
 		cout << __FUNCTION__ << " is called." << endl;
 	}
-
 	void TAP_CDECL Quote::OnRtnQuote(const TapAPIQuoteWhole *info)
 	{
+		time_t rawtime;
+		struct tm * timeinfo;
+		char buffer[80];
+		time(&rawtime);
+		timeinfo = localtime(&rawtime);
+
+		strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", timeinfo);
+		std::string now(buffer);
+		cout << "local time:" << now << endl;
 		if (NULL != info)
 		{
 			std::string dateTimeStamp(info->DateTimeStamp);
@@ -287,10 +292,10 @@ namespace QuotePushRedis
 			std::replace(dateTimeStamp.begin(), dateTimeStamp.end(), ' ', ':');
 			std::replace(dateTimeStamp.begin(), dateTimeStamp.end(), '-', ':');
 			std::replace(dateTimeStamp.begin(), dateTimeStamp.end(), '.', ':');
-			//auto lastPrice = QuotePushRedis::Helper::to_string(info->QLastPrice);
+
 			std::string   pub_tickKey = "  " + exchangeNo + ":" + commodityNo + ":" + contractNo1 + "  ";
 			std::string   set_tickKey = "  " + exchangeNo + ":" + commodityNo + ":" + contractNo1 + ":" + dateTimeStamp + "  ";
-			std::string   tickValue = std::to_string(info->QLastPrice) + "," + std::to_string(info->QTotalQty) + "," + dateTimeStamp;
+			std::string   tickValue = dateTimeStamp + "," + std::to_string(info->QLastPrice) + "," + std::to_string(info->QTotalQty) + "," + std::to_string(info->QLastQty);
 
 			std::string  publish_cmd = "PUBLISH " + pub_tickKey + tickValue;
 			redisReply* pubReply = (redisReply*)redisCommand(redisCTX, publish_cmd.c_str());
@@ -305,7 +310,6 @@ namespace QuotePushRedis
 			int argc = 4;
 			char *argv[] = { hset,key,hkey,hvalue };
 			size_t argvlen[] = { 4,6,4,3 };
-
 			//redisCommandArgv(redisCTX, argc, argv, argvlen);
 
 			//每一次执行完Redis命令后需要清空redisReply 以免对下一次的Redis操作造成影响
@@ -317,7 +321,7 @@ namespace QuotePushRedis
 			{
 				freeReplyObject(setReply);
 			}
-			cout << "行情更新:" << dateTimeStamp << ":" << publish_cmd << " " << endl;
+			cout << publish_cmd << endl;
 		}
 	}
 }

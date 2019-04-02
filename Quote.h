@@ -1,6 +1,5 @@
 ﻿#ifndef QUOTE_H
 #define QUOTE_H
-
 #include "TapQuoteAPI.h"
 #include "SimpleEvent.h"
 #include <sstream>
@@ -13,6 +12,7 @@ namespace QuotePushRedis
 			stm << n;
 			return stm.str();
 		}
+		
 	}
 	class Quote : public ITapQuoteAPINotify
 	{
