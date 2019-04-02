@@ -280,7 +280,7 @@ namespace QuotePushRedis
 		time(&rawtime);
 		timeinfo = localtime(&rawtime);
 
-		strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", timeinfo);
+		strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeinfo);
 		std::string now(buffer);
 		cout << "local time:" << now << endl;
 		if (NULL != info)
