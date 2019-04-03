@@ -40,6 +40,6 @@ int main(int argc, char **argv) {
 	objQuote.SetAPI(pAPI);
 	objQuote.Run();
 
-	getchar();
+	auto c=getchar();
 	return 0;
 }

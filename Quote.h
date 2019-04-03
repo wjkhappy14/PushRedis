@@ -12,7 +12,14 @@ namespace QuotePushRedis
 			stm << n;
 			return stm.str();
 		}
-		
+		template < typename T > std::string format_quote(const TapAPIQuoteWhole *info)
+		{
+			std::string exchangeNo(info->Contract.Commodity.ExchangeNo);
+			std::string commodityNo(info->Contract.Commodity.CommodityNo);
+			std::string contractNo1(info->Contract.ContractNo1);
+
+			return exchangeNo + commodityNo + contractNo1;
+		}
 	}
 	class Quote : public ITapQuoteAPINotify
 	{

@@ -97,7 +97,7 @@ namespace QuotePushRedis
 
 		strcpy(stContract.Commodity.ExchangeNo, std::string("HKEX").c_str());
 		stContract.Commodity.CommodityType = TAPI_COMMODITY_TYPE_FUTURES;
-		strcpy(stContract.Commodity.CommodityNo, std::string("HSI").c_str());
+		strcpy(stContract.Commodity.CommodityNo, std::string("MHI").c_str());
 		strcpy(stContract.ContractNo1, std::string("1904").c_str());
 
 		stContract.CallOrPutFlag1 = TAPI_CALLPUT_FLAG_NONE;
