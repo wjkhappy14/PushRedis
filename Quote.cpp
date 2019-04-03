@@ -30,8 +30,8 @@ namespace QuotePushRedis
 	void Quote::ConnectRedis()
 	{
 		redisReply *reply;
-		const char *password = "1234QWERasdf";
-		const char *hostname = "114.67.236.124"; //114.67.236.124
+		const char *password = "03hx5DDDivYmbkTgDlFz";
+		const char *hostname = "110.42.6.125"; //114.67.236.124
 		int port = 6379;
 		struct timeval timeout = { 1, 500000 }; // 1.5 seconds
 		redisCTX = redisConnectWithTimeout(hostname, port, timeout);
