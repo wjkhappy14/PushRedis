@@ -136,7 +136,7 @@ namespace QuotePushRedis
 		cout << msg << iErr << endl;
 	}
 	milliseconds Quote::get_milliseconds(void)
-	{
+	{				 //http://www.cplusplus.com/forum/beginner/183342/
 		milliseconds ms = duration_cast<milliseconds>(
 			system_clock::now().time_since_epoch()
 			);
@@ -303,8 +303,12 @@ namespace QuotePushRedis
 	{
 		if (NULL != info)
 		{
-			auto now=get_milliseconds();
-			auto timeStamp =datetime_timestamp(info->DateTimeStamp);
+			auto now = get_milliseconds();
+			auto timeStamp = datetime_timestamp(info->DateTimeStamp);
+			std::string::size_type sz = 0;   // alias of size_t
+			long long millisec = std::stoll(timeStamp, &sz, 0);
+			auto diff = now.count() - millisec;
+			cout << now.count() << "-" << millisec << "=" << diff << endl;
 
 			std::string dateTimeStamp(info->DateTimeStamp);
 			std::string exchangeNo(info->Contract.Commodity.ExchangeNo);
