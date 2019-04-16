@@ -17,7 +17,7 @@ using namespace QuotePushRedis;
 
 int main(int argc, char **argv) {
 	auto hello = std::string{ "Hello!" };
-	char* numbers[10] = {  };
+	char* numbers[10] = { "A","B","C","D","E","F","G" };
 	std::string s = "How are you ";
 
 	auto str = hello.c_str();
@@ -40,6 +40,6 @@ int main(int argc, char **argv) {
 	objQuote.SetAPI(pAPI);
 	objQuote.Run();
 
-	auto c=getchar();
+	auto c = getchar();
 	return 0;
 }

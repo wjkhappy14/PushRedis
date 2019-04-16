@@ -3,6 +3,9 @@
 #include "TapQuoteAPI.h"
 #include "SimpleEvent.h"
 #include <sstream>
+#include <chrono>
+using namespace std;
+using namespace std::chrono;
 namespace QuotePushRedis
 {
 	namespace Helper {
@@ -20,6 +23,7 @@ namespace QuotePushRedis
 
 			return exchangeNo + commodityNo + contractNo1;
 		}
+		
 	}
 	class Quote : public ITapQuoteAPINotify
 	{
@@ -30,6 +34,8 @@ namespace QuotePushRedis
 		void SetAPI(ITapQuoteAPI* pAPI);
 		void Run();
 		void SubscribeItems();
+		milliseconds get_milliseconds(void);
+		std::string datetime_timestamp(std::string  datetime = "1970.01.01 00:00:00.000");
 		static	void  ConnectRedis();
 
 	public:

@@ -98,7 +98,7 @@ namespace QuotePushRedis
 		strcpy(stContract.Commodity.ExchangeNo, std::string("HKEX").c_str());
 		stContract.Commodity.CommodityType = TAPI_COMMODITY_TYPE_FUTURES;
 		strcpy(stContract.Commodity.CommodityNo, std::string("MHI").c_str());
-		strcpy(stContract.ContractNo1, std::string("1904").c_str());
+		strcpy(stContract.ContractNo1, std::string("1905").c_str());
 
 		stContract.CallOrPutFlag1 = TAPI_CALLPUT_FLAG_NONE;
 		stContract.CallOrPutFlag2 = TAPI_CALLPUT_FLAG_NONE;
@@ -134,6 +134,33 @@ namespace QuotePushRedis
 			break;
 		}
 		cout << msg << iErr << endl;
+	}
+	milliseconds Quote::get_milliseconds(void)
+	{
+		milliseconds ms = duration_cast<milliseconds>(
+			system_clock::now().time_since_epoch()
+			);
+		return ms;
+	}
+	std::string Quote::datetime_timestamp(std::string datetime)
+	{
+		if (datetime.length() < 23) {
+			std::cout << "invalid string - cant convert to timestamp";
+		}
+		struct tm tm;
+		tm.tm_year = atoi(datetime.substr(0, 4).c_str()) - 1900;
+		tm.tm_mon = atoi(datetime.substr(5, 2).c_str()) - 1;
+		tm.tm_mday = atoi(datetime.substr(8, 2).c_str());
+		tm.tm_hour = atoi(datetime.substr(11, 2).c_str());
+		tm.tm_min = atoi(datetime.substr(14, 2).c_str());
+		tm.tm_sec = atoi(datetime.substr(17, 2).c_str());
+
+		char buff[80];
+		strftime(buff, 80, "%Y.%m.%d %H:%M:%S", &tm);
+		auto time = mktime(&tm);
+
+		auto result = std::to_string(time) + datetime.substr(20, 3).c_str();
+		return result;
 	}
 	void TAP_CDECL Quote::OnRspLogin(TAPIINT32 errorCode, const TapAPIQuotLoginRspInfo *info)
 	{
@@ -274,17 +301,11 @@ namespace QuotePushRedis
 	}
 	void TAP_CDECL Quote::OnRtnQuote(const TapAPIQuoteWhole *info)
 	{
-		time_t rawtime;
-		struct tm * timeinfo;
-		char buffer[80];
-		time(&rawtime);
-		timeinfo = localtime(&rawtime);
-
-		strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeinfo);
-		std::string now(buffer);
-		cout << "local time:" << now << endl;
 		if (NULL != info)
 		{
+			auto now=get_milliseconds();
+			auto timeStamp =datetime_timestamp(info->DateTimeStamp);
+
 			std::string dateTimeStamp(info->DateTimeStamp);
 			std::string exchangeNo(info->Contract.Commodity.ExchangeNo);
 			std::string commodityNo(info->Contract.Commodity.CommodityNo);
