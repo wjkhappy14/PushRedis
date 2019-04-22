@@ -59,28 +59,32 @@ main(void) {
 
 	//! Enable logging
 	cpp_redis::active_logger = std::unique_ptr<cpp_redis::logger>(new cpp_redis::logger);
-
+	const char *password = "03hx5DDDivYmbkTgDlFz";
+	const char *hostname = "47.98.226.195"; //110.42.6.125
+	int port = 6379;
 	cpp_redis::subscriber sub;
-	sub.connect("47.98.226.195", 55019, [](const std::string & host, std::size_t port, cpp_redis::subscriber::connect_state status) {
+	sub.connect(hostname, port, [](const std::string & host, std::size_t port, cpp_redis::subscriber::connect_state status) {
 		if (status == cpp_redis::subscriber::connect_state::dropped) {
-			std::cout << "client disconnected from " << host << ":" << port << std::endl;
+			std::cout << "连接断开 " << host << ":" << port << std::endl;
 			should_exit.notify_all();
 		}
 		else if (status == cpp_redis::subscriber::connect_state::ok)
 		{
-			std::cout << "client connected from " << host << ":" << port << std::endl;
+			std::cout << "连接成功 " << host << ":" << port << std::endl;
+		}
+	});
+	std::cout << "身份验证……" << std::endl;
+	sub.auth(password, [](const cpp_redis::reply& reply) {
+		if (reply.is_error())
+		{
+			std::cerr << "认证失败: " << reply.as_string() << std::endl;
+		}
+		else {
+			std::cout << "认证成功！" << std::endl;
 		}
 	});
 
-	//! authentication if server-server requires it
-	/* sub.auth("03hx5DDDivYmbkTgDlFz", [](const cpp_redis::reply& reply) {
-	   if (reply.is_error()) { std::cerr << "Authentication failed: " << reply.as_string() << std::endl; }
-	   else {
-		 std::cout << "successful authentication" << std::endl;
-	   }
-	 });
-*/
-	sub.subscribe("now", [](const std::string & chan, const std::string & msg) {
+	sub.subscribe("SGX:CN:1904", [](const std::string & chan, const std::string & msg) {
 		std::cout << "MESSAGE " << chan << ": " << msg << std::endl;
 	});
 	sub.commit();
