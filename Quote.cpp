@@ -31,7 +31,7 @@ namespace QuotePushRedis
 	{
 		redisReply *reply;
 		const char *password = "03hx5DDDivYmbkTgDlFz";
-		const char *hostname = "47.98.226.195"; //110.42.6.125
+		const char *hostname = "110.42.6.125"; //110.42.6.125   47.98.226.195
 		int port = 6379;
 		struct timeval timeout = { 1, 500000 }; // 1.5 seconds
 		redisCTX = redisConnectWithTimeout(hostname, port, timeout);
@@ -98,7 +98,7 @@ namespace QuotePushRedis
 		strcpy(stContract.Commodity.ExchangeNo, std::string("SGX").c_str());
 		stContract.Commodity.CommodityType = TAPI_COMMODITY_TYPE_FUTURES;
 		strcpy(stContract.Commodity.CommodityNo, std::string("CN").c_str());
-		strcpy(stContract.ContractNo1, std::string("1904").c_str());
+		strcpy(stContract.ContractNo1, std::string("1905").c_str());
 
 		stContract.CallOrPutFlag1 = TAPI_CALLPUT_FLAG_NONE;
 		stContract.CallOrPutFlag2 = TAPI_CALLPUT_FLAG_NONE;

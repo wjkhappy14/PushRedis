@@ -60,7 +60,7 @@ main(void) {
 	//! Enable logging
 	cpp_redis::active_logger = std::unique_ptr<cpp_redis::logger>(new cpp_redis::logger);
 	const char *password = "03hx5DDDivYmbkTgDlFz";
-	const char *hostname = "47.98.226.195"; //110.42.6.125
+	const char *hostname = "110.42.6.125"; //110.42.6.125		 47.98.226.195
 	int port = 6379;
 	cpp_redis::subscriber sub;
 	sub.connect(hostname, port, [](const std::string & host, std::size_t port, cpp_redis::subscriber::connect_state status) {
@@ -84,7 +84,7 @@ main(void) {
 		}
 	});
 
-	sub.subscribe("SGX:CN:1904", [](const std::string & chan, const std::string & msg) {
+	sub.subscribe("SGX:CN:1905", [](const std::string & chan, const std::string & msg) {
 		std::cout << "MESSAGE " << chan << ": " << msg << std::endl;
 	});
 	sub.commit();
