@@ -31,7 +31,7 @@ namespace QuotePushRedis
 	{
 		redisReply *reply;
 		const char *password = "03hx5DDDivYmbkTgDlFz";
-		const char *hostname = "110.42.6.125"; //114.67.236.124
+		const char *hostname = "47.98.226.195"; //110.42.6.125
 		int port = 6379;
 		struct timeval timeout = { 1, 500000 }; // 1.5 seconds
 		redisCTX = redisConnectWithTimeout(hostname, port, timeout);
@@ -166,8 +166,6 @@ namespace QuotePushRedis
 	{
 		if (TAPIERROR_SUCCEED == errorCode) {
 			cout << "登录成功，等待API初始化...UserNo:" << info->StartTime << endl;
-			redisReply* reply = (redisReply*)redisCommand(redisCTX, "SET Login_UserNo %s", info->UserNo, 20);
-			freeReplyObject(reply);
 			m_bIsAPIReady = true;
 		}
 		else {

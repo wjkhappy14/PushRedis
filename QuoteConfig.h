@@ -2,7 +2,7 @@
 #define QUOTE_CONFIG_H
 
 //行情IP地址与端口 联通
-#define DEFAULT_IP		("61.163.243.173")
+#define DEFAULT_IP		("47.98.226.195")
 #define DEFAULT_PORT	(7171)
 
 

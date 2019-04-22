@@ -61,7 +61,7 @@ main(void) {
 	cpp_redis::active_logger = std::unique_ptr<cpp_redis::logger>(new cpp_redis::logger);
 
 	cpp_redis::subscriber sub;
-	sub.connect("10.0.0.10", 6379, [](const std::string & host, std::size_t port, cpp_redis::subscriber::connect_state status) {
+	sub.connect("47.98.226.195", 55019, [](const std::string & host, std::size_t port, cpp_redis::subscriber::connect_state status) {
 		if (status == cpp_redis::subscriber::connect_state::dropped) {
 			std::cout << "client disconnected from " << host << ":" << port << std::endl;
 			should_exit.notify_all();
