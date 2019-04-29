@@ -7,26 +7,27 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 
 namespace TickBoardcastApp
 {
-    
+
     public class TickBoardcastHandler : SimpleChannelInboundHandler<string>
     {
+        ProducerConsumer procon = new ProducerConsumer();
         static readonly ConcurrentDictionary<string, SubscriberChannelGroup> ChannelGroups = new ConcurrentDictionary<string, SubscriberChannelGroup>();
         static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
         public static ISubscriber RedisSub { get; } = Redis.GetSubscriber();
 
-        private readonly System.Threading.Timer Timer = new System.Threading.Timer((x) =>
-        {
-            System.Diagnostics.Debug.WriteLine(x);
-        });
+        private readonly System.Timers.Timer timer = new System.Timers.Timer(1000);
+       
         public IList<string> Items = new List<string>() {
             "GC1906",
             "CN1906",
             "CL1906",
             "SI1906",
             "DAX1906",
+             "time",
             "MHI1906"
         };
         private static IChannelGroup DefaultGroup { get; set; }
@@ -39,6 +40,13 @@ namespace TickBoardcastApp
                 Console.WriteLine(msg);
                 PushRun(msg);
             });
+            timer.Elapsed += Timer_Elapsed;
+        }
+
+        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            string time = DateTime.Now.ToString("HH:mm:ss.fff");
+            PushRun(time);
         }
 
         public void InitSubscriberChannelGroups(IEventExecutor executor)
@@ -69,9 +77,9 @@ namespace TickBoardcastApp
                 }
             }
             InitSubscriberChannelGroups(contex.Executor);
-            contex.WriteAndFlushAsync(string.Format("Welcome to {0} secure chat server!\n", Dns.GetHostName()));
+            contex.WriteAndFlushAsync(string.Format($"Welcome to {ServerSettings.Port} secure chat server!\n", Dns.GetHostName()));
             g.Add(contex.Channel);
-
+            timer.Start();
         }
 
         class EveryOneBut : IChannelMatcher
@@ -99,27 +107,30 @@ namespace TickBoardcastApp
                 }
             }
         }
+        public static void PushRun(int n)
+        {
+            DefaultGroup.WriteAndFlushAsync($"{n}:time:{DateTime.Now.ToString("HH:mm:ss.fff")}{Environment.NewLine}");
+        }
 
         protected override void ChannelRead0(IChannelHandlerContext contex, string msg)
         {
             //send message to all but this one
-            string time = DateTime.Now.ToString("HH:mm:ss.fff");
-            string broadcast = string.Format("[{0}] {1}\n", contex.Channel.RemoteAddress, msg);
-            string response = string.Format("[you] {0}\n", msg);
+            string now = DateTime.Now.ToString("HH:mm:ss.fff \r\n");
+            string broadcast = $"{contex.Channel.RemoteAddress}:{msg}";
+            string reply = $"{contex.Channel.RemoteAddress}:{msg}{Environment.NewLine}";
             if (Items.Contains(msg))
             {
                 ChannelGroups[msg].Add(contex.Channel);
             }
             DefaultGroup.WriteAndFlushAsync(broadcast, new EveryOneBut(contex.Channel.Id));
 
-            contex.WriteAndFlushAsync(response);
+            contex.WriteAndFlushAsync(reply);
 
-            Console.WriteLine(broadcast);
-
-            if (string.Equals("bye", msg, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals("time", msg, StringComparison.OrdinalIgnoreCase))
             {
-                contex.CloseAsync();
+                contex.WriteAndFlushAsync(now);
             }
+            Console.WriteLine(broadcast);
         }
 
         public override void ChannelReadComplete(IChannelHandlerContext ctx) => ctx.Flush();

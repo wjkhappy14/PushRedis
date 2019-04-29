@@ -6,48 +6,36 @@ namespace TickBoardcastApp
 {
     public class ProducerConsumer
     {
-        ConcurrentQueue<int> counter = new ConcurrentQueue<int>();
+        public ConcurrentQueue<int> Counter = new ConcurrentQueue<int>();
         public void Producer()
         {
-            Thread tProducer = new Thread(() =>
+            int n = 0;
+            while (1 > 0)
             {
-                int n = 0;
-                while (1 > 0)
-                {
-                    n++;
-                    counter.Enqueue(n);
-                    Console.WriteLine($"Enqueue:{n}");
-                }
-            })
-            {
-                Name = "Producer"
-            };
-            tProducer.Start();
-            tProducer.Join();
+                Thread.Sleep(TimeSpan.FromSeconds(1));
+                n++;
+                Counter.Enqueue(n);
+            }
         }
 
-        public void Consumer()
+        public void Consumer(Action<int> action)
         {
-            Thread tConsumer = new Thread(() =>
+            while (1 > 0)
             {
-                while (counter.TryDequeue(out int n))
+                if (Counter.TryDequeue(out int n))
                 {
-                    Console.WriteLine($"Dequeue:{n}");
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                    action.Invoke(n);
                 }
-            })
-            {
-                Name = "Consumer"
-            };
-            tConsumer.Start();
-            tConsumer.Join();
+            }
         }
-        public void Count()                                                     
+        public void Count()
         {
             Thread tCount = new Thread(() =>
             {
-                while (!counter.IsEmpty)
+                while (!Counter.IsEmpty)
                 {
-                    Console.WriteLine($"Count:{counter.Count}");
+                    Console.WriteLine($"Count:{Counter.Count}");
                 }
             })
             {
