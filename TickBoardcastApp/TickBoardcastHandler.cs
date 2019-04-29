@@ -20,7 +20,7 @@ namespace TickBoardcastApp
         public static ISubscriber RedisSub { get; } = Redis.GetSubscriber();
 
         private readonly System.Timers.Timer timer = new System.Timers.Timer(1000);
-       
+
         public IList<string> Items = new List<string>() {
             "GC1906",
             "CN1906",
@@ -38,7 +38,7 @@ namespace TickBoardcastApp
                 string time = DateTime.Now.ToString("HH:mm:ss.fff");
                 string msg = $"{channel.ToString()}:{value.ToString()} localtime:{time}\r\n";
                 Console.WriteLine(msg);
-                PushRun(msg);
+                PushToChannelGroups(msg);
             });
             timer.Elapsed += Timer_Elapsed;
         }
@@ -46,7 +46,8 @@ namespace TickBoardcastApp
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             string time = DateTime.Now.ToString("HH:mm:ss.fff");
-            PushRun(time);
+            PushToChannelGroups(time);
+            PushToAllChannels(time);
         }
 
         public void InitSubscriberChannelGroups(IEventExecutor executor)
@@ -94,7 +95,7 @@ namespace TickBoardcastApp
             public bool Matches(IChannel channel) => channel.Id != Id;
         }
 
-        public void PushRun(string msg)
+        public void PushToChannelGroups(string msg)
         {
             if (ChannelGroups.Count > 0)
             {
@@ -102,14 +103,14 @@ namespace TickBoardcastApp
                 {
                     if (group.Count > 0)
                     {
-                        group.WriteAndFlushAsync($"{group.Name}:time:{DateTime.Now.ToString("HH:mm:ss.fff")} msg:{msg}\r\n");
+                        group.WriteAndFlushAsync($"[{group.Name}]:{msg}\r\n");
                     }
                 }
             }
         }
-        public static void PushRun(int n)
+        public static void PushToAllChannels(string msg)
         {
-            DefaultGroup.WriteAndFlushAsync($"{n}:time:{DateTime.Now.ToString("HH:mm:ss.fff")}{Environment.NewLine}");
+            DefaultGroup.WriteAndFlushAsync($"{msg}{Environment.NewLine}");
         }
 
         protected override void ChannelRead0(IChannelHandlerContext contex, string msg)
