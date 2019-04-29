@@ -22,6 +22,7 @@
     <ProjectGuid>{97F32B20-E008-43B4-833D-CBBD3FA3D43C}</ProjectGuid>
     <RootNamespace>hiredis</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>TickPushApp</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -163,7 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CHANGELOG.md" />
-    <None Include="cpp-redis.htm">
+    <None Include="cpp-redis.html">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="README.md" />

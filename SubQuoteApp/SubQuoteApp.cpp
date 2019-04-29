@@ -84,7 +84,7 @@ main(void) {
 		}
 	});
 
-	sub.subscribe("SGX:CN:1905", [](const std::string & chan, const std::string & msg) {
+	sub.subscribe("SGX:CN:1906", [](const std::string & chan, const std::string & msg) {
 		std::cout << "MESSAGE " << chan << ": " << msg << std::endl;
 	});
 	sub.commit();
