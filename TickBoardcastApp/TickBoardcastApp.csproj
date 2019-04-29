@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7FB818BB-7BD3-4D1E-9093-0B04F21AC644}</ProjectGuid>
+    <ProjectGuid>{8E67D6DF-608A-4BF4-8B5F-F499DA500D81}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TickStoreApp</RootNamespace>
-    <AssemblyName>TickStoreApp</AssemblyName>
+    <RootNamespace>TickBoardcastApp</RootNamespace>
+    <AssemblyName>TickBoardcastApp</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper">
-      <HintPath>..\ShareDLL\Dapper.dll</HintPath>
-    </Reference>
     <Reference Include="DotNetty.Buffers">
       <HintPath>..\ShareDLL\DotNetty\DotNetty.Buffers.dll</HintPath>
     </Reference>
@@ -63,8 +60,8 @@
     <Reference Include="Microsoft.Extensions.Logging.Abstractions">
       <HintPath>..\ShareDLL\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>..\ShareDLL\MySql.Data.6.9.12\lib\net45\MySql.Data.dll</HintPath>
+    <Reference Include="StackExchange.Redis">
+      <HintPath>..\ShareDLL\StackExchange.Redis.1.2.6\lib\net45\StackExchange.Redis.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -85,7 +82,8 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TickSubscribeHandler.cs" />
+    <Compile Include="SubscriberChannelGroup.cs" />
+    <Compile Include="TickBoardcastHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\shared\dotnetty.com.pfx">
@@ -93,6 +91,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{9b3527e1-d7a7-45b6-92b6-cb733da0ba26}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
