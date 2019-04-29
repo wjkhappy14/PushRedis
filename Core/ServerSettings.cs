@@ -12,7 +12,7 @@ namespace Core
                 return !string.IsNullOrEmpty(ssl) && bool.Parse(ssl);
             }
         }
-
+        public static string Host =>ConfigurationManager.ConnectionStrings["Host"].ConnectionString;
         public static int Port => int.Parse(ConfigurationManager.ConnectionStrings["Port"].ConnectionString);
         public static string Bind => ConfigurationManager.ConnectionStrings["Bind"].ConnectionString;
         public static string X509Cert => ConfigurationManager.ConnectionStrings["X509Cert"].ConnectionString;

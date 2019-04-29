@@ -1,12 +1,11 @@
-﻿using DotNetty.Codecs;
+﻿using Core;
+using DotNetty.Codecs;
 using DotNetty.Handlers.Tls;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -19,16 +18,16 @@ namespace TickStoreApp
     {
         static async Task RunClientAsync()
         {
-            IPAddress Host = IPAddress.Parse("65.52.173.5");
-            IPEndPoint endpoint = new IPEndPoint(Host, 2048);
+            IPAddress Host = IPAddress.Parse(ServerSettings.Host);
+            IPEndPoint endpoint = new IPEndPoint(Host, ServerSettings.Port);
             Console.Title = endpoint.ToString();
             MultithreadEventLoopGroup group = new MultithreadEventLoopGroup();
 
             X509Certificate2 cert = null;
             string targetHost = null;
-            if (true)
+            if (ServerSettings.IsSsl)
             {
-                cert = new X509Certificate2(Path.Combine(Environment.CurrentDirectory, "dotnetty.com.pfx"), "password");
+                cert = new X509Certificate2(Path.Combine(ServerSettings.X509Cert, "dotnetty.com.pfx"), "password");
                 targetHost = cert.GetNameInfo(X509NameType.DnsName, false);
             }
             try

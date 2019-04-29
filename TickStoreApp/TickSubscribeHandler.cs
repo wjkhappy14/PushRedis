@@ -19,7 +19,8 @@ namespace TickStoreApp
         }
         protected override void ChannelRead0(IChannelHandlerContext ctx, string msg)
         {
-            Console.WriteLine(msg);
+            string time = DateTime.Now.ToString("HH:mm:ss.fff");
+            Console.WriteLine($"local time:{time}{msg}");
         }
         public override void ExceptionCaught(IChannelHandlerContext contex, Exception e)
         {
