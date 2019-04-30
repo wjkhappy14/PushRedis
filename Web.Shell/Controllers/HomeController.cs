@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace Web.Shell.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
