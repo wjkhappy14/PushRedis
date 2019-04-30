@@ -19,7 +19,7 @@ namespace TickBoardcastApp
         static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
         public static ISubscriber RedisSub { get; } = Redis.GetSubscriber();
 
-        private readonly System.Timers.Timer timer = new System.Timers.Timer(1000);
+        private readonly System.Timers.Timer timer = new System.Timers.Timer(1);
 
         public IList<string> Items = new List<string>() {
             "GC1906",
@@ -35,8 +35,8 @@ namespace TickBoardcastApp
         {
             RedisSub.Subscribe("SGX:CN:1906", (channel, value) =>
             {
-                string time = DateTime.Now.ToString("HH:mm:ss.fff");
-                string msg = $"{channel.ToString()}:{value.ToString()} localtime:{time}\r\n";
+                long unixTimeMilliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                string msg = $"{unixTimeMilliseconds}";
                 Console.WriteLine(msg);
                 PushToChannelGroups(msg);
             });
@@ -45,9 +45,10 @@ namespace TickBoardcastApp
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            string time = DateTime.Now.ToString("HH:mm:ss.fff");
-            PushToChannelGroups(time);
-            PushToAllChannels(time);
+            long unixTimeMilliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            string now = unixTimeMilliseconds.ToString();
+            PushToChannelGroups(now);
+            PushToAllChannels(now);
         }
 
         public void InitSubscriberChannelGroups(IEventExecutor executor)
@@ -78,7 +79,9 @@ namespace TickBoardcastApp
                 }
             }
             InitSubscriberChannelGroups(contex.Executor);
-            contex.WriteAndFlushAsync(string.Format($"Welcome to {ServerSettings.Port} secure chat server!\n", Dns.GetHostName()));
+            long unixTimeMilliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            //string.Format($"Welcome to {ServerSettings.Port} secure chat server!\n", Dns.GetHostName()
+            contex.WriteAndFlushAsync(unixTimeMilliseconds);
             g.Add(contex.Channel);
             timer.Start();
         }
@@ -103,7 +106,7 @@ namespace TickBoardcastApp
                 {
                     if (group.Count > 0)
                     {
-                        group.WriteAndFlushAsync($"[{group.Name}]:{msg}\r\n");
+                        group.WriteAndFlushAsync(msg);
                     }
                 }
             }
@@ -116,22 +119,22 @@ namespace TickBoardcastApp
         protected override void ChannelRead0(IChannelHandlerContext contex, string msg)
         {
             //send message to all but this one
-            string now = DateTime.Now.ToString("HH:mm:ss.fff \r\n");
+            long unixTimeMilliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             string broadcast = $"{contex.Channel.RemoteAddress}:{msg}";
+            Console.WriteLine(broadcast);
             string reply = $"{contex.Channel.RemoteAddress}:{msg}{Environment.NewLine}";
             if (Items.Contains(msg))
             {
                 ChannelGroups[msg].Add(contex.Channel);
             }
-            DefaultGroup.WriteAndFlushAsync(broadcast, new EveryOneBut(contex.Channel.Id));
-
+            // DefaultGroup.WriteAndFlushAsync(broadcast, new EveryOneBut(contex.Channel.Id));
             contex.WriteAndFlushAsync(reply);
 
             if (string.Equals("time", msg, StringComparison.OrdinalIgnoreCase))
             {
-                contex.WriteAndFlushAsync(now);
+                contex.WriteAndFlushAsync(unixTimeMilliseconds);
             }
-            Console.WriteLine(broadcast);
+
         }
 
         public override void ChannelReadComplete(IChannelHandlerContext ctx) => ctx.Flush();
