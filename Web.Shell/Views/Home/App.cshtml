@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台</title>
+    <link href="/Styles/style.css?v=@DateTime.Now.Ticks" type="text/css" rel="stylesheet" />
+    <script>
+        var VERSION = @DateTime.Now;
+        document.domain = document.domain;
+    </script>
+    @*<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.11.3/jquery.min.js"></script>*@
+    <script type="text/javascript">
+        if (!window.jQuery) {
+            document.write('<script type="text/javascript" src="/Scripts/jquery.js"><\/script>');
+        }
+    </script>
+</head>
+<body>
+    @RenderBody()
+    @{
+        <script type="text/javascript" src="/Scripts/template.js?v=@DateTime.Now.Ticks"></script>
+
+        <script type="text/javascript" src="/Scripts/framework-init.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/framework-mapping.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/jquery.hashchange.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/jquery.date.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/jquery.validate.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/jquery.tooltip.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/jquery.dialog.js?v=@DateTime.Now.Ticks"></script>
+
+        <script type="text/javascript" src="/Scripts/module-header.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/module-pager.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/module-account.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/module-log.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/module-report.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/module-monitor.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/module-notice.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/module-password.js?v=@DateTime.Now.Ticks"></script>
+        <script type="text/javascript" src="/Scripts/module-settings.js?v=@DateTime.Now.Ticks"></script>
+    }
+</body>
+</html>
