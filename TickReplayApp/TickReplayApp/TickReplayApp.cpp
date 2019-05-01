@@ -52,8 +52,8 @@ main(void) {
 
 	//! Enable logging
 	cpp_redis::active_logger = std::unique_ptr<cpp_redis::logger>(new cpp_redis::logger);
-	const char *password = "03hx5DDDivYmbkTgDlFz";
-	const char *hostname = "110.42.6.125"; //110.42.6.125		 47.98.226.195
+	const char *password = "1234QWERasdf";
+	const char *hostname = "10.0.1.5"; //110.42.6.125		 47.98.226.195
 	int port = 6379;
 	cpp_redis::client client;
 
@@ -81,9 +81,13 @@ main(void) {
 		std::cout << "auth is ok" << std::endl;
 	}
 
-	client.publish("xxx", "1234");
-
-	client.sync_commit();
+	int x = 0;
+	while (true)
+	{
+		x++;
+		client.publish("xxx", std::to_string(x));
+		client.sync_commit();
+	}
 
 	signal(SIGINT, &sigint_handler);
 	std::mutex mtx;

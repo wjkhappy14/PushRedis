@@ -108,6 +108,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ContractQuoteFull.html" />
     <Content Include="Images\bg-ball-index.png" />
     <Content Include="Images\bg-chip1.png" />
     <Content Include="Images\bg-login.jpg" />
