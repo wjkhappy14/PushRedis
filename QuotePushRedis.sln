@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{670091
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Shell", "Web.Shell\Web.Shell.csproj", "{47F95331-A630-4337-A708-841B79D1700D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TickReplayApp", "TickReplayApp\TickReplayApp\TickReplayApp.vcxproj", "{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -177,6 +179,28 @@ Global
 		{47F95331-A630-4337-A708-841B79D1700D}.Test|x64.Build.0 = Test|Any CPU
 		{47F95331-A630-4337-A708-841B79D1700D}.Test|x86.ActiveCfg = Test|Any CPU
 		{47F95331-A630-4337-A708-841B79D1700D}.Test|x86.Build.0 = Test|Any CPU
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Debug|x64.ActiveCfg = Debug|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Debug|x64.Build.0 = Debug|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Debug|x86.ActiveCfg = Debug|Win32
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Debug|x86.Build.0 = Debug|Win32
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Dev|Any CPU.ActiveCfg = Release|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Dev|Any CPU.Build.0 = Release|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Dev|x64.ActiveCfg = Debug|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Dev|x64.Build.0 = Debug|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Dev|x86.ActiveCfg = Debug|Win32
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Dev|x86.Build.0 = Debug|Win32
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Release|Any CPU.ActiveCfg = Release|Win32
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Release|x64.ActiveCfg = Release|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Release|x64.Build.0 = Release|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Release|x86.ActiveCfg = Release|Win32
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Release|x86.Build.0 = Release|Win32
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Test|Any CPU.ActiveCfg = Release|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Test|Any CPU.Build.0 = Release|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Test|x64.ActiveCfg = Release|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Test|x64.Build.0 = Release|x64
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Test|x86.ActiveCfg = Release|Win32
+		{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}.Test|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
