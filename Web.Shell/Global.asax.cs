@@ -17,7 +17,7 @@ namespace Web.Shell
 
         private static void RegisterRoutes(RouteCollection routes)
         {
-          
+          //  RouteTable.Routes.MapConnection<TickConnection>("echo", "echo/{*operation}");
 
 
         }

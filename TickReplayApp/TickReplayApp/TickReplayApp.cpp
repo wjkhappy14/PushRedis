@@ -81,11 +81,19 @@ main(void) {
 		std::cout << "auth is ok" << std::endl;
 	}
 
-	int x = 0;
+	long long x = 0;
 	while (true)
 	{
+		milliseconds ms = duration_cast<milliseconds>(
+			system_clock::now().time_since_epoch()
+			);
 		x++;
-		client.publish("xxx", std::to_string(x));
+		auto milliseconds = ms.count();
+		auto value = std::to_string(x);
+		auto key = std::to_string(milliseconds)+":"+ value;
+		
+		client.set(key, value);
+		client.publish("now", std::to_string(milliseconds));
 		client.sync_commit();
 	}
 
