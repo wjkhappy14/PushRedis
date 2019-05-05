@@ -81,20 +81,22 @@ main(void) {
 		std::cout << "auth is ok" << std::endl;
 	}
 
-	long long x = 0;
+	
 	while (true)
 	{
-		milliseconds ms = duration_cast<milliseconds>(
-			system_clock::now().time_since_epoch()
-			);
-		x++;
-		auto milliseconds = ms.count();
-		auto value = std::to_string(x);
-		auto key = std::to_string(milliseconds)+":"+ value;
-		
-		client.set(key, value);
-		client.publish("now", std::to_string(milliseconds));
-		client.sync_commit();
+		auto now = system_clock::now();
+		auto milliseconds = now.time_since_epoch().count();
+		long long x = 0;
+		while (true)
+		{
+			x++;
+			auto value = std::to_string(x);
+			auto key = std::to_string(milliseconds) + ":" + value;
+
+			client.set(key, value);
+			client.publish("now", std::to_string(milliseconds));
+			client.sync_commit();
+		}
 	}
 
 	signal(SIGINT, &sigint_handler);
