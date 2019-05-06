@@ -1,4 +1,6 @@
-﻿namespace Core
+﻿using System;
+
+namespace Core
 {
     public class ContractQuoteFull
     {
@@ -8,7 +10,7 @@
 
         }
 
-        public string Time { get; set; }
+        public long Time => DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
 
         public string CommodityNo
