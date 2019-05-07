@@ -3,26 +3,18 @@ using System.Net;
 using System;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using Core;
 
 namespace TickStoreApp
 {
     public class TickDispatcher
     {
         public static MySqlConnection connection = new MySqlConnection("Server=107.180.41.46; database=wallhaven; UID=nginx; password=nginx; SSLMode=none");
-        private static ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(new ConfigurationOptions
-        {
-            Password = "03hx5DDDivYmbkTgDlFz",
-            EndPoints = {
-                new IPEndPoint(IPAddress.Parse("110.42.6.125"), 6379)
-            }
-            // ChannelPrefix = "X"
-        });
+        private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
 
         static private void Subscribe(string channelName)
         {
-
-            ISubscriber sub = redis.GetSubscriber();
-
+            ISubscriber sub = Redis.GetSubscriber();
             sub.Subscribe(channelName, (channel, message) =>
             {
                 long id = DateTimeOffset.Now.ToUnixTimeMilliseconds();

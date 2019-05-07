@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using Core;
 using Microsoft.AspNet.SignalR;
 using SignalR.Tick.Hubs.DemoHub;
+using StackExchange.Redis;
 
 namespace SignalR.Tick
 {
     public static class BackgroundThread
     {
+        private static readonly ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
+        static readonly IDatabase DB = Redis.GetDatabase(2);
         public static void Start()
         {
-            ThreadPool.QueueUserWorkItem(x=>
+            ThreadPool.QueueUserWorkItem(x =>
             {
                 IPersistentConnectionContext context = GlobalHost.ConnectionManager.GetConnectionContext<StreamingConnection>();
                 IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<DemoHub>();
@@ -18,7 +22,9 @@ namespace SignalR.Tick
                 {
                     try
                     {
-                        context.Connection.Broadcast(DateTime.Now.ToString());
+                        string now = DateTime.Now.ToString();
+                        DB.PublishAsync("now", now);
+                        context.Connection.Broadcast(now);
                         hubContext.Clients.All.fromArbitraryCode(DateTime.Now.ToString());
                     }
                     catch (Exception ex)
