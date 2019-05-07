@@ -24,9 +24,8 @@ namespace SignalR.Tick
             app.MapSignalR<StreamingConnection>("/streaming-connection");
 
             app.Use(typeof(ClaimsMiddleware));
-
             ConfigureSignalR(GlobalHost.DependencyResolver, GlobalHost.HubPipeline);
-
+            GlobalHost.DependencyResolver.UseRedis("110.42.6.125", 6379, "03hx5DDDivYmbkTgDlFz", "signalR");
             //跨域
             app.Map("/cors", map =>
             {
