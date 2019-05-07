@@ -1,5 +1,4 @@
-﻿// Crockford's supplant method (poor man's templating)
-if (!String.prototype.supplant) {
+﻿if (!String.prototype.supplant) {
     String.prototype.supplant = function (o) {
         return this.replace(/{([^{}]*)}/g,
             function (a, b) {
@@ -20,8 +19,8 @@ jQuery.fn.flash = function (color, duration) {
 $(function () {
 
     var ticker = $.connection.stockTicker, // the generated client-side hub proxy
-        up = '▲',
-        down = '▼',
+        up = '↑',
+        down = '↓',
         $stockTable = $('#stockTable'),
         $stockTableBody = $stockTable.find('tbody'),
         rowTemplate = '<tr data-symbol="{Symbol}"><td>{Symbol}</td><td>{Price}</td><td>{DayOpen}</td><td>{DayHigh}</td><td>{DayLow}</td><td><span class="dir {DirectionClass}">{Direction}</span> {Change}</td><td>{PercentChange}</td><td>{TickTime}</td></tr>',
@@ -67,8 +66,8 @@ $(function () {
                 $row = $(rowTemplate.supplant(displayStock)),
                 $li = $(liTemplate.supplant(displayStock)),
                 bg = stock.LastChange < 0
-                        ? '255,148,148' // red
-                        : '154,240,117'; // green
+                    ? '255,148,148' // red
+                    : '154,240,117'; // green
 
             $stockTableBody.find('tr[data-symbol=' + stock.Symbol + ']')
                 .replaceWith($row);
@@ -110,7 +109,6 @@ $(function () {
             } else {
                 ticker.client.marketClosed();
             }
-
             // Wire up the buttons
             $("#open").click(function () {
                 ticker.server.openMarket();
