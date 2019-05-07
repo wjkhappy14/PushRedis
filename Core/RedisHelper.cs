@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Core
@@ -116,7 +117,18 @@ namespace Core
         {
             return (await Db.SortedSetRangeByScoreWithScoresAsync(key, start, stop, exclude, order, skip, take)).ToDictionary();
         }
-
+        public static IEnumerable<HashEntry> ObjectToRedisHash(object o)
+        {
+            List<HashEntry> hashList = new List<HashEntry>();
+            foreach (PropertyInfo prop in o.GetType().GetProperties())
+            {
+                string rvalue = string.Empty;
+                object value = prop.GetValue(o);
+                rvalue = value is null ? "" : value.ToString();
+                hashList.Add(new HashEntry(prop.Name, rvalue));
+            }
+            return hashList;
+        }
         #endregion
 
         #region Hash

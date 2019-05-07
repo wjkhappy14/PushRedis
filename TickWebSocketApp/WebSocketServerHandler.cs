@@ -18,18 +18,17 @@ namespace TickWebSocketApp
     public sealed class WebSocketServerHandler : SimpleChannelInboundHandler<object>
     {
         const string WebsocketPath = "/websocket";
-
-        WebSocketServerHandshaker handshaker;
+        private WebSocketServerHandshaker handshaker;
 
         protected override void ChannelRead0(IChannelHandlerContext ctx, object msg)
         {
             if (msg is IFullHttpRequest request)
             {
-                this.HandleHttpRequest(ctx, request);
+                HandleHttpRequest(ctx, request);
             }
             else if (msg is WebSocketFrame frame)
             {
-                this.HandleWebSocketFrame(ctx, frame);
+                HandleWebSocketFrame(ctx, frame);
             }
         }
 

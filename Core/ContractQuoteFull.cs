@@ -1,13 +1,37 @@
-﻿using System;
+﻿using StackExchange.Redis;
+using System;
+using System.Collections.Generic;
 
 namespace Core
 {
     public class ContractQuoteFull
     {
-
+        private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
         public ContractQuoteFull()
         {
 
+        }
+        public static ContractQuoteFull Default()
+        {
+            IDatabase db = Redis.GetDatabase(4);
+            RedisValue value = db.StringGet("Item");
+            ContractQuoteFull item = new ContractQuoteFull()
+            {
+                ContractNo = value
+            };
+            return item;
+        }
+
+        public static ContractQuoteFull Fake(string contractNo)
+        {
+            IDatabase db = Redis.GetDatabase(4);
+            ContractQuoteFull item = new ContractQuoteFull()
+            {
+                ContractNo = contractNo
+            };
+            IEnumerable<HashEntry> items = RedisHelper.ObjectToRedisHash(item);
+            HashEntry[] values = db.HashGetAll(contractNo);
+            return item;
         }
 
         public long Time => DateTimeOffset.Now.ToUnixTimeMilliseconds();
@@ -171,7 +195,5 @@ namespace Core
         {
             return "";
         }
-
     }
-
 }

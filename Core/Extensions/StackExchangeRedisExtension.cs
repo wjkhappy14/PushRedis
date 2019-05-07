@@ -10,9 +10,7 @@ namespace Core.Extensions
     {
         public static RedisValue ToRedisValue<T>(this T value)
         {
-            return value is ValueType || value is string
-? value.ToString()
-: JsonConvert.SerializeObject(value);
+            return value is ValueType || value is string? value.ToString():JsonConvert.SerializeObject(value);
         }
 
         public static RedisValue[] ToRedisValues<T>(this IEnumerable<T> values)
@@ -77,6 +75,8 @@ namespace Core.Extensions
 
             return dict;
         }
+
+       
     }
 
 }
