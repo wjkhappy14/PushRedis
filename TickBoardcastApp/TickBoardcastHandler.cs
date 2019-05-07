@@ -14,7 +14,7 @@ namespace TickBoardcastApp
     {
         ProducerConsumer procon = new ProducerConsumer();
         static readonly ConcurrentDictionary<string, SubscriberChannelGroup> ChannelGroups = new ConcurrentDictionary<string, SubscriberChannelGroup>();
-        static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
+        private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
         public static ISubscriber RedisSub { get; } = Redis.GetSubscriber();
 
         private readonly System.Timers.Timer timer = new System.Timers.Timer(1);

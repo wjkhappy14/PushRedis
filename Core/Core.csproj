@@ -37,6 +37,24 @@
     <Reference Include="Dapper.Mapper">
       <HintPath>..\ShareDLL\Dapper.Mapper.1.50.1\lib\net45\Dapper.Mapper.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetty.Buffers">
+      <HintPath>..\ShareDLL\DotNetty\DotNetty.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Codecs">
+      <HintPath>..\ShareDLL\DotNetty\DotNetty.Codecs.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Codecs.Http">
+      <HintPath>..\ShareDLL\DotNetty\DotNetty.Codecs.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Common">
+      <HintPath>..\ShareDLL\DotNetty\DotNetty.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Handlers">
+      <HintPath>..\ShareDLL\DotNetty\DotNetty.Handlers.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Transport">
+      <HintPath>..\ShareDLL\DotNetty\DotNetty.Transport.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\ShareDLL\MySql.Data.6.9.12\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
