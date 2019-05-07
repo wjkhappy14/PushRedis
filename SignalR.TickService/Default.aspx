@@ -85,9 +85,9 @@
             <p><a class="btn" href="Hubs/RealtimeBroadcast/">View sample &raquo;</a></p>
         </div>
         <div class="span4">
-            <h3>Hub Connection API</h3>
-            <p>A sample that demonstrates Hub Connection API including starting and stopping, sending and receiving messages, and managing groups.</p>
-            <p><a class="btn" href="Hubs/HubConnectionAPI/">View sample &raquo;</a></p>
+            <h3>Redis Hub Connection API</h3>
+            <p>Redis Hub Connection API including starting and stopping, sending and receiving messages, and managing groups.</p>
+            <p><a class="btn" href="Hubs/HubConnectionAPI/">查看 &raquo;</a></p>
         </div>
     </div>
 

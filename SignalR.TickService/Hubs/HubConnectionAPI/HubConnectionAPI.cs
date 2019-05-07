@@ -1,10 +1,25 @@
+using Core;
 using Microsoft.AspNet.SignalR;
+using StackExchange.Redis;
+using System;
 using System.Threading.Tasks;
 
 namespace SignalR.Tick.Hubs.HubConnectionAPI
 {
     public class HubConnectionAPI : Hub
     {
+        private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
+        public static ISubscriber RedisSub { get; } = Redis.GetSubscriber();
+
+        public HubConnectionAPI()
+        {
+            RedisSub.Subscribe("now", (channel, value) =>
+            {
+                long unixTimeMilliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                string msg = $"{unixTimeMilliseconds}:{channel}:{value}";
+                DisplayMessageAll(msg);
+            });
+        }
         public string JoinGroup(string connectionId, string groupName)
         {
             Groups.Add(connectionId, groupName).Wait();

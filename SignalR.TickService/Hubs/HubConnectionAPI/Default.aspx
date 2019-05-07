@@ -8,7 +8,7 @@
     </ul>
 
     <div class="page-header">
-        <h2>Hub Connection API</h2>
+        <h2>Redis Hub Connection API</h2>
         <p>Demonstrates Hub Connection API including starting and stopping, sending and receiving messages, and managing groups.</p>
     </div>
 
