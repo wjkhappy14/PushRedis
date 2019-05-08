@@ -1,4 +1,4 @@
-using Core;
+﻿using Core;
 using Microsoft.AspNet.SignalR;
 using StackExchange.Redis;
 using System;
@@ -23,13 +23,13 @@ namespace SignalR.Tick.Hubs.HubConnectionAPI
         public string JoinGroup(string connectionId, string groupName)
         {
             Groups.Add(connectionId, groupName).Wait();
-            return connectionId + " joined " + groupName;
+            return connectionId + " 加入 " + groupName;
         }
 
         public string LeaveGroup(string connectionId, string groupName)
         {
             Groups.Remove(connectionId, groupName).Wait();
-            return connectionId + " removed " + groupName;
+            return connectionId + " 移除 " + groupName;
         }
 
         public void DisplayMessageAll(string message)
@@ -84,7 +84,7 @@ namespace SignalR.Tick.Hubs.HubConnectionAPI
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            var message = string.Format("{0} OnDisconnected(stopCalled: {1})", Context.ConnectionId, stopCalled);
+            string message = string.Format("{0} 断开 (stopCalled: {1})", Context.ConnectionId, stopCalled);
             return Clients.All.displayMessage(message);
         }
     }
