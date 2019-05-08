@@ -2,6 +2,7 @@
     font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
     font-size: 16px;
     background-color: black;
+    color: green;
 }
 
 #stockTable table {
@@ -48,6 +49,7 @@
     #stockTicker .symbol {
         font-weight: bold;
     }
+
     #stockTicker .change {
         font-style: italic;
     }
