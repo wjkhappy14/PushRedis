@@ -28,30 +28,31 @@ namespace SignalR.Tick
             string clientIp = GetClientIP(request);
 
             string user = GetUser(connectionId);
+            string msg = $"@{DateTime.Now } :  [{user}]  加入 from  [{clientIp}]";
 
-            return Groups.Add(connectionId, "foo").ContinueWith(_ =>
-                   Connection.Broadcast(DateTime.Now + ": " + user + " joined from " + clientIp)).Unwrap();
+            return Groups.Add(connectionId, "foo").ContinueWith(x =>
+                   Connection.Broadcast(msg)).Unwrap();
         }
 
         protected override Task OnReconnected(IRequest request, string connectionId)
         {
             string user = GetUser(connectionId);
 
-            return Connection.Broadcast(DateTime.Now + ": " + user + " reconnected");
+            return Connection.Broadcast(DateTime.Now + ": " + user + " 重连");
         }
 
         protected override Task OnDisconnected(IRequest request, string connectionId, bool stopCalled)
         {
-            string ignored;
-            _users.TryRemove(connectionId, out ignored);
+            _users.TryRemove(connectionId, out string ignored);
 
             string suffix = stopCalled ? "cleanly" : "uncleanly";
-            return Connection.Broadcast(DateTime.Now + ": " + GetUser(connectionId) + " disconnected " + suffix);
+            string msg = $"@{DateTime.Now}: User { GetUser(connectionId)}  断开: {suffix}";
+            return Connection.Broadcast(msg);
         }
 
         protected override Task OnReceived(IRequest request, string connectionId, string data)
         {
-            var message = JsonConvert.DeserializeObject<Message>(data);
+            Message message = JsonConvert.DeserializeObject<Message>(data);
 
             switch (message.Type)
             {
@@ -122,8 +123,7 @@ namespace SignalR.Tick
 
         private string GetUser(string connectionId)
         {
-            string user;
-            if (!_clients.TryGetValue(connectionId, out user))
+            if (!_clients.TryGetValue(connectionId, out string user))
             {
                 return connectionId;
             }
@@ -132,8 +132,7 @@ namespace SignalR.Tick
 
         private string GetClient(string user)
         {
-            string connectionId;
-            if (_users.TryGetValue(user, out connectionId))
+            if (_users.TryGetValue(user, out string connectionId))
             {
                 return connectionId;
             }
