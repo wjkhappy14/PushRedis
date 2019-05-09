@@ -11,6 +11,22 @@ namespace Core
         {
 
         }
+
+        public static List<string> Items = new List<string>() {
+           "AD1906",
+           "BP1906",
+           "CD1906",
+           "CL1906",
+           "CN1905",
+           "DAX190",
+           "EC1906",
+           "GC1906",
+           "HG1907",
+           "HSI1905",
+           "MHI1905",
+           "NQ1906",
+           "SI1907"
+        };
         public static ContractQuoteFull Default()
         {
             IDatabase db = Redis.GetDatabase(4);
@@ -22,16 +38,22 @@ namespace Core
             return item;
         }
 
-        public static ContractQuoteFull Fake(string contractNo)
+        public static Dictionary<string,string> Fake(string contractNo)
         {
             IDatabase db = Redis.GetDatabase(4);
-            ContractQuoteFull item = new ContractQuoteFull()
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+             HashEntry[] values = db.HashGetAll(contractNo);
+            foreach (HashEntry item in values)
             {
-                ContractNo = contractNo
-            };
-            IEnumerable<HashEntry> items = RedisHelper.ObjectToRedisHash(item);
-            HashEntry[] values = db.HashGetAll(contractNo);
-            return item;
+                if (item.Name == "Descriptor" || item.Name == "Parser")
+                {
+                }
+                else
+                {
+                    dic.Add(item.Name, item.Value);
+                }
+            }
+            return dic;
         }
 
         public long Time => DateTimeOffset.Now.ToUnixTimeMilliseconds();

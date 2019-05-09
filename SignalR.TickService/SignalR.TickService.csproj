@@ -694,6 +694,7 @@
     <Compile Include="Hubs\Test\NodeEvent.cs" />
     <Compile Include="Hubs\Test\StressHub.cs" />
     <Compile Include="Hubs\Test\TestHub.cs" />
+    <Compile Include="Models\ElementTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Raw\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
