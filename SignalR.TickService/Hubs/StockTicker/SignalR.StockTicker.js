@@ -23,17 +23,17 @@ $(function () {
         down = '↓',
         $stockTable = $('#stockTable'),
         $stockTableBody = $stockTable.find('tbody'),
-        rowTemplate = '<tr data-symbol="{Symbol}"><td>{Symbol}</td><td>{Price}</td><td>{DayOpen}</td><td>{DayHigh}</td><td>{DayLow}</td><td><span class="dir {DirectionClass}">{Direction}</span> {Change}</td><td>{PercentChange}</td><td>{TickTime}</td></tr>',
+        rowTemplate = '<tr data-symbol="{commodityNo}"><td>{commodityNo}</td><td>{BidPrice}</td><td>{DayOpen}</td><td>{DayHigh}</td><td>{DayLow}</td><td><span class="dir {DirectionClass}">{Direction}</span> {Change}</td><td>{PercentChange}</td><td>{Time}</td></tr>',
         $stockTicker = $('#stockTicker'),
         $stockTickerUl = $stockTicker.find('ul'),
-        liTemplate = '<li data-symbol="{Symbol}"><span class="symbol">{Symbol}</span> <span class="price">{Price}</span> <span class="change"><span class="dir {DirectionClass}">{Direction}</span> {Change} ({PercentChange})</span></li>';
+        liTemplate = '<li data-symbol="{commodityNo}"><span class="symbol">{commodityNo}</span> <span class="price">{BidPrice}</span> <span class="change"><span class="dir {DirectionClass}">{Direction}</span> {Change} ({PercentChange})</span></li>';
 
     function formatStock(stock) {
         return $.extend(stock, {
-            Price: stock.Price.toFixed(2),
-            PercentChange: (stock.PercentChange * 100).toFixed(2) + '%',
-            Direction: stock.Change === 0 ? '' : stock.Change >= 0 ? up : down,
-            DirectionClass: stock.Change === 0 ? 'even' : stock.Change >= 0 ? 'up' : 'down'
+            Price: stock.BidPrice,
+            PercentChange: (stock.BidPrice * 100).toFixed(2) + '%',
+            Direction: stock.BidPrice === 0 ? '' : stock.BidPrice >= 0 ? up : down,
+            DirectionClass: stock.BidPrice === 0 ? 'even' : stock.BidPrice >= 0 ? 'up' : 'down'
         });
     }
 
@@ -69,9 +69,9 @@ $(function () {
                     ? '255,148,148' // red
                     : '154,240,117'; // green
 
-            $stockTableBody.find('tr[data-symbol=' + stock.Symbol + ']')
+            $stockTableBody.find('tr[data-symbol=' + stock.commodityNo + ']')
                 .replaceWith($row);
-            $stockTickerUl.find('li[data-symbol=' + stock.Symbol + ']')
+            $stockTickerUl.find('li[data-symbol=' + stock.commodityNo + ']')
                 .replaceWith($li);
 
             $row.flash(bg, 1000);

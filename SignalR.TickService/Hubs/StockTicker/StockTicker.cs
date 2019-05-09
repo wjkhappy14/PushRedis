@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using Core;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using StackExchange.Redis;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -9,21 +11,22 @@ namespace SignalR.Tick.Hubs.StockTicker
 {
     public class StockTicker
     {
+
+        private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
+        public static ISubscriber RedisSub { get; } = Redis.GetSubscriber();
         // Singleton instance
         private readonly static Lazy<StockTicker> _instance = new Lazy<StockTicker>(() => new StockTicker(GlobalHost.ConnectionManager.GetHubContext<StockTickerHub>().Clients));
 
         private readonly object _marketStateLock = new object();
         private readonly object _updateStockPricesLock = new object();
 
-        private readonly ConcurrentDictionary<string, Stock> _stocks = new ConcurrentDictionary<string, Stock>();
+        private readonly ConcurrentDictionary<string, ContractQuoteFull> _stocks = new ConcurrentDictionary<string, ContractQuoteFull>();
 
         // Stock can go up or down by a percentage of this factor on each change
         private readonly double _rangePercent = 0.002;
 
-        private readonly TimeSpan _updateInterval = TimeSpan.FromMilliseconds(15);
         private readonly Random _updateOrNotRandom = new Random();
 
-        private Timer _timer;
         private volatile bool _updatingStockPrices;
         private volatile MarketState _marketState;
 
@@ -31,6 +34,17 @@ namespace SignalR.Tick.Hubs.StockTicker
         {
             Clients = clients;
             LoadDefaultStocks();
+            ContractQuoteFull.Items.ForEach(item =>
+            {
+                RedisSub.Subscribe(item, (channel, value) =>
+                {
+                    //string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    //string msg = $"{now}/{value}";
+
+
+                    Clients.All.updateStockPrice(value);
+                });
+            });
         }
 
         public static StockTicker Instance => _instance.Value;
@@ -47,7 +61,7 @@ namespace SignalR.Tick.Hubs.StockTicker
             private set => _marketState = value;
         }
 
-        public IEnumerable<Stock> GetAllStocks() => _stocks.Values;
+        public IEnumerable<ContractQuoteFull> GetAllStocks() => _stocks.Values;
 
         public void OpenMarket()
         {
@@ -55,7 +69,7 @@ namespace SignalR.Tick.Hubs.StockTicker
             {
                 if (MarketState != MarketState.Open)
                 {
-                    _timer = new Timer(UpdateStockPrices, null, _updateInterval, _updateInterval);
+                    Clients.All.updateStockPrice(2);
 
                     MarketState = MarketState.Open;
 
@@ -70,11 +84,6 @@ namespace SignalR.Tick.Hubs.StockTicker
             {
                 if (MarketState == MarketState.Open)
                 {
-                    if (_timer != null)
-                    {
-                        _timer.Dispose();
-                    }
-
                     MarketState = MarketState.Closed;
 
                     BroadcastMarketStateChange(MarketState.Closed);
@@ -99,73 +108,10 @@ namespace SignalR.Tick.Hubs.StockTicker
         private void LoadDefaultStocks()
         {
             _stocks.Clear();
-            List<Stock> stocks = new List<Stock>
-            {
-                new Stock { Symbol = "MSFT", Price = 41.68m },
-                new Stock { Symbol = "AAPL", Price = 92.08m },
-                new Stock { Symbol = "Red", Price = 92.08m },
-                new Stock { Symbol = "Pink", Price = 92.08m },
-                new Stock { Symbol = "Azure", Price = 92.08m },
-                new Stock { Symbol = "Green", Price = 92.08m },
-                new Stock { Symbol = "Yellow", Price = 92.08m },
-                new Stock { Symbol = "White", Price = 92.08m },
-                new Stock { Symbol = "Gray", Price = 92.08m },
-                new Stock { Symbol = "Olive", Price = 95.08m },
-                new Stock { Symbol = "Mazada", Price = 192.08m },
-                new Stock { Symbol = "Benz", Price = 92.08m },
-                new Stock { Symbol = "BMW", Price = 92.08m },
-                new Stock { Symbol = "Audi", Price = 92.08m },
-                new Stock { Symbol = "Honda", Price = 92.08m },
-                new Stock { Symbol = "Toyota", Price = 92.08m },
-                new Stock { Symbol = "ABB", Price = 92.08m },
-                new Stock { Symbol = "GOOG", Price = 543.01m }
-            };
-
-            stocks.ForEach(stock => _stocks.TryAdd(stock.Symbol, stock));
+            ContractQuoteFull.Items.ForEach(stock => _stocks.TryAdd(stock, ContractQuoteFull.Default(stock)));
         }
 
-        private void UpdateStockPrices(object state)
-        {
-            // This function must be re-entrant as it's running as a timer interval handler
-            lock (_updateStockPricesLock)
-            {
-                if (!_updatingStockPrices)
-                {
-                    _updatingStockPrices = true;
-
-                    foreach (Stock stock in _stocks.Values)
-                    {
-                        if (TryUpdateStockPrice(stock))
-                        {
-                            BroadcastStockPrice(stock);
-                        }
-                    }
-
-                    _updatingStockPrices = false;
-                }
-            }
-        }
-
-        private bool TryUpdateStockPrice(Stock stock)
-        {
-            // Randomly choose whether to udpate this stock or not
-            double r = _updateOrNotRandom.NextDouble();
-            if (r > 0.1)
-            {
-                return false;
-            }
-
-            // Update the stock price by a random factor of the range percent
-            Random random = new Random((int)Math.Floor(stock.Price));
-            double percentChange = random.NextDouble() * _rangePercent;
-            bool pos = random.NextDouble() > 0.51;
-            decimal change = Math.Round(stock.Price * (decimal)percentChange, 2);
-            change = pos ? change : -change;
-
-            stock.Price += change;
-            return true;
-        }
-
+     
         private void BroadcastMarketStateChange(MarketState marketState)
         {
             switch (marketState)
@@ -184,11 +130,6 @@ namespace SignalR.Tick.Hubs.StockTicker
         private void BroadcastMarketReset()
         {
             Clients.All.marketReset();
-        }
-
-        private void BroadcastStockPrice(Stock stock)
-        {
-            Clients.All.updateStockPrice(stock);
         }
     }
 

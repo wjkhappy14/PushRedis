@@ -520,6 +520,7 @@
     <Content Include="Scripts\jcanvas.js" />
     <Content Include="Hubs\DrawingPad\drawingpad.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="Scripts\render-tpl.js" />
     <Content Include="Scripts\signalr.samples.js" />
     <Content Include="Scripts\jquery.easing.1.3.js" />
     <Content Include="Scripts\jQuery.tmpl.js" />
@@ -680,7 +681,6 @@
     <Compile Include="Hubs\RealtimeBroadcast\HighFrequencyTimer.cs" />
     <Compile Include="Hubs\RealtimeBroadcast\Realtime.cs" />
     <Compile Include="Hubs\ShapeShare\ShapeShare.cs" />
-    <Compile Include="Hubs\StockTicker\Stock.cs" />
     <Compile Include="Hubs\StockTicker\StockTicker.cs" />
     <Compile Include="Hubs\StockTicker\StockTickerHub.cs" />
     <Compile Include="Hubs\Test\LongRunningHub.cs" />

@@ -1,6 +1,7 @@
 ﻿using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Core
 {
@@ -27,22 +28,42 @@ namespace Core
            "NQ1906",
            "SI1907"
         };
-        public static ContractQuoteFull Default()
+
+        public static Dictionary<string, string> SymbolItems = new Dictionary<string, string>() {
+           {"AD1906","AD" },
+           {"BP1906","BP" },
+           {"CD1906","CD" },
+           {"CL1906","CL" },
+           {"CN1905","CN" },
+           {"DAX190","DAX" },
+           {"EC1906","EC" },
+           {"GC1906","GC" },
+           {"HG1907","HG" },
+           {"HSI1905","HSI" },
+           {"MHI1905","MHI" },
+           {"NQ1906","NQ" },
+           {"SI1907", "SI" }
+
+        };
+        public static ContractQuoteFull Default(string key)
         {
-            IDatabase db = Redis.GetDatabase(4);
-            RedisValue value = db.StringGet("Item");
+
+            var rel = Items.First(x => x == key);
+            var value = SymbolItems[rel];
+
             ContractQuoteFull item = new ContractQuoteFull()
             {
-                ContractNo = value
+                CommodityNo = value,
+                BidPrice = "12564"
             };
             return item;
         }
 
-        public static Dictionary<string,string> Fake(string contractNo)
+        public static Dictionary<string, string> Fake(string contractNo)
         {
             IDatabase db = Redis.GetDatabase(4);
             Dictionary<string, string> dic = new Dictionary<string, string>();
-             HashEntry[] values = db.HashGetAll(contractNo);
+            HashEntry[] values = db.HashGetAll(contractNo);
             foreach (HashEntry item in values)
             {
                 if (item.Name == "Descriptor" || item.Name == "Parser")

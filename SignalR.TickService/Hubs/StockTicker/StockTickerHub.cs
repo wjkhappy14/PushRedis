@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using Core;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using System.Collections.Generic;
 
@@ -20,7 +21,7 @@ namespace SignalR.Tick.Hubs.StockTicker
             StockTicker = stockTicker;
         }
 
-        public IEnumerable<Stock> GetAllStocks()
+        public IEnumerable<ContractQuoteFull> GetAllStocks()
         {
             return StockTicker.GetAllStocks();
         }
