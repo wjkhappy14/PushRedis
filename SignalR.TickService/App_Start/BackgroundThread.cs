@@ -22,10 +22,10 @@ namespace SignalR.Tick
                 {
                     try
                     {
-                        string now = DateTime.Now.ToString();
+                        string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                         DB.PublishAsync("now", now);
                         context.Connection.Broadcast(now);
-                        hubContext.Clients.All.fromArbitraryCode(DateTime.Now.ToString());
+                        hubContext.Clients.All.fromArbitraryCode(now);
                     }
                     catch (Exception ex)
                     {
