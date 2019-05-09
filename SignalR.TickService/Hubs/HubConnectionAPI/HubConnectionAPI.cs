@@ -15,8 +15,8 @@ namespace SignalR.Tick.Hubs.HubConnectionAPI
         {
             RedisSub.Subscribe("now", (channel, value) =>
             {
-                long unixTimeMilliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-                string msg = $"{unixTimeMilliseconds}:{channel}:{value}";
+                string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                string msg = $"{now}/{value}";
                 DisplayMessageAll(msg);
             });
         }
