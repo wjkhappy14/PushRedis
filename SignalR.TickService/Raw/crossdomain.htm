@@ -8,23 +8,26 @@
             font-family: "Segoe UI";
             font-size: 12px;
         }
+
         form {
             margin-bottom: 10px;
             display: block;
         }
+
         label {
             display: block;
         }
     </style>
+    <script src="/Scripts/jquery-3.3.1.js"></script>
     <script src="../Scripts/signalr.samples.js" type="text/javascript"></script>
-    <script src="../Scripts/jquery-1.8.2.js"></script>
+
     <script src="../Scripts/jquery.cookie.js" type="text/javascript"></script>
     <script src="../Scripts/json2.min.js" type="text/javascript"></script>
     <script src="../Scripts/jquery.signalR.js"></script>
     <script>
         $(function () {
             "use strict";
-            var connection = $.connection('http://localhost:8080/raw-connection');
+            var connection = $.connection('http://65.52.173.5/raw-connection');
             connection.logging = true;
 
             connection.received(function (data) {
@@ -36,14 +39,14 @@
 
             connection.reconnected(function () {
                 $("<li/>").css("background-color", "green")
-                          .css("color", "white")
-                          .html("[" + new Date().toTimeString() + "]: Connection re-established")
-                          .appendTo($("#messages"));
+                    .css("color", "white")
+                    .html("[" + new Date().toTimeString() + "]: Connection re-established")
+                    .appendTo($("#messages"));
             });
 
             connection.error(function (err) {
                 $("<li/>").html(err || "Error occurred")
-                          .appendTo($("#messages"));
+                    .appendTo($("#messages"));
             });
 
             connection.stateChanged(function (change) {
@@ -60,7 +63,7 @@
                 }
 
                 $("<li/>").html(oldState + " => " + newState)
-                          .appendTo($("#messages"));
+                    .appendTo($("#messages"));
             });
 
             var start = function () {
@@ -109,7 +112,7 @@
                 if ($el.val() === "Stop") {
                     connection.stop();
                     $el.val("Start")
-                       .prop("disabled", false);
+                        .prop("disabled", false);
                 } else {
                     start();
                     $el.val("Stop");
