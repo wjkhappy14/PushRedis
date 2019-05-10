@@ -1,6 +1,7 @@
 ﻿using Core;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
 using System.Collections.Concurrent;
@@ -40,9 +41,8 @@ namespace SignalR.Tick.Hubs.StockTicker
                 {
                     //string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     //string msg = $"{now}/{value}";
-
-
-                    Clients.All.updateStockPrice(value);
+                    ContractQuoteFull data =  JsonConvert.DeserializeObject<ContractQuoteFull>(value);
+                    Clients.All.updateStockPrice(data);
                 });
             });
         }
