@@ -8,6 +8,7 @@
 #stockTable table {
     border-collapse: collapse;
     text-align: center;
+    margin-top: 50px;
 }
 
     #stockTable table th, #stockTable table td {

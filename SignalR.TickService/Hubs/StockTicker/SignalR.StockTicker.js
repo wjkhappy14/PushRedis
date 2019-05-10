@@ -23,7 +23,7 @@ $(function () {
         down = '↓',
         $stockTable = $('#stockTable'),
         $stockTableBody = $stockTable.find('tbody'),
-        rowTemplate = '<tr data-symbol="{CommodityNo}"><td>{CommodityNo}</td> <td>{ContractNo}</td><td>{CurrentTime}</td><td>{HighPrice}</td><td>{LastPrice}</td> <td>{LastSize}</td><td>{LowPrice}</td> <td>{NowClosePrice}</td><td>{ClosePrice}</td> <td>{OpenPrice}</td><td>{PercentChange}</td><td>{PositionQty}</td> <td>{PrePositionQty}</td> <td>{PreSettlePrice}</td> <td>{Time}</td> <td>{TotalQty}</td><td>{TotalVolume}</td><td>{Volume}</td><td>{AskPrice}</td><td>{AskSize}</td><td>{BidPrice}</td><td>{BidSize}</td></tr>',
+        rowTemplate = '<tr data-symbol="{CommodityNo}"><td>{CommodityNo}</td> <td>{ContractNo}</td><td>{CurrentTime}</td><td>{HighPrice}</td><td>{LastPrice}</td> <td>{LastSize}</td><td>{LowPrice}</td> <td>{NowClosePrice}</td><td>{ClosePrice}</td> <td>{OpenPrice}</td><td>{PercentChange}</td><td>{PositionQty}</td> <td>{PrePositionQty}</td> <td>{PreSettlePrice}</td> <td>{Time}</td> <td>{TotalQty}</td><td>{TotalVolume}</td><td>{Volume}</td><td>{AskPrice}</td><td>{AskSize}</td><td>{BidPrice}</td><td>{BidSize}</td><td>{TimeDiff}</td></tr>',
         $stockTicker = $('#stockTicker'),
         $stockTickerUl = $stockTicker.find('ul'),
         liTemplate = '<li data-symbol="{CommodityNo}"><span>{CommodityNo}</span> <span>{ContractNo}</span><span>{CurrentTime}</span><span>{HighPrice}</span><span>{LastPrice}</span> <span>{LastSize}</span><span>{LowPrice}</span> <span>{NowClosePrice}</span><span>{ClosePrice}</span> <span>{OpenPrice}</span><span>{PercentChange}</span><span>{PositionQty}</span> <span>{PrePositionQty}</span> <span>{PreSettlePrice}</span> <span>{Time}</span> <span>{TotalQty}</span><span>{TotalVolume}</span><span>{Volume}</span><span>{AskPrice}</span><span>{AskSize}</span><span>{BidPrice}</span><span>{BidSize}</span></li>';
@@ -31,6 +31,7 @@ $(function () {
     function formatStock(stock) {
         return $.extend(stock, {
             Price: stock.BidPrice,
+            TimeDiff: timestamp()-stock.Time,
             PercentChange: (stock.BidPrice * 100).toFixed(2) + '%',
             Direction: stock.BidPrice === 0 ? '' : stock.BidPrice >= 0 ? up : down,
             DirectionClass: stock.BidPrice === 0 ? 'even' : stock.BidPrice >= 0 ? 'up' : 'down'

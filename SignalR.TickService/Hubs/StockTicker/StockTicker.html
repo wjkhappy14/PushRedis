@@ -3,7 +3,7 @@
 <head>
     <title>Real Time Stock Ticker</title>
     <link href="StockTicker.css" rel="stylesheet" />
-
+    <script src="/Scripts/render-tpl.js"></script>
     <script src="../../Scripts/jquery-3.3.1.js"></script>
     <script src="../../Scripts/jquery.color-2.1.2.js"></script>
     <script src="../../Scripts/jquery.signalR.js"></script>
@@ -25,10 +25,10 @@
         <table border="1">
             <thead>
                 <tr class="">
-                    <th colspan="1" rowspan="1" class="el-table_2_column_6">
+                    <th>
                         <div class="cell">#</div>
                     </th>
-                    <th colspan="1" rowspan="1" class="cell">
+                    <th class="cell">
                         <div class="cell">
                             <div class="table-head" style="width: 100%;">合约名称</div>
                         </div>
@@ -53,42 +53,42 @@
                             <div class="table-head" style="width: 100%;">卖价</div>
                         </div>
                     </th>
-                    <th colspan="1" rowspan="1" class="cell">
+                    <th class="cell">
                         <div class="cell">
                             <div class="table-head" style="width: 100%;">卖量</div>
                         </div>
                     </th>
-                    <th colspan="1" rowspan="1" class="cell">
+                    <th class="cell">
                         <div class="cell">
                             <div class="table-head" style="width: 100%;">成交量</div>
                         </div>
                     </th>
-                    <th colspan="1" rowspan="1" class="cell">
+                    <th class="cell">
                         <div class="cell">
                             <div class="table-head" style="width: 100%;">涨跌</div>
                         </div>
                     </th>
-                    <th colspan="1" rowspan="1" class="cell">
+                    <th class="cell">
                         <div class="cell">
                             <div class="table-head" style="width: 100%;">增幅%</div>
                         </div>
                     </th>
-                    <th colspan="1" rowspan="1" class="cell">
+                    <th class="cell">
                         <div class="cell">
                             <div class="table-head" style="width: 100%;">开盘</div>
                         </div>
                     </th>
-                    <th colspan="1" rowspan="1" class="cell">
+                    <th class="cell">
                         <div class="cell">
                             <div class="table-head" style="width: 100%;">最高</div>
                         </div>
                     </th>
-                    <th colspan="1" rowspan="1" class="cell">
+                    <th class="cell">
                         <div class="cell">
                             <div class="table-head" style="width: 100%;">最低</div>
                         </div>
                     </th>
-                    <th colspan="1" rowspan="1" class="cell">
+                    <th class="cell">
                         <div class="cell">
                             <div class="table-head" style="width: 100%;">昨结</div>
                         </div>
@@ -115,20 +115,44 @@
                     </th>
                     <th colspan="1" rowspan="1" class="cell">
                         <div class="cell">
-                            <div class="table-head" style="width: 100%;">更新时间</div>
+                            <div class="table-head" style="width: 100%;">AskPrice</div>
                         </div>
                     </th>
                     <th colspan="1" rowspan="1" class="cell">
-                        <div class="cell eee">交易规则</div>
+                        <div class="cell eee">AskSize</div>
                     </th>
-                    <th></th>
-                    <th></th>
-                    <th class="gutter" style="width: 0px; display: none;"></th>
+                    <th>BidPrice</th>
+                    <th class="gutter">BidSize</th>
+                    <th>TimeDiff</th>
+                </tr>
+                <tr>
+                    <td>CommodityNo</td>
+                    <td>ContractNo</td>
+                    <td>CurrentTime</td>
+                    <td>HighPrice</td>
+                    <td>LastPrice</td>
+                    <td>LastSize</td>
+                    <td>LowPrice</td>
+                    <td>NowClosePrice</td>
+                    <td>ClosePrice</td>
+                    <td>OpenPrice</td>
+                    <td>PercentChange</td>
+                    <td>PositionQty</td>
+                    <td>PrePositionQty</td>
+                    <td>PreSettlePrice</td>
+                    <td>Time</td>
+                    <td>TotalQty</td>
+                    <td>TotalVolume</td>
+                    <td>Volume</td>
+                    <td>AskPrice</td>
+                    <td>AskSize</td>
+                    <td>BidPrice</td>
+                    <td>BidSize</td>
+                    <td>TimeDiff</td>
                 </tr>
             </thead>
             <tbody>
                 <tr class="loading"><td colspan="7">加载中...</td></tr>
-
             </tbody>
         </table>
     </div>
