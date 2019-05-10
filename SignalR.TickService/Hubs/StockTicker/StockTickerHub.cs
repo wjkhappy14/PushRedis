@@ -1,6 +1,7 @@
 ﻿using Core;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using System;
 using System.Collections.Generic;
 
 namespace SignalR.Tick.Hubs.StockTicker
@@ -38,7 +39,32 @@ namespace SignalR.Tick.Hubs.StockTicker
         {
             StockTicker.OpenMarket();
         }
+        /// <summary>
+        /// 订阅
+        /// </summary>
+        /// <param name="item"></param>
+        public void Subscribe(string item)
+        {
 
+
+        }
+        /// <summary>
+        /// 取消订阅
+        /// </summary>
+        /// <param name="item"></param>
+        public void UnSubscribe(string item)
+        {
+
+        }
+        /// <summary>
+        /// 当前时间
+        /// </summary>
+        /// <returns></returns>
+        public string Now()
+        {
+            string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            return now;
+        }
         /// <summary>
         /// 休市
         /// </summary>

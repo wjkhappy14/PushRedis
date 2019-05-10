@@ -76,10 +76,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/13/2012 12:19:34</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.dll">
-      <publishTime>05/10/2019 11:29:28</publishTime>
+      <publishTime>05/10/2019 15:38:42</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.pdb">
-      <publishTime>05/10/2019 11:29:28</publishTime>
+      <publishTime>05/10/2019 15:38:42</publishTime>
     </File>
     <File Include="bin/StackExchange.Redis.StrongName.dll">
       <publishTime>01/25/2018 09:26:38</publishTime>
@@ -1111,13 +1111,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/04/2019 12:33:23</publishTime>
     </File>
     <File Include="Hubs/StockTicker/SignalR.StockTicker.js">
-      <publishTime>05/10/2019 11:12:58</publishTime>
+      <publishTime>05/10/2019 15:14:54</publishTime>
     </File>
     <File Include="Hubs/StockTicker/StockTicker.css">
-      <publishTime>05/10/2019 11:13:39</publishTime>
+      <publishTime>05/10/2019 15:21:26</publishTime>
     </File>
     <File Include="Hubs/StockTicker/StockTicker.html">
-      <publishTime>05/10/2019 11:21:05</publishTime>
+      <publishTime>05/10/2019 15:33:36</publishTime>
     </File>
     <File Include="Hubs/Test/chat.aspx">
       <publishTime>05/03/2019 19:22:08</publishTime>
@@ -1261,7 +1261,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/04/2019 12:46:19</publishTime>
     </File>
     <File Include="Scripts/render-tpl.js">
-      <publishTime>05/09/2019 17:19:47</publishTime>
+      <publishTime>05/10/2019 15:09:07</publishTime>
     </File>
     <File Include="Scripts/signalr.samples.js">
       <publishTime>05/05/2019 18:18:43</publishTime>
