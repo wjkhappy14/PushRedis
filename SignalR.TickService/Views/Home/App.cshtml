@@ -38,6 +38,21 @@
     @{
         <h2>@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")</h2>
         <h2>@DateTimeOffset.Now.ToUnixTimeMilliseconds()</h2>
+        <h2>@Request.UserHostAddress</h2>
+        <h2>@Request.UserAgent</h2>
+        <h2>@Request.TotalBytes</h2>
+        <h2>@Server.MachineName</h2>
+        <ul>
+            @{
+                foreach (var item in Request.Headers)
+                {
+                    string key = item.ToString();
+                    string value = Request.Headers[key];
+            <li>@key:@value</li>
+                }
+
+            }
+        </ul>
     }
 </body>
 </html>
