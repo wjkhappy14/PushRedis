@@ -41,10 +41,10 @@ namespace SignalR.TickService.Client.App
 
         private async Task RunHubConnectionAPI(string url)
         {
-            var hubConnection = new HubConnection(url);
+            HubConnection hubConnection = new HubConnection(url);
             hubConnection.TraceWriter = _traceWriter;
 
-            var hubProxy = hubConnection.CreateHubProxy("HubConnectionAPI");
+            IHubProxy hubProxy = hubConnection.CreateHubProxy("HubConnectionAPI");
             hubProxy.On<string>("displayMessage", (data) => hubConnection.TraceWriter.WriteLine(data));
 
             await hubConnection.Start();
@@ -67,7 +67,7 @@ namespace SignalR.TickService.Client.App
 
         private async Task RunDemo(string url)
         {
-            var hubConnection = new HubConnection(url);
+            HubConnection hubConnection = new HubConnection(url);
             hubConnection.TraceWriter = _traceWriter;
 
             IHubProxy hubProxy = hubConnection.CreateHubProxy("demo");
@@ -81,7 +81,7 @@ namespace SignalR.TickService.Client.App
             hubConnection.TraceWriter.WriteLine("transport.Name={0}", hubConnection.Transport.Name);
 
             hubConnection.TraceWriter.WriteLine("Invoking long running hub method with progress...");
-            var result = await hubProxy.Invoke<string, int>("ReportProgress",
+            string result = await hubProxy.Invoke<string, int>("ReportProgress",
                 percent => hubConnection.TraceWriter.WriteLine("{0}% complete", percent),
                 /* jobName */ "Long running job");
             hubConnection.TraceWriter.WriteLine("{0}", result);
@@ -93,7 +93,7 @@ namespace SignalR.TickService.Client.App
         {
             string url = serverUrl + "raw-connection";
 
-            var connection = new Connection(url);
+            Connection connection = new Connection(url);
             connection.TraceWriter = _traceWriter;
 
             await connection.Start();
@@ -108,7 +108,7 @@ namespace SignalR.TickService.Client.App
         {
             string url = serverUrl + "streaming-connection";
 
-            var connection = new Connection(url);
+            Connection connection = new Connection(url);
             connection.TraceWriter = _traceWriter;
 
             await connection.Start();
@@ -119,7 +119,7 @@ namespace SignalR.TickService.Client.App
         {
             string url = serverUrl + "cookieauth";
 
-            var handler = new HttpClientHandler();
+            HttpClientHandler handler = new HttpClientHandler();
             handler.CookieContainer = new CookieContainer();
             using (var httpClient = new HttpClient(handler))
             {
@@ -130,18 +130,14 @@ namespace SignalR.TickService.Client.App
             var connection = new Connection(url + "/echo");
             connection.TraceWriter = _traceWriter;
             connection.Received += (data) => connection.TraceWriter.WriteLine(data);
-#if !ANDROID && !iOS
-            connection.CookieContainer = handler.CookieContainer;
-#endif
+
             await connection.Start();
             await connection.Send("sending to AuthenticatedEchoConnection");
 
             var hubConnection = new HubConnection(url);
             hubConnection.TraceWriter = _traceWriter;
-#if !ANDROID && !iOS
-            hubConnection.CookieContainer = handler.CookieContainer;
-#endif
-            var hubProxy = hubConnection.CreateHubProxy("AuthHub");
+
+            IHubProxy hubProxy = hubConnection.CreateHubProxy("AuthHub");
             hubProxy.On<string, string>("invoked", (connectionId, date) => hubConnection.TraceWriter.WriteLine("connectionId={0}, date={1}", connectionId, date));
 
             await hubConnection.Start();
@@ -152,14 +148,12 @@ namespace SignalR.TickService.Client.App
 
         private async Task RunWindowsAuth(string url)
         {
-            var hubConnection = new HubConnection(url);
+            HubConnection hubConnection = new HubConnection(url);
             hubConnection.TraceWriter = _traceWriter;
 
             // Windows Auth is not supported on SL and WindowsStore apps
-#if !SILVERLIGHT && !NETFX_CORE && !ANDROID && !iOS
-            hubConnection.Credentials = CredentialCache.DefaultCredentials;
-#endif
-            var hubProxy = hubConnection.CreateHubProxy("AuthHub");
+
+            IHubProxy hubProxy = hubConnection.CreateHubProxy("AuthHub");
             hubProxy.On<string, string>("invoked", (connectionId, date) => hubConnection.TraceWriter.WriteLine("connectionId={0}, date={1}", connectionId, date));
 
             await hubConnection.Start();
@@ -170,11 +164,11 @@ namespace SignalR.TickService.Client.App
 
         private async Task RunHeaderAuthHub(string url)
         {
-            var hubConnection = new HubConnection(url);
+            HubConnection hubConnection = new HubConnection(url);
             hubConnection.TraceWriter = _traceWriter;
             hubConnection.Headers.Add("username", "john");
 
-            var hubProxy = hubConnection.CreateHubProxy("HeaderAuthHub");
+            IHubProxy hubProxy = hubConnection.CreateHubProxy("HeaderAuthHub");
             hubProxy.On<string>("display", (msg) => hubConnection.TraceWriter.WriteLine(msg));
 
             await hubConnection.Start();
@@ -183,11 +177,11 @@ namespace SignalR.TickService.Client.App
 
         private async Task RunPendingCallbacks(string url)
         {
-            var hubConnection = new HubConnection(url);
+            HubConnection hubConnection = new HubConnection(url);
             hubConnection.TraceWriter = _traceWriter;
             hubConnection.TraceLevel = TraceLevels.StateChanges;
 
-            var hubProxy = hubConnection.CreateHubProxy("LongRunningHub");
+            IHubProxy hubProxy = hubConnection.CreateHubProxy("LongRunningHub");
             ManualResetEvent event1 = new ManualResetEvent(false);
             ManualResetEvent event2 = new ManualResetEvent(false);
 

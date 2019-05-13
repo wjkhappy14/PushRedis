@@ -470,7 +470,7 @@
     <Content Include="Hubs\ShapeShare\index.htm" />
     <Content Include="Hubs\StockTicker\SignalR.StockTicker.js" />
     <Content Include="Hubs\StockTicker\StockTicker.css" />
-    <Content Include="Hubs\StockTicker\StockTicker.html" />
+    <None Include="Views\Hubs\StockTicker.cshtml" />
     <Content Include="Hubs\Test\chat.aspx" />
     <Content Include="Hubs\Test\chat.js" />
     <Content Include="Hubs\Test\clientsCaller.aspx" />
@@ -579,7 +579,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommodityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\HubsController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -742,6 +742,7 @@
       <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v15.0\WebApplications\Microsoft.WebApplication.targets" Condition="true" />
   <Import Project="$(WAPToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

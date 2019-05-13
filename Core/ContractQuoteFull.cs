@@ -47,10 +47,8 @@ namespace Core
         };
         public static ContractQuoteFull Default(string key)
         {
-
-            var rel = Items.First(x => x == key);
-            var value = SymbolItems[rel];
-
+            string rel = Items.First(x => x == key);
+            string value = SymbolItems[rel];
             ContractQuoteFull item = new ContractQuoteFull()
             {
                 CommodityNo = value,
@@ -78,26 +76,17 @@ namespace Core
         }
 
         public long Time => DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        public string CommodityNo { get; set; }
 
+        public string ContractNo { get; set; }
+        public string BidPrice { get; set; }
 
-        public string CommodityNo
-        { get; set; }
+        public string BidPrice2 { get; set; }
 
-        public string ContractNo
-        { get; set; }
-        public string BidPrice
-        { get; set; }
+        public string BidPrice3 { get; set; }
+        public string BidPrice4 { get; set; }
 
-        public string BidPrice2
-        { get; set; }
-
-        public string BidPrice3
-        { get; set; }
-        public string BidPrice4
-        { get; set; }
-
-        public string BidPrice5
-        { get; set; }
+        public string BidPrice5 { get; set; }
         public string BidPrice6
         { get; set; }
 

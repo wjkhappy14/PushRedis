@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/Views/Home/App.cshtml";
+}
+
+<head>
+    <link href="/Hubs/StockTicker/StockTicker.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+    <script src="/Hubs/StockTicker/SignalR.StockTicker.js?v=@DateTime.Now.Ticks"></script>
+</head>
+<input type="button" id="open" value="开市" />
+<input type="button" id="close" value="休市" disabled="disabled" />
+<input type="button" id="reset" value="重置" />
+<div id="stockTicker">
+    <div class="inner">
+        <ul>
+            <li class="loading">加载中...</li>
+        </ul>
+    </div>
+</div>
+<div id="stockTable">
+    <table border="1">
+        <thead>
+            <tr>
+                <td>{CommodityNo}</td>
+                <td>{ContractNo}</td>
+                <td>{CurrentTime}</td>
+                <td>{Time}</td>
+                <td>{TimeDiff}</td>
+                <td>{HighPrice}</td>
+                <td>{LastPrice}</td>
+                <td>{LastSize}</td>
+                <td>{LowPrice}</td>
+                <td>{NowClosePrice}</td>
+                <td>{ClosePrice}</td>
+                <td>{OpenPrice}</td>
+                <td>{PercentChange}</td>
+                <td>{PositionQty}</td>
+                <td>{PrePositionQty}</td>
+                <td>{PreSettlePrice}</td>
+                <td>{TotalQty}</td>
+                <td>{TotalVolume}</td>
+                <td>{Volume}</td>
+                <td>{AskPrice}</td>
+                <td>{AskSize}</td>
+                <td>{BidPrice}</td>
+                <td>{BidSize}</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="loading"><td colspan="7">加载中...</td></tr>
+        </tbody>
+    </table>
+</div>

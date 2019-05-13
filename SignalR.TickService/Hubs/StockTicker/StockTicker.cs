@@ -11,7 +11,6 @@ namespace SignalR.Tick.Hubs.StockTicker
 {
     public class StockTicker
     {
-
         private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
         public static ISubscriber RedisSub { get; } = Redis.GetSubscriber();
         // Singleton instance
