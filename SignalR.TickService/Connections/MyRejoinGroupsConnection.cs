@@ -2,5 +2,9 @@
 {
     public class MyRejoinGroupsConnection : MyGroupConnection
     {
+        public MyRejoinGroupsConnection()
+        {
+
+        }
     }
 }

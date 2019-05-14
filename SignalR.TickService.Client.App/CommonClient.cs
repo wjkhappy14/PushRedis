@@ -14,10 +14,7 @@ namespace SignalR.TickService.Client.App
     {
         private TextWriter _traceWriter;
 
-        public CommonClient(TextWriter traceWriter)
-        {
-            _traceWriter = traceWriter;
-        }
+        public CommonClient(TextWriter traceWriter) => _traceWriter = traceWriter;
 
         public void Run(string url) => RunAsync(url).Wait();
 
@@ -98,6 +95,10 @@ namespace SignalR.TickService.Client.App
         {
             HubConnection hubConnection = new HubConnection(url);
             hubConnection.TraceWriter = _traceWriter;
+            hubConnection.Received += (x) => {
+
+                hubConnection.TraceWriter.WriteLine(x);
+            };
 
             IHubProxy hubProxy = hubConnection.CreateHubProxy("stockTicker");
             hubProxy.On<int>("invoke", (i) =>
@@ -129,7 +130,6 @@ namespace SignalR.TickService.Client.App
             await connection.Send(new { type = 1, value = "first message" });
             await connection.Send(new { type = 1, value = "second message" });
         }
-
 
         private async Task RunStreaming(string serverUrl)
         {

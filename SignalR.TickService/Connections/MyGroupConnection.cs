@@ -4,11 +4,12 @@ using Newtonsoft.Json.Linq;
 
 namespace SignalR.Tick.Connections
 {
-    public class MyGroupConnection : PersistentConnection
+    public class MyGroupConnection : MyReconnect
     {
         protected override Task OnReceived(IRequest request, string connectionId, string data)
         {
             JObject operation = JObject.Parse(data);
+
             int type = operation.Value<int>("type");
             string group = operation.Value<string>("group");
             string groupConnectionId = operation.Value<string>("connectionId") ?? connectionId;

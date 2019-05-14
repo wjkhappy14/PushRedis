@@ -66,7 +66,7 @@ namespace SignalR.Tick
                     }
                 });
 
-                map.MapSignalR<AuthenticatedEchoConnection>("/echo");
+                map.MapSignalR<AddGroupOnConnectedConnection>("/echo");
                 map.MapSignalR();
             });
 

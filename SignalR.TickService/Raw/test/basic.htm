@@ -8,10 +8,12 @@
             font-family: "Segoe UI";
             font-size: 12px;
         }
+
         form {
             margin-bottom: 10px;
             display: block;
         }
+
         label {
             display: block;
         }
@@ -83,8 +85,8 @@
                 raises(function () {
                     connection.send('hello world');
                 },
-                'SignalR: Connection must be started before data can be sent. Call .start() before .send()',
-                'Exception thrown when sending without starting');
+                    'SignalR: Connection must be started before data can be sent. Call .start() before .send()',
+                    'Exception thrown when sending without starting');
 
             });
 
@@ -109,16 +111,15 @@
 </head>
 <body>
     <h1 id="qunit-header">
-        QUnit example</h1>
-    <h2 id="qunit-banner">
-    </h2>
+        QUnit example
+    </h1>
+    <h2 id="qunit-banner"></h2>
     <div id="qunit-testrunner-toolbar">
     </div>
-    <h2 id="qunit-userAgent">
-    </h2>
-    <ol id="qunit-tests">
-    </ol>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
     <div id="qunit-fixture">
-        test markup, will be hidden</div>
+        test markup, will be hidden
+    </div>
 </body>
 </html>
