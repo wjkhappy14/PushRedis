@@ -61,7 +61,7 @@ namespace SignalR.Tick.Hubs.StockTicker
             return false;
         }
 
-        public void Send(Command cmd)
+        public void SendCmd(Command cmd)
         {
             string content = cmd.Text.Replace("<", "&lt;").Replace(">", "&gt;");
 
@@ -111,6 +111,12 @@ namespace SignalR.Tick.Hubs.StockTicker
             }
         }
 
+        public long GetUnixTimeMilliseconds() => DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+        public string GetTimeNow() => DateTime.Now.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss.FFFFFFF");
+
+        public static Dictionary<string, string> GetSymbols() => ContractQuoteFull.SymbolItems;
+
         public override Task OnDisconnected(bool stopCalled)
         {
             ClientItem user = _users.Values.FirstOrDefault(u => u.ConnectionId == Context.ConnectionId);
@@ -135,7 +141,8 @@ namespace SignalR.Tick.Hubs.StockTicker
             return null;
         }
 
-        public IEnumerable<ClientItem> GetUsers()
+        public IGroupManager GetGroups() => Groups;
+        public IEnumerable<ClientItem> GeClients()
         {
             string room = Clients.Caller.room;
 
@@ -361,7 +368,7 @@ namespace SignalR.Tick.Hubs.StockTicker
 
         private ClientItem AddUser(string newUserName)
         {
-            var user = new ClientItem(newUserName, GetMD5Hash(newUserName));
+            ClientItem user = new ClientItem(newUserName, GetMD5Hash(newUserName));
             user.ConnectionId = Context.ConnectionId;
             _users[newUserName] = user;
             _userRooms[newUserName] = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
