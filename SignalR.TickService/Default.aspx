@@ -44,11 +44,6 @@
             <p>Demonstrates how to use the authorization features of the Hub API to restrict certain Hubs and methods to specific users.</p>
             <p><a class="btn" href="Hubs/Auth/">查看  &raquo;</a></p>
         </div>
-        <div class="span4">
-            <h3>Chat</h3>
-            <p>The canonical real-time web example: a chat application. Features user management, multiple rooms and rich content integration.</p>
-            <p><a class="btn" href="Hubs/Chat/">查看  &raquo;</a></p>
-        </div>
     </div>
 
     <div class="row">
