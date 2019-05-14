@@ -76,10 +76,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/13/2012 12:19:34</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.dll">
-      <publishTime>05/13/2019 15:11:25</publishTime>
+      <publishTime>05/13/2019 16:33:11</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.pdb">
-      <publishTime>05/13/2019 15:11:25</publishTime>
+      <publishTime>05/13/2019 16:33:11</publishTime>
     </File>
     <File Include="bin/StackExchange.Redis.StrongName.dll">
       <publishTime>01/25/2018 09:26:38</publishTime>
@@ -1276,7 +1276,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2019 15:09:59</publishTime>
     </File>
     <File Include="Views/Home/App.cshtml">
-      <publishTime>05/13/2019 12:43:40</publishTime>
+      <publishTime>05/13/2019 16:07:24</publishTime>
     </File>
     <File Include="Views/Home/Error.cshtml">
       <publishTime>05/10/2019 10:53:48</publishTime>
@@ -1294,7 +1294,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2019 15:09:37</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/13/2019 12:45:28</publishTime>
+      <publishTime>05/13/2019 16:33:12</publishTime>
     </File>
   </ItemGroup>
 </Project>

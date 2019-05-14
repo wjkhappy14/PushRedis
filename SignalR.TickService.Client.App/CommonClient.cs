@@ -25,7 +25,7 @@ namespace SignalR.TickService.Client.App
         {
             try
             {
-                await RunDemo(url);
+                await RunStockTickerDemo(url);
             }
             catch (HttpClientException httpClientException)
             {
@@ -87,6 +87,33 @@ namespace SignalR.TickService.Client.App
             hubConnection.TraceWriter.WriteLine("{0}", result);
 
             await hubProxy.Invoke("multipleCalls");
+        }
+
+        /// <summary>
+        /// stockTicker
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private async Task RunStockTickerDemo(string url)
+        {
+            HubConnection hubConnection = new HubConnection(url);
+            hubConnection.TraceWriter = _traceWriter;
+
+            IHubProxy hubProxy = hubConnection.CreateHubProxy("stockTicker");
+            hubProxy.On<int>("invoke", (i) =>
+            {
+                int n = hubProxy.GetValue<int>("index");
+                hubConnection.TraceWriter.WriteLine("{0} client state index -> {1}", i, n);
+            });
+
+            await hubConnection.Start();
+            hubConnection.TraceWriter.WriteLine("transport.Name={0}", hubConnection.Transport.Name);
+
+            //hubConnection.TraceWriter.WriteLine("Invoking long running hub method with progress...");
+            //string result = await hubProxy.Invoke<string, int>("ReportProgress",percent => hubConnection.TraceWriter.WriteLine("{0}% complete", percent),"Long running job");
+            //hubConnection.TraceWriter.WriteLine("{0}", result);
+
+           // await hubProxy.Invoke("multipleCalls");
         }
 
         private async Task RunRawConnection(string serverUrl)
