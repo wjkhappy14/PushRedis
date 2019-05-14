@@ -14,7 +14,7 @@
     <dl class="dl-expanded">
         <dt>Arbitrary Code</dt>
         <dd id="arbitraryCode"></dd>
-        
+
         <dt>Report Progress</dt>
         <dd id="progress">
             <span>not started</span>
@@ -25,34 +25,34 @@
 
         <dt>Group Added</dt>
         <dd id="groupAdded"></dd>
-        
+
         <dt>Generic Task</dt>
         <dd id="value"></dd>
-        
+
         <dt>Task With Exception</dt>
         <dd id="taskWithException"></dd>
-        
+
         <dt>Generic Task With Exception</dt>
         <dd id="genericTaskWithException"></dd>
 
         <dt>Synchronous Exception</dt>
         <dd id="synchronousException"></dd>
-        
+
         <dt>Dynamic Task</dt>
         <dd id="dynamicTask"></dd>
-        
+
         <dt>Invoking hub method with dynamic</dt>
         <dd id="passingDynamicComplex"></dd>
-        
+
         <dt>SimpleArray</dt>
         <dd id="simpleArray"></dd>
-        
+
         <dt>ComplexType</dt>
         <dd id="complexType"></dd>
 
         <dt>ComplexArray</dt>
         <dd id="complexArray"></dd>
-        
+
         <dt>Overloads</dt>
         <dd id="overloads"></dd>
 
@@ -61,7 +61,7 @@
 
         <dt>Read VB.NET State Value</dt>
         <dd id="readVBStateValue"></dd>
-        
+
         <dt>Inline Script Tag</dt>
         <dd id="inlineScriptTag"></dd>
 
@@ -70,7 +70,7 @@
 
         <dt>Generic Task With ContinueWith</dt>
         <dd id="genericTaskWithContinueWith"></dd>
-        
+
         <dt>Typed callback</dt>
         <dd id="typed"></dd>
 

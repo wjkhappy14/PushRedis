@@ -439,8 +439,6 @@
     <Content Include="Hubs\Benchmark\crossdomain.htm" />
     <Content Include="Hubs\Benchmark\Benchmark.js" />
     <Content Include="Hubs\Benchmark\index.htm" />
-    <Content Include="Hubs\Chat\Mobile.css" />
-    <Content Include="Hubs\Chat\mobile.htm" />
     <Content Include="Hubs\ConnectDisconnect\Default.aspx" />
     <Content Include="Hubs\ConnectDisconnect\Status.js" />
     <Content Include="Hubs\Counting\ClientAcks.js" />
@@ -448,9 +446,6 @@
     <Content Include="Hubs\DemoHub\crossdomain.htm" />
     <Content Include="Hubs\DemoHub\Default.aspx" />
     <Content Include="Hubs\DemoHub\DemoHub.js" />
-    <Content Include="Hubs\Chat\Chat.css" />
-    <Content Include="Hubs\Chat\Chat.js" />
-    <Content Include="Hubs\Chat\index.htm" />
     <Content Include="Hubs\DrawingPad\Default.aspx" />
     <Content Include="Hubs\HubConnectionAPI\Default.aspx" />
     <Content Include="Hubs\HubConnectionAPI\HubConnectionAPI.js" />
@@ -468,6 +463,7 @@
     <Content Include="Hubs\ShapeShare\ShapeShare.css" />
     <Content Include="Hubs\ShapeShare\ShapeShare.js" />
     <Content Include="Hubs\ShapeShare\index.htm" />
+    <Content Include="Hubs\StockTicker\Subscribe.js" />
     <Content Include="Hubs\StockTicker\SignalR.StockTicker.js" />
     <Content Include="Hubs\StockTicker\StockTicker.css" />
     <None Include="Views\Hubs\StockTicker.cshtml" />
@@ -615,12 +611,6 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Hubs\DemoHub\DemoHub.cs" />
-    <Compile Include="Hubs\Chat\Chat.cs" />
-    <Compile Include="Hubs\Chat\ContentProviders\CollegeHumorContentProvider.cs" />
-    <Compile Include="Hubs\Chat\ContentProviders\EmbedContentProvider.cs" />
-    <Compile Include="Hubs\Chat\ContentProviders\IContentProvider.cs" />
-    <Compile Include="Hubs\Chat\ContentProviders\ImageContentProvider.cs" />
-    <Compile Include="Hubs\Chat\ContentProviders\YouTubeContentProvider.cs" />
     <Compile Include="Hubs\DemoHub\TypedDemoHub.cs" />
     <Compile Include="Hubs\DrawingPad\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

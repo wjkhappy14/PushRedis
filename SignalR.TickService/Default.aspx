@@ -19,7 +19,7 @@
                 Demonstrates all features of the lower-level connection API including starting and stopping, sending and
                receiving messages, and managing groups.
             </p>
-            <p><a class="btn" href="/HubsRaw/">查看  &raquo;</a></p>
+            <p><a class="btn" href="/Hubs/Raw/">查看  &raquo;</a></p>
         </div>
         <div class="span4">
             <h3>Simple Streaming</h3>

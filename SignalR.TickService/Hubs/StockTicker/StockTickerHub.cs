@@ -309,7 +309,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                             throw new InvalidOperationException("Who are you trying send a private message to?");
                         }
 
-                        var to = parts[1];
+                        string to = parts[1];
                         if (to.Equals(name, StringComparison.OrdinalIgnoreCase))
                         {
                             throw new InvalidOperationException("You can't private message yourself!");
@@ -412,7 +412,7 @@ namespace SignalR.Tick.Hubs.StockTicker
         private void EnsureUser()
         {
             string name = Clients.Caller.name;
-            if (String.IsNullOrEmpty(name) || !_users.ContainsKey(name))
+            if (string.IsNullOrEmpty(name) || !_users.ContainsKey(name))
             {
                 throw new InvalidOperationException("You don't have a name. Pick a name using '/nick nickname'.");
             }

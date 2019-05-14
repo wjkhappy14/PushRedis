@@ -1,6 +1,6 @@
 ﻿
 $(function () {
-    var chat = $.connection.chat;
+    var chat = $.connection.stockTicker;
 
     function clearMessages() {
         $('#messages').html('');
@@ -75,7 +75,7 @@ $(function () {
         };
 
         var e = $('#new-message-template').tmpl(data)
-                                          .appendTo($('#messages'));
+            .appendTo($('#messages'));
         refreshMessages();
         updateUnread();
         e[0].scrollIntoView();
@@ -93,7 +93,7 @@ $(function () {
         };
 
         var e = $('#new-user-template').tmpl(data)
-                                       .appendTo($('#users'));
+            .appendTo($('#users'));
         refreshUsers();
 
         if (!exists && this.state.name != user.Name) {
@@ -106,10 +106,10 @@ $(function () {
 
     chat.client.changeUserName = function (oldUser, newUser) {
         $('#u-' + oldUser.Name).replaceWith(
-                $('#new-user-template').tmpl({
-                    name: newUser.Name,
-                    hash: newUser.Hash
-                })
+            $('#new-user-template').tmpl({
+                name: newUser.Name,
+                hash: newUser.Hash
+            })
         );
         refreshUsers();
 
@@ -187,7 +187,7 @@ $(function () {
         $.cookie('userid', chat.state.id, { path: '/', expires: 30 });
     }
 
-    addMessage('Welcome to the SignalR IRC clone', 'notification');
+    addMessage('欢迎加入', '系统通知');
 
     $('#new-message').val('');
     $('#new-message').focus();

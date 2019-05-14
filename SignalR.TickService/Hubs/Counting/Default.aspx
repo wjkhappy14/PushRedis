@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SignalR.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SignalR.Tick.Hubs.Counting.Default" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <ul class="breadcrumb">
         <li><a href="<%: ResolveUrl("~/") %>">SignalR Samples</a> <span class="divider">/</span></li>
@@ -12,7 +13,7 @@
 
     <input type="button" value="Go" id="go" />
     <div id="value"></div>
-    
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="Scripts" runat="server">
