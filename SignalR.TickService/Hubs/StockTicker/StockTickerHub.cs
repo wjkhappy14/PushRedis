@@ -15,24 +15,19 @@ using System.Threading.Tasks;
 
 namespace SignalR.Tick.Hubs.StockTicker
 {
-
     [HubName("stockTicker")]
     public class StockTickerHub : Hub
     {
         private static readonly ConcurrentDictionary<string, ClientItem> _users = new ConcurrentDictionary<string, ClientItem>(StringComparer.OrdinalIgnoreCase);
         private static readonly ConcurrentDictionary<string, HashSet<string>> _userRooms = new ConcurrentDictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
-        private static readonly ConcurrentDictionary<string, ChannelGroup> _rooms = new ConcurrentDictionary<string, ChannelGroup>(StringComparer.OrdinalIgnoreCase);
+        private static readonly ConcurrentDictionary<string, ChannelGroup> ChannelGroups = new ConcurrentDictionary<string, ChannelGroup>(StringComparer.OrdinalIgnoreCase);
 
-        public bool Join()
+        public bool Join(string connectionId, string groupName)
         {
-            // Check the user id cookie
+            Groups.Add(connectionId, groupName).Wait();
+            dynamic g = Clients.Group(groupName);
 
-            if (!Context.RequestCookies.TryGetValue("userid", out Microsoft.AspNet.SignalR.Cookie userIdCookie))
-            {
-                return false;
-            }
-
-            ClientItem user = _users.Values.FirstOrDefault(u => u.Id == userIdCookie.Value);
+            ClientItem user = _users.Values.FirstOrDefault(u => u.Id == groupName);
 
             if (user != null)
             {
@@ -51,7 +46,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                     foreach (var room in rooms)
                     {
                         Clients.Group(room).leave(user);
-                        var chatRoom = _rooms[room];
+                        var chatRoom = ChannelGroups[room];
                         chatRoom.Users.Remove(user.Name);
                     }
                 }
@@ -66,24 +61,22 @@ namespace SignalR.Tick.Hubs.StockTicker
             return false;
         }
 
-        public void Send(string content)
+        public void Send(Command cmd)
         {
-            content = content.Replace("<", "&lt;").Replace(">", "&gt;");
+            string content = cmd.Text.Replace("<", "&lt;").Replace(">", "&gt;");
 
-            if (!TryHandleCommand(content))
+            if (!TryHandleCommand(cmd))
             {
                 string roomName = Clients.Caller.room;
                 string name = Clients.Caller.name;
 
                 EnsureUserAndRoom();
 
-                HashSet<string> links;
-                string messageText = Transform(content, out links);
-                Command chatMessage = new Command(name, messageText);
+                string messageText = Transform(content, out HashSet<string> links);
 
-                _rooms[roomName].Messages.Add(chatMessage);
+                ChannelGroups[roomName].Messages.Add(cmd);
 
-                Clients.Group(roomName).addMessage(chatMessage.Id, chatMessage.User, chatMessage.Text);
+                Clients.Group(roomName).addMessage(cmd.Id, cmd.User, cmd.Text);
 
                 if (links.Any())
                 {
@@ -109,9 +102,9 @@ namespace SignalR.Tick.Hubs.StockTicker
                             string extractedContent = "<p>" + task.Result + "</p>";
 
                             // If we did get something, update the message and notify all clients
-                            chatMessage.Text += extractedContent;
+                            cmd.Text += extractedContent;
 
-                            Clients.Group(roomName).addMessageContent(chatMessage.Id, extractedContent);
+                            Clients.Group(roomName).addMessageContent(cmd.Id, extractedContent);
                         }
                     });
                 }
@@ -123,23 +116,20 @@ namespace SignalR.Tick.Hubs.StockTicker
             ClientItem user = _users.Values.FirstOrDefault(u => u.ConnectionId == Context.ConnectionId);
             if (user != null)
             {
-                ClientItem ignoredUser;
-                _users.TryRemove(user.Name, out ignoredUser);
+                _users.TryRemove(user.Name, out ClientItem ignoredUser);
 
                 // Leave all rooms
-                HashSet<string> rooms;
-                if (_userRooms.TryGetValue(user.Name, out rooms))
+                if (_userRooms.TryGetValue(user.Name, out HashSet<string> rooms))
                 {
                     foreach (var room in rooms)
                     {
                         Clients.Group(room).leave(user);
-                        var chatRoom = _rooms[room];
+                        var chatRoom = ChannelGroups[room];
                         chatRoom.Users.Remove(user.Name);
                     }
                 }
 
-                HashSet<string> ignoredRoom;
-                _userRooms.TryRemove(user.Name, out ignoredRoom);
+                _userRooms.TryRemove(user.Name, out HashSet<string> ignoredRoom);
             }
 
             return null;
@@ -149,12 +139,12 @@ namespace SignalR.Tick.Hubs.StockTicker
         {
             string room = Clients.Caller.room;
 
-            if (String.IsNullOrEmpty(room))
+            if (string.IsNullOrEmpty(room))
             {
                 return Enumerable.Empty<ClientItem>();
             }
 
-            return from name in _rooms[room].Users
+            return from name in ChannelGroups[room].Users
                    select _users[name];
         }
 
@@ -165,22 +155,21 @@ namespace SignalR.Tick.Hubs.StockTicker
                          .Select(b => b.ToString("x2")));
         }
 
-        private bool TryHandleCommand(string message)
+        private bool TryHandleCommand(Command cmd)
         {
             string room = Clients.Caller.room;
             string name = Clients.Caller.name;
 
-            message = message.Trim();
-            if (message.StartsWith("/"))
+            if (cmd.Text.StartsWith("/"))
             {
-                var parts = message.Substring(1).Split(' ');
-                var commandName = parts[0];
+                string[] parts = cmd.Text.Substring(1).Split(' ');
+                string commandName = parts[0];
 
                 if (commandName.Equals("nick", StringComparison.OrdinalIgnoreCase))
                 {
-                    var newUserName = String.Join(" ", parts.Skip(1));
+                    string newUserName = String.Join(" ", parts.Skip(1));
 
-                    if (String.IsNullOrEmpty(newUserName))
+                    if (string.IsNullOrEmpty(newUserName))
                     {
                         throw new InvalidOperationException("No username specified!");
                     }
@@ -192,14 +181,14 @@ namespace SignalR.Tick.Hubs.StockTicker
 
                     if (!_users.ContainsKey(newUserName))
                     {
-                        if (String.IsNullOrEmpty(name) || !_users.ContainsKey(name))
+                        if (string.IsNullOrEmpty(name) || !_users.ContainsKey(name))
                         {
                             AddUser(newUserName);
                         }
                         else
                         {
-                            var oldUser = _users[name];
-                            var newUser = new ClientItem
+                            ClientItem oldUser = _users[name];
+                            ClientItem newUser = new ClientItem
                             {
                                 Name = newUserName,
                                 Hash = GetMD5Hash(newUserName),
@@ -212,17 +201,15 @@ namespace SignalR.Tick.Hubs.StockTicker
 
                             if (_userRooms[name].Any())
                             {
-                                foreach (var r in _userRooms[name])
+                                foreach (string r in _userRooms[name])
                                 {
-                                    _rooms[r].Users.Remove(name);
-                                    _rooms[r].Users.Add(newUserName);
+                                    ChannelGroups[r].Users.Remove(name);
+                                    ChannelGroups[r].Users.Add(newUserName);
                                     Clients.Group(r).changeUserName(oldUser, newUser);
                                 }
                             }
-                            HashSet<string> ignoredRoom;
-                            ClientItem ignoredUser;
-                            _userRooms.TryRemove(name, out ignoredRoom);
-                            _users.TryRemove(name, out ignoredUser);
+                            _userRooms.TryRemove(name, out HashSet<string> ignoredRoom);
+                            _users.TryRemove(name, out ClientItem ignoredUser);
 
                             Clients.Caller.hash = newUser.Hash;
                             Clients.Caller.name = newUser.Name;
@@ -242,7 +229,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                     EnsureUser();
                     if (commandName.Equals("rooms", StringComparison.OrdinalIgnoreCase))
                     {
-                        var rooms = _rooms.Select(r => new
+                        var rooms = ChannelGroups.Select(r => new
                         {
                             Name = r.Key,
                             Count = r.Value.Users.Count
@@ -264,17 +251,17 @@ namespace SignalR.Tick.Hubs.StockTicker
                         var newRoom = parts[1];
                         ChannelGroup chatRoom;
                         // Create the room if it doesn't exist
-                        if (!_rooms.TryGetValue(newRoom, out chatRoom))
+                        if (!ChannelGroups.TryGetValue(newRoom, out chatRoom))
                         {
                             chatRoom = new ChannelGroup();
-                            _rooms.TryAdd(newRoom, chatRoom);
+                            ChannelGroups.TryAdd(newRoom, chatRoom);
                         }
 
                         // Remove the old room
                         if (!String.IsNullOrEmpty(room))
                         {
                             _userRooms[name].Remove(room);
-                            _rooms[room].Users.Remove(name);
+                            ChannelGroups[room].Users.Remove(name);
 
                             Clients.Group(room).leave(_users[name]);
                             Groups.Remove(Context.ConnectionId, room);
@@ -320,14 +307,14 @@ namespace SignalR.Tick.Hubs.StockTicker
                             throw new InvalidOperationException(String.Format("Couldn't find any user named '{0}'.", to));
                         }
 
-                        var messageText = String.Join(" ", parts.Skip(2)).Trim();
+                        string messageText = String.Join(" ", parts.Skip(2)).Trim();
 
-                        if (String.IsNullOrEmpty(messageText))
+                        if (string.IsNullOrEmpty(messageText))
                         {
                             throw new InvalidOperationException(String.Format("What did you want to say to '{0}'.", to));
                         }
 
-                        var recipientId = _users[to].ConnectionId;
+                        string recipientId = _users[to].ConnectionId;
                         // Send a message to the sender and the sendee                        
                         Clients.Group(recipientId).sendPrivateMessage(name, to, messageText);
                         Clients.Caller.sendPrivateMessage(name, to, messageText);
@@ -343,15 +330,14 @@ namespace SignalR.Tick.Hubs.StockTicker
                             {
                                 throw new InvalidProgramException("You what?");
                             }
-                            var content = String.Join(" ", parts.Skip(1));
+                            string content = String.Join(" ", parts.Skip(1));
 
                             Clients.Group(room).sendMeMessage(name, content);
                             return true;
                         }
                         else if (commandName.Equals("leave", StringComparison.OrdinalIgnoreCase))
                         {
-                            ChannelGroup chatRoom;
-                            if (_rooms.TryGetValue(room, out chatRoom))
+                            if (ChannelGroups.TryGetValue(room, out ChannelGroup chatRoom))
                             {
                                 chatRoom.Users.Remove(name);
                                 _userRooms[name].Remove(room);
@@ -397,13 +383,12 @@ namespace SignalR.Tick.Hubs.StockTicker
             string room = Clients.Caller.room;
             string name = Clients.Caller.name;
 
-            if (string.IsNullOrEmpty(room) || !_rooms.ContainsKey(room))
+            if (string.IsNullOrEmpty(room) || !ChannelGroups.ContainsKey(room))
             {
                 throw new InvalidOperationException("Use '/join room' to join a room.");
             }
 
-            HashSet<string> rooms;
-            if (!_userRooms.TryGetValue(name, out rooms) || !rooms.Contains(room))
+            if (!_userRooms.TryGetValue(name, out HashSet<string> rooms) || !rooms.Contains(room))
             {
                 throw new InvalidOperationException(String.Format("You're not in '{0}'. Use '/join {0}' to join it.", room));
             }
@@ -422,16 +407,16 @@ namespace SignalR.Tick.Hubs.StockTicker
         {
             const string urlPattern = @"((https?|ftp)://|www\.)[\w]+(.[\w]+)([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])";
 
-            var urls = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            HashSet<string> urls = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             message = Regex.Replace(message, urlPattern, m =>
             {
-                var httpPortion = String.Empty;
+                string httpPortion = String.Empty;
                 if (!m.Value.Contains("://"))
                 {
                     httpPortion = "http://";
                 }
 
-                var url = httpPortion + m.Value;
+                string url = httpPortion + m.Value;
 
                 urls.Add(url);
 
@@ -459,14 +444,12 @@ namespace SignalR.Tick.Hubs.StockTicker
         [Serializable]
         public class Command
         {
-            public string Id { get; private set; }
+            public string Id { get; set; }
             public string User { get; set; }
             public string Text { get; set; }
-            public Command(string user, string text)
+            public Command()
             {
-                User = user;
-                Text = text;
-                Id = Guid.NewGuid().ToString("d");
+
             }
         }
 
