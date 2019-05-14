@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 using System;
 
 namespace SignalR.Tick.Hubs.RealtimeBroadcast
@@ -8,7 +9,7 @@ namespace SignalR.Tick.Hubs.RealtimeBroadcast
     {
         private static readonly Lazy<HighFrequencyTimer> _timerInstance = new Lazy<HighFrequencyTimer>(() =>
             {
-                var clients = GlobalHost.ConnectionManager.GetHubContext<Realtime>().Clients;
+                IHubConnectionContext<dynamic> clients = GlobalHost.ConnectionManager.GetHubContext<Realtime>().Clients;
                 return new HighFrequencyTimer(25,
                     id => clients.All.frame(id),
                     () => clients.All.engineStarted(),

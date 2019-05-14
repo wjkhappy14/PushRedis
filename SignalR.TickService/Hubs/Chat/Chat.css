@@ -1,11 +1,9 @@
-﻿body
-{
+﻿body {
     font-family: Trebuchet MS;
     font-size: 13px;
 }
 
-#messages
-{
+#messages {
     width: 70%;
     border: 1px solid #ccc;
     height: 500px;
@@ -15,14 +13,12 @@
     padding-left: 0px;
 }
 
-#messages li
-{
-    list-style-type: none;
-    padding: 3px;
-}
+    #messages li {
+        list-style-type: none;
+        padding: 3px;
+    }
 
-#users
-{
+#users {
     width: 17%;
     height: 500px;
     border-right: 1px solid #ccc;
@@ -36,40 +32,32 @@
     white-space: nowrap;
 }
 
-#users li
-{
-    padding: 4px;
-}
+    #users li {
+        padding: 4px;
+    }
 
-.clear
-{
+.clear {
     clear: both;
 }
 
-#new-message
-{
+#new-message {
     font-family: Trebuchet MS;
     width: 70%;
     padding: 5px;
     border: 1px solid #ccc;
 }
 
-.error 
-{
-    color:Red;
+.error {
+    color: Red;
 }
 
-.pm
-{
-    color:Red;
+.pm {
+    color: Red;
 }
 
-.notification
-{
-    color:#bbb;
+.notification {
+    color: #bbb;
 }
 
-.message
-{
-    
+.message {
 }

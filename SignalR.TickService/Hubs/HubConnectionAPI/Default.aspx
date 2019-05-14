@@ -5,14 +5,8 @@
     <ul class="breadcrumb">
         <li><a href="<%: ResolveUrl("~/") %>">SignalR Samples</a>
             <span class="divider">/</span></li>
-        <li class="active">Hub Connection API</li>
+        <li class="active">Redis Connection API</li>
     </ul>
-
-    <div class="page-header">
-        <h2>Redis Hub Connection API</h2>
-        <p>Demonstrates Hub Connection API</p>
-    </div>
-
     <p>
         <label for="group">Group: </label>
         <input type="text" id="group" placeholder="群组名称:" />

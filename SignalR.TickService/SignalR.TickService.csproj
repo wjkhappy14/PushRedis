@@ -510,12 +510,12 @@
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.mobile-1.4.5.js" />
     <Content Include="Scripts\jquery.mobile-1.4.5.min.js" />
-    <Content Include="Raw\Default.aspx" />
-    <Content Include="Raw\test\basic.htm" />
-    <Content Include="Raw\crossdomain.htm" />
-    <Content Include="Raw\eventSource.html" />
-    <Content Include="Raw\test\connect-reconnect.htm" />
-    <Content Include="Raw\test\sending.htm" />
+    <Content Include="Hubs\Raw\Default.aspx" />
+    <Content Include="Hubs\Raw\test\basic.htm" />
+    <Content Include="Hubs\Raw\crossdomain.htm" />
+    <Content Include="Hubs\Raw\eventSource.html" />
+    <Content Include="Hubs\Raw\test\connect-reconnect.htm" />
+    <Content Include="Hubs\Raw\test\sending.htm" />
     <Content Include="Scripts\hubs.js" />
     <Content Include="Scripts\jcanvas.js" />
     <Content Include="Hubs\DrawingPad\drawingpad.js" />
@@ -529,7 +529,7 @@
     <Content Include="Scripts\remedial.js" />
     <Content Include="Scripts\jquery.signalR.js" />
     <Content Include="Scripts\jquery.signalR.min.js" />
-    <Content Include="Streaming\Default.aspx" />
+    <Content Include="Hubs\Streaming\Default.aspx" />
     <Content Include="Styles\style.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -679,16 +679,16 @@
     <Compile Include="Hubs\Test\TestHub.cs" />
     <Compile Include="Models\ElementTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Raw\Default.aspx.cs">
+    <Compile Include="Hubs\Raw\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Raw\Default.aspx.designer.cs">
+    <Compile Include="Hubs\Raw\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Raw\RawConnection.cs" />
-    <Compile Include="Raw\SendingConnection.cs" />
-    <Compile Include="Raw\TestConnection.cs" />
+    <Compile Include="Hubs\Raw\RawConnection.cs" />
+    <Compile Include="Hubs\Raw\SendingConnection.cs" />
+    <Compile Include="Hubs\Raw\TestConnection.cs" />
     <Compile Include="SignalR.Master.cs">
       <DependentUpon>SignalR.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -696,14 +696,14 @@
     <Compile Include="SignalR.Master.designer.cs">
       <DependentUpon>SignalR.Master</DependentUpon>
     </Compile>
-    <Compile Include="Streaming\Default.aspx.cs">
+    <Compile Include="Hubs\Streaming\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Streaming\Default.aspx.designer.cs">
+    <Compile Include="Hubs\Streaming\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Streaming\StreamingConnection.cs" />
+    <Compile Include="Hubs\Streaming\StreamingConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

@@ -6,7 +6,7 @@
         connectionText = $("#ConnectionText"),
         groupText = $("#GroupText"),
         messageText = $("#MessageText");
-    
+
     testHub.client.clientConnected = function (nodeEvent) {
         common.writeLine("clientConnected: " + JSON.stringify(nodeEvent));
         connectionsList.append("<option id=" + nodeEvent.Data + ">" + nodeEvent.Data + "</option>");
@@ -24,16 +24,16 @@
 
     testHub.client.connectionsAll = function (nodeEvent) {
         common.writeLine("connectionsAll: " + JSON.stringify(nodeEvent));
-        $.each(nodeEvent.Data, function(index, value) {
+        $.each(nodeEvent.Data, function (index, value) {
             connectionsList.append("<option id=" + value + ">" + value + "</option>");
-        });        
+        });
     };
 
     testHub.client.groupsAll = function (nodeEvent) {
         common.writeLine("groupsAll: " + JSON.stringify(nodeEvent));
         $.each(nodeEvent.Data, function (index, value) {
             groupsList.append("<option id=" + value + ">" + value + "</option>");
-        });        
+        });
     };
 
     testHub.client.addedGroup = function (nodeEvent) {

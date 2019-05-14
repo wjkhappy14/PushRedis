@@ -14,14 +14,16 @@
             <td><a href="clientsGroupSender.aspx?transport=serverSentEvents">serverSentEvents</a></td>
             <td><a href="clientsGroupSender.aspx?transport=longPolling">longPolling</a></td>
         </tr>
-    </table> 
+    </table>
     <table>
         <tr>
-            <td>Send: <label id="SendLabel">0</label></td>
-            <td>Received: <label id="ReceivedLabel">0</label></td>
-        </tr> 
+            <td>Send:
+                <label id="SendLabel">0</label></td>
+            <td>Received:
+                <label id="ReceivedLabel">0</label></td>
+        </tr>
     </table>
-    <h1>TestHub</h1>    
+    <h1>TestHub</h1>
     <ul id="HubMessages">
     </ul>
 </asp:Content>

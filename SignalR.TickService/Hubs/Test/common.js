@@ -66,7 +66,7 @@ var common = (function () {
         printState: function (state) {
             return ["connecting", "connected", "reconnecting", state, "disconnected"][state];
         },
-        incrementLabel : function(label) {
+        incrementLabel: function (label) {
             var value = parseInt(label.text(), 10) + 1;
             label.text(value);
             return value;

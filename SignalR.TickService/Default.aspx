@@ -19,12 +19,12 @@
                 Demonstrates all features of the lower-level connection API including starting and stopping, sending and
                receiving messages, and managing groups.
             </p>
-            <p><a class="btn" href="Raw/">查看  &raquo;</a></p>
+            <p><a class="btn" href="/HubsRaw/">查看  &raquo;</a></p>
         </div>
         <div class="span4">
             <h3>Simple Streaming</h3>
             <p>A simple example of a background thread that broadcasts the server time to all connected clients every two seconds.</p>
-            <p><a class="btn" href="Streaming/">查看  &raquo;</a></p>
+            <p><a class="btn" href="Hubs/Streaming/">查看  &raquo;</a></p>
         </div>
         <div class="span4">
             <h3>Connection Status</h3>
@@ -73,12 +73,12 @@
         <div class="span4">
             <h3>Hub Ping</h3>
             <p>A sample that's used for measuring the full roundtrip time for invocations of Hub methods from client to server and back again.</p>
-            <p><a class="btn" href="Hubs/Benchmark/"> 查看 &raquo;</a></p>
+            <p><a class="btn" href="Hubs/Benchmark/">查看 &raquo;</a></p>
         </div>
         <div class="span4">
             <h3>Real-time Broadcast</h3>
             <p>A sample that uses a high-frequency timer to deliver updates at a high rate (e.g. 25 Hz) as might be typical in a real-time, multi-user HTML5 game.</p>
-            <p><a class="btn" href="Hubs/RealtimeBroadcast/"> 查看 &raquo;</a></p>
+            <p><a class="btn" href="Hubs/RealtimeBroadcast/">查看 &raquo;</a></p>
         </div>
         <div class="span4">
             <h3>Redis Hub Connection API</h3>

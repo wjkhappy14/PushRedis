@@ -505,5 +505,7 @@ namespace SignalR.Tick.Hubs.Chat
                 Users = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             }
         }
+
     }
+
 }

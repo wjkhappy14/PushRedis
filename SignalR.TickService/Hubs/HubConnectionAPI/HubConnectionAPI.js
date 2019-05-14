@@ -95,7 +95,6 @@ $(function () {
     };
     start();
 
-
     $('#joinGroup').click(function () {
         // Set the connection Id to the specified value or the generated SignalR value
         var connectionIdToJoin = connectionTextInput.val() || $.connection.hub.id;
@@ -154,8 +153,8 @@ $(function () {
     $("#groupmsg").click(function () {
         hubConnectionAPI.server.displayMessageGroup(groupNameTextInput.val(),
             groupMessageTextInput.val()).fail(function (e) {
-            writeError("Failed at getMessageGroup: " + e);
-        });
+                writeError("Failed at getMessageGroup: " + e);
+            });
     });
 
     $("#groupmsgExceptSpecified").click(function () {
@@ -169,8 +168,8 @@ $(function () {
     $("#otherInGroupmsg").click(function () {
         hubConnectionAPI.server.displayMessageOthersInGroup(groupNameTextInput.val(),
             groupMessageTextInput.val()).fail(function (e) {
-            writeError("Failed at displayMessageOthersInGroup: " + e);
-        });
+                writeError("Failed at displayMessageOthersInGroup: " + e);
+            });
     });
 
     stopStartBtn.click(function () {

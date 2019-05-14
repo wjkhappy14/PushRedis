@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
+using SignalR.Tick.Connections;
 
 namespace SignalR.Tick
 {
-    public class StreamingConnection : PersistentConnection
+    public class StreamingConnection : AddGroupOnConnectedConnection
     {
         protected override Task OnConnected(IRequest request, string connectionId)
         {
