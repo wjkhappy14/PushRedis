@@ -1,7 +1,6 @@
 ﻿using Core;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -27,9 +26,7 @@ namespace SignalR.Tick.Hubs.StockTicker
         {
             Groups.Add(connectionId, groupName).Wait();
             dynamic g = Clients.Group(groupName);
-
             ClientItem user = _users.Values.FirstOrDefault(u => u.Id == groupName);
-
             if (user != null)
             {
                 // Update the users's client id mapping
@@ -65,7 +62,10 @@ namespace SignalR.Tick.Hubs.StockTicker
         public void SendCmd(Command cmd)
         {
             string content = cmd.Text.Replace("<", "&lt;").Replace(">", "&gt;");
-
+            string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            StockTicker.OpenMarket();
+            StockTicker.CloseMarket();
+            StockTicker.Reset();
             if (!TryHandleCommand(cmd))
             {
                 string roomName = Clients.Caller.room;
@@ -98,7 +98,6 @@ namespace SignalR.Tick.Hubs.StockTicker
                             {
                                 continue;
                             }
-
                             // Try to get content from each url we're resolved in the query
                             string extractedContent = "<p>" + task.Result + "</p>";
 
@@ -171,8 +170,6 @@ namespace SignalR.Tick.Hubs.StockTicker
         {
             string room = Clients.Caller.room;
             string name = Clients.Caller.name;
-
-
             string[] parts = cmd.Text.Substring(1).Split(' ');
             string commandName = parts[0];
 
@@ -283,7 +280,6 @@ namespace SignalR.Tick.Hubs.StockTicker
                     {
                         throw new InvalidOperationException("You're already in that room!");
                     }
-
                     Clients.Group(newRoom).addUser(_users[name]);
 
                     // Set the room on the caller
@@ -388,7 +384,6 @@ namespace SignalR.Tick.Hubs.StockTicker
         private void EnsureUserAndRoom()
         {
             EnsureUser();
-
             // TODO: Restore when groups work
             string room = Clients.Caller.room;
             string name = Clients.Caller.name;
@@ -451,58 +446,13 @@ namespace SignalR.Tick.Hubs.StockTicker
             return response.CharacterSet;
         }
 
-        [Serializable]
-        public class Command
-        {
-            public string Id { get; set; }
-            public string User { get; set; }
-            public string Text { get; set; }
-            public Command()
-            {
-
-            }
-        }
-
-        [Serializable]
-        public class ClientItem
-        {
-            public string ConnectionId { get; set; }
-            public string Id { get; set; }
-            public string Name { get; set; }
-            public string Hash { get; set; }
-
-            public ClientItem()
-            {
-            }
-
-            public ClientItem(string name, string hash)
-            {
-                Name = name;
-                Hash = hash;
-                Id = Guid.NewGuid().ToString("d");
-            }
-        }
-
-        public class ChannelGroup
-        {
-            public List<Command> Messages { get; set; }
-            public HashSet<string> Users { get; set; }
-
-            public ChannelGroup()
-            {
-                Messages = new List<Command>();
-                Users = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            }
-        }
-
         private StockTicker StockTicker { get; }
 
         public StockTickerHub() : this(StockTicker.Instance)
         {
-
         }
 
-        public StockTickerHub(StockTicker stockTicker)
+        private StockTickerHub(StockTicker stockTicker)
         {
             StockTicker = stockTicker;
         }
@@ -510,64 +460,6 @@ namespace SignalR.Tick.Hubs.StockTicker
         public IEnumerable<ContractQuoteFull> GetAllStocks()
         {
             return StockTicker.GetAllStocks();
-        }
-
-        public string GetMarketState()
-        {
-            return StockTicker.MarketState.ToString();
-        }
-
-        /// <summary>
-        /// 开市
-        /// </summary>
-        public void OpenMarket()
-        {
-            StockTicker.OpenMarket();
-        }
-
-        /// <summary>
-        /// 订阅
-        /// </summary>
-        /// <param name="item"></param>
-        public void Subscribe(string item)
-        {
-
-
-        }
-
-        /// <summary>
-        /// 取消订阅
-        /// </summary>
-        /// <param name="item"></param>
-        public void UnSubscribe(string item)
-        {
-
-        }
-
-        /// <summary>
-        /// 当前时间
-        /// </summary>
-        /// <returns></returns>
-        public string Now()
-        {
-            string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            return now;
-        }
-
-        /// <summary>
-        /// 休市
-        /// </summary>
-        public void CloseMarket()
-        {
-            StockTicker.CloseMarket();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Reset()
-        {
-            StockTicker.Reset();
         }
     }
 }

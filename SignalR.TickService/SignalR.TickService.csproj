@@ -657,6 +657,10 @@
     <Compile Include="Hubs\RealtimeBroadcast\HighFrequencyTimer.cs" />
     <Compile Include="Hubs\RealtimeBroadcast\Realtime.cs" />
     <Compile Include="Hubs\ShapeShare\ShapeShare.cs" />
+    <Compile Include="Hubs\StockTicker\ChannelGroup.cs" />
+    <Compile Include="Hubs\StockTicker\ClientItem.cs" />
+    <Compile Include="Hubs\StockTicker\Command.cs" />
+    <Compile Include="Hubs\StockTicker\CommandType.cs" />
     <Compile Include="Hubs\StockTicker\StockTicker.cs" />
     <Compile Include="Hubs\StockTicker\StockTickerHub.cs" />
     <Compile Include="Hubs\Test\LongRunningHub.cs" />
