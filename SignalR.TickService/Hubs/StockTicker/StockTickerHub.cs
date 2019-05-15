@@ -4,13 +4,10 @@ using Microsoft.AspNet.SignalR.Hubs;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -92,6 +89,7 @@ namespace SignalR.Tick.Hubs.StockTicker
             dynamic g = Clients.Group(cmd.Text);
             cmd.Text += $@"{UnixTimeMilliseconds}@{cmd.User}";
             g.addMessage(cmd.Id, cmd.User, cmd.Text);
+
             if (Clients != null)
             {
                 g.addMessageContent(cmd.Id, cmd.Text);

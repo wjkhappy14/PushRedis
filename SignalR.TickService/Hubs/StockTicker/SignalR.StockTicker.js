@@ -124,7 +124,6 @@ $(function () {
         }
     });
 
-    // Start the connection
     $.connection.hub.logging = true;
     $.connection.hub.start({ transport: ['webSockets'] })
         .then(init)
@@ -133,6 +132,8 @@ $(function () {
             return ticker.server.getMarketState();
         })
         .done(function (state) {
+            ticker.server.join();
+            updateCookie();
             if (state === 'Open') {
                 ticker.client.marketOpened();
             } else {
