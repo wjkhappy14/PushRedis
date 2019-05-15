@@ -76,10 +76,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/06/2019 16:13:04</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.dll">
-      <publishTime>05/15/2019 16:38:06</publishTime>
+      <publishTime>05/15/2019 17:22:28</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.pdb">
-      <publishTime>05/15/2019 16:38:06</publishTime>
+      <publishTime>05/15/2019 17:22:28</publishTime>
     </File>
     <File Include="bin/StackExchange.Redis.StrongName.dll">
       <publishTime>05/06/2019 16:13:04</publishTime>

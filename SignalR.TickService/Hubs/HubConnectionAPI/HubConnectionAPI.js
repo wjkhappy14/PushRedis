@@ -27,7 +27,6 @@ $(function () {
     "use strict";
 
     var hubConnectionAPI = $.connection.hubConnectionAPI,
-        messages = $("#messages"),
         groupNameTextInput = $("#group"),
         connectionTextInput = $("#connection"),
         messageTextInput = $("#message"),

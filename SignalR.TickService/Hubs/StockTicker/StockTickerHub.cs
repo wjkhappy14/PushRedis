@@ -11,6 +11,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SignalR.Tick.Hubs.StockTicker
@@ -61,8 +62,29 @@ namespace SignalR.Tick.Hubs.StockTicker
 
         public void SendCmd(Command cmd)
         {
+            dynamic caller = Clients.Caller;
+            int id = 0;
+            Clients.Caller.id = Interlocked.Increment(ref id);
+
+            if (cmd.CmdType == CommandType.Subscribe)
+            {
+                Groups.Add(Context.ConnectionId, cmd.Text);
+            }
+            else if (cmd.CmdType == CommandType.UnSubscribe)
+            {
+                Groups.Remove(Context.ConnectionId, cmd.Text);
+            }
+            else if (cmd.CmdType == CommandType.Now)
+            {
+                string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                Clients.Client(Context.ConnectionId);
+            }
+            else if (cmd.CmdType == CommandType.Ping)
+            {
+                Clients.Caller.pong();
+            }
             string content = cmd.Text.Replace("<", "&lt;").Replace(">", "&gt;");
-            string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
             StockTicker.OpenMarket();
             StockTicker.CloseMarket();
             StockTicker.Reset();
@@ -119,7 +141,7 @@ namespace SignalR.Tick.Hubs.StockTicker
 
         public override Task OnReconnected()
         {
-            return base.OnReconnected();
+            return Clients.All.reconnected(Context.ConnectionId, DateTime.Now.ToString());
         }
         public override Task OnDisconnected(bool stopCalled)
         {
@@ -144,7 +166,11 @@ namespace SignalR.Tick.Hubs.StockTicker
 
             return null;
         }
-
+        public override Task OnConnected()
+        {
+            dynamic all = Clients.All;
+            return base.OnConnected();
+        }
         public IGroupManager GetGroups() => Groups;
         public IEnumerable<ClientItem> GeClients()
         {
@@ -436,8 +462,8 @@ namespace SignalR.Tick.Hubs.StockTicker
 
         private Task<string> ExtractContent(string url)
         {
-            var request = (HttpWebRequest)HttpWebRequest.Create(url);
-            var requestTask = Task.Factory.FromAsync((cb, state) => request.BeginGetResponse(cb, state), ar => request.EndGetResponse(ar), null);
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+            Task<WebResponse> requestTask = Task.Factory.FromAsync((cb, state) => request.BeginGetResponse(cb, state), ar => request.EndGetResponse(ar), null);
             return requestTask.ContinueWith(task => ExtractContent((HttpWebResponse)task.Result));
         }
 
@@ -445,7 +471,6 @@ namespace SignalR.Tick.Hubs.StockTicker
         {
             return response.CharacterSet;
         }
-
         private StockTicker StockTicker { get; }
 
         public StockTickerHub() : this(StockTicker.Instance)
