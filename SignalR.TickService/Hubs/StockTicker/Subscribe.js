@@ -141,9 +141,13 @@ $(function () {
     };
 
     $('#send-message').submit(function () {
-        var command = $('#new-message').val();
-
-        chat.server.send(command)
+       // var command = $('#new-message').val();
+        var command = {
+            Id: 1,
+            User: 'Tom',
+            Text:'Hello'
+        };
+        chat.server.sendCmd(command)
             .fail(function (e) {
                 addMessage(e, 'error');
             });
@@ -151,6 +155,54 @@ $(function () {
         $('#new-message').val('');
         $('#new-message').focus();
 
+        return false;
+    });
+
+    ///订阅
+    $('#btn-Subscribe').click(function () {
+        var command = {
+            Id: 1,
+            User: 'Tom',
+            Text: 'Hello'
+        };
+        chat.server.subscribe(command)
+            .fail(function (e) {
+                addMessage(e, 'error');
+            });
+
+        $('#new-message').val('');
+        $('#new-message').focus();
+        return false;
+    });
+
+    $('#btn-unSubscribe').click(function () {
+        var command = {
+            Id: 1,
+            User: 'Tom',
+            Text: 'Hello'
+        };
+        chat.server.unSubscribe(command)
+            .fail(function (e) {
+                addMessage(e, 'error');
+            });
+
+        $('#new-message').val('');
+        $('#new-message').focus();
+        return false;
+    });
+
+    ///GetTimeNow
+    $('#btn-now').click(function () {
+        chat.server.getTimeNow()
+            .done(function (e) {
+                addMessage(e, 'ok');
+
+            }).fail(function (e) {
+                addMessage(e, 'error');
+            });
+
+        $('#new-message').val('');
+        $('#new-message').focus();
         return false;
     });
 
@@ -192,12 +244,12 @@ $(function () {
     $('#new-message').val('');
     $('#new-message').focus();
 
-    $.connection.hub.logging = true;
+
     $.connection.hub.start({ transport: ['webSockets'] }, function () {
         chat.server.join()
             .done(function (success) {
                 if (success === false) {
-                    $.cookie('userid', '');
+                    updateCookie()
                     addMessage('Choose a name using "/nick nickname".', 'notification');
                 }
                 addMessage('After that, you can view rooms using "/rooms" and join a room using "/join roomname".', 'notification');

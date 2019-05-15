@@ -10,10 +10,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Core.dll">
-      <publishTime>05/13/2019 15:11:14</publishTime>
+      <publishTime>05/15/2019 14:28:37</publishTime>
     </File>
     <File Include="bin/Core.pdb">
-      <publishTime>05/13/2019 15:11:14</publishTime>
+      <publishTime>05/15/2019 14:28:37</publishTime>
     </File>
     <File Include="bin/dotnetty.com.pfx">
       <publishTime>04/29/2019 13:45:10</publishTime>
@@ -76,10 +76,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/13/2012 12:19:34</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.dll">
-      <publishTime>05/13/2019 16:33:11</publishTime>
+      <publishTime>05/15/2019 14:28:38</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.pdb">
-      <publishTime>05/13/2019 16:33:11</publishTime>
+      <publishTime>05/15/2019 14:28:38</publishTime>
     </File>
     <File Include="bin/StackExchange.Redis.StrongName.dll">
       <publishTime>01/25/2018 09:26:38</publishTime>
@@ -109,7 +109,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/28/2018 13:04:24</publishTime>
     </File>
     <File Include="clientaccesspolicy.xml">
-      <publishTime>05/02/2019 00:54:07</publishTime>
+      <publishTime>05/14/2019 14:24:04</publishTime>
     </File>
     <File Include="Content/bg-body.jpg">
       <publishTime>05/02/2019 00:54:06</publishTime>
@@ -985,7 +985,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/02/2019 00:54:06</publishTime>
     </File>
     <File Include="Default.aspx">
-      <publishTime>05/08/2019 11:23:48</publishTime>
+      <publishTime>05/14/2019 22:24:33</publishTime>
     </File>
     <File Include="dotnetty.com.pfx">
       <publishTime>04/29/2019 13:45:10</publishTime>
@@ -1015,10 +1015,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/04/2019 17:42:24</publishTime>
     </File>
     <File Include="Hubs/Benchmark/crossdomain.htm">
-      <publishTime>05/04/2019 17:43:21</publishTime>
+      <publishTime>05/14/2019 17:45:20</publishTime>
     </File>
     <File Include="Hubs/Benchmark/index.htm">
-      <publishTime>05/05/2019 18:17:56</publishTime>
+      <publishTime>05/14/2019 14:26:44</publishTime>
     </File>
     <File Include="Hubs/Chat/Chat.css">
       <publishTime>05/02/2019 00:54:06</publishTime>
@@ -1045,13 +1045,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2019 17:54:00</publishTime>
     </File>
     <File Include="Hubs/Counting/Default.aspx">
-      <publishTime>05/03/2019 19:22:08</publishTime>
+      <publishTime>05/14/2019 17:45:41</publishTime>
     </File>
     <File Include="Hubs/DemoHub/crossdomain.htm">
-      <publishTime>05/08/2019 11:40:53</publishTime>
+      <publishTime>05/14/2019 14:32:43</publishTime>
     </File>
     <File Include="Hubs/DemoHub/Default.aspx">
-      <publishTime>05/03/2019 19:22:08</publishTime>
+      <publishTime>05/14/2019 17:46:02</publishTime>
     </File>
     <File Include="Hubs/DemoHub/DemoHub.js">
       <publishTime>05/02/2019 00:54:06</publishTime>
@@ -1063,10 +1063,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/04/2019 17:51:13</publishTime>
     </File>
     <File Include="Hubs/HubConnectionAPI/Default.aspx">
-      <publishTime>05/09/2019 16:40:39</publishTime>
+      <publishTime>05/14/2019 14:15:26</publishTime>
     </File>
     <File Include="Hubs/HubConnectionAPI/HubConnectionAPI.js">
-      <publishTime>05/09/2019 17:11:14</publishTime>
+      <publishTime>05/14/2019 14:18:23</publishTime>
     </File>
     <File Include="Hubs/MessageLoops/Default.aspx">
       <publishTime>05/03/2019 19:22:08</publishTime>
@@ -1085,6 +1085,24 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Hubs/MouseTracking/MouseTracking.js">
       <publishTime>05/04/2019 17:31:13</publishTime>
+    </File>
+    <File Include="Hubs/Raw/crossdomain.htm">
+      <publishTime>05/08/2019 11:44:14</publishTime>
+    </File>
+    <File Include="Hubs/Raw/Default.aspx">
+      <publishTime>05/03/2019 19:22:08</publishTime>
+    </File>
+    <File Include="Hubs/Raw/eventSource.html">
+      <publishTime>05/08/2019 11:42:55</publishTime>
+    </File>
+    <File Include="Hubs/Raw/test/basic.htm">
+      <publishTime>05/14/2019 11:01:59</publishTime>
+    </File>
+    <File Include="Hubs/Raw/test/connect-reconnect.htm">
+      <publishTime>05/02/2019 00:54:07</publishTime>
+    </File>
+    <File Include="Hubs/Raw/test/sending.htm">
+      <publishTime>05/02/2019 00:54:07</publishTime>
     </File>
     <File Include="Hubs/RealtimeBroadcast/index.html">
       <publishTime>05/04/2019 17:32:00</publishTime>
@@ -1108,22 +1126,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/03/2019 22:04:22</publishTime>
     </File>
     <File Include="Hubs/SimultaneousConnections/SimultaneousConnections.js">
-      <publishTime>05/04/2019 12:33:23</publishTime>
+      <publishTime>05/14/2019 14:24:19</publishTime>
     </File>
     <File Include="Hubs/StockTicker/SignalR.StockTicker.js">
-      <publishTime>05/13/2019 12:43:40</publishTime>
+      <publishTime>05/15/2019 13:55:05</publishTime>
     </File>
     <File Include="Hubs/StockTicker/StockTicker.css">
-      <publishTime>05/10/2019 15:21:26</publishTime>
+      <publishTime>05/15/2019 11:30:33</publishTime>
     </File>
     <File Include="Hubs/StockTicker/StockTicker.html">
       <publishTime>05/10/2019 15:33:36</publishTime>
+    </File>
+    <File Include="Hubs/StockTicker/Subscribe.js">
+      <publishTime>05/15/2019 13:49:49</publishTime>
+    </File>
+    <File Include="Hubs/Streaming/Default.aspx">
+      <publishTime>05/09/2019 16:25:50</publishTime>
     </File>
     <File Include="Hubs/Test/chat.aspx">
       <publishTime>05/03/2019 19:22:08</publishTime>
     </File>
     <File Include="Hubs/Test/chat.js">
-      <publishTime>05/02/2019 00:54:07</publishTime>
+      <publishTime>05/14/2019 12:59:21</publishTime>
     </File>
     <File Include="Hubs/Test/clientsCaller.aspx">
       <publishTime>05/03/2019 19:22:08</publishTime>
@@ -1138,16 +1162,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/02/2019 00:54:07</publishTime>
     </File>
     <File Include="Hubs/Test/clientsGroupSender.aspx">
-      <publishTime>05/03/2019 19:22:08</publishTime>
+      <publishTime>05/14/2019 13:08:36</publishTime>
     </File>
     <File Include="Hubs/Test/clientsGroupSender.js">
       <publishTime>05/02/2019 00:54:07</publishTime>
     </File>
     <File Include="Hubs/Test/common.js">
-      <publishTime>05/02/2019 00:54:07</publishTime>
+      <publishTime>05/14/2019 14:22:59</publishTime>
     </File>
     <File Include="Hubs/Test/Default.aspx">
-      <publishTime>05/03/2019 19:22:08</publishTime>
+      <publishTime>05/14/2019 12:43:28</publishTime>
     </File>
     <File Include="log4net.config">
       <publishTime>05/05/2019 15:10:51</publishTime>
@@ -1257,6 +1281,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/json2.min.js">
       <publishTime>05/02/2019 00:54:07</publishTime>
     </File>
+    <File Include="Scripts/push_worker.js">
+      <publishTime>05/15/2019 13:50:04</publishTime>
+    </File>
     <File Include="Scripts/remedial.js">
       <publishTime>05/04/2019 12:46:19</publishTime>
     </File>
@@ -1276,7 +1303,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2019 15:09:59</publishTime>
     </File>
     <File Include="Views/Home/App.cshtml">
-      <publishTime>05/13/2019 16:07:24</publishTime>
+      <publishTime>05/15/2019 12:18:51</publishTime>
     </File>
     <File Include="Views/Home/Error.cshtml">
       <publishTime>05/10/2019 10:53:48</publishTime>
@@ -1294,7 +1321,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2019 15:09:37</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/13/2019 16:33:12</publishTime>
+      <publishTime>05/15/2019 14:28:38</publishTime>
     </File>
   </ItemGroup>
 </Project>

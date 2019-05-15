@@ -167,8 +167,7 @@ namespace SignalR.Tick.Hubs.StockTicker
             string room = Clients.Caller.room;
             string name = Clients.Caller.name;
 
-            if (cmd.Text.StartsWith("/"))
-            {
+          
                 string[] parts = cmd.Text.Substring(1).Split(' ');
                 string commandName = parts[0];
 
@@ -362,7 +361,6 @@ namespace SignalR.Tick.Hubs.StockTicker
                         throw new InvalidOperationException(String.Format("'{0}' is not a valid command.", parts[0]));
                     }
                 }
-            }
             return false;
         }
 

@@ -1,7 +1,5 @@
 ﻿@{
-                /**/
-
-                Layout = "~/Views/Home/App.cshtml";
+    Layout = "~/Views/Home/App.cshtml";
 }
 <head>
     <link href="/Hubs/StockTicker/StockTicker.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
@@ -37,6 +35,11 @@
     <input type="button" id="open" value="开市" />
     <input type="button" id="close" value="休市" disabled="disabled" />
     <input type="button" id="reset" value="重置" />
+
+    <input type="button" id="btn-Subscribe" value="Subscribe"/>
+    <input type="button" id="btn-unSubscribe" value="UnSubscribe"/>
+    <input type="button" id="btn-now" value="Now"/>
+
     <div id="stockTicker">
         <div class="inner">
             <ul>
@@ -78,5 +81,4 @@
             </tbody>
         </table>
     </div>
-
 </div>

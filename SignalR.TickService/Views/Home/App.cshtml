@@ -17,12 +17,12 @@
     <script type="text/javascript" src="/signalr/hubs?v=@DateTime.Now.Ticks"></script>
     <script type="text/javascript" src="/Home/Tmpl?v=@DateTime.Now.Ticks"></script>
     <script src="/Scripts/render-tpl.js?v=@DateTime.Now.Ticks"></script>
-
+    <script src="/Scripts/push_worker.js"></script>
     <script type="text/javascript">
         document.domain = document.domain;
         window.onload = function () {
             for (var item in $.signalR) {
-                console.dir(item);
+                // console.dir(item);
             }
         }
     </script>
@@ -48,7 +48,7 @@
                 {
                     string key = item.ToString();
                     string value = Request.Headers[key];
-            <li>@key:@value</li>
+                    <li>@key:@value</li>
                 }
 
             }

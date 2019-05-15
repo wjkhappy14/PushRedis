@@ -516,6 +516,7 @@
     <Content Include="Scripts\jcanvas.js" />
     <Content Include="Hubs\DrawingPad\drawingpad.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="Scripts\push_worker.js" />
     <Content Include="Scripts\render-tpl.js" />
     <Content Include="Scripts\signalr.samples.js" />
     <Content Include="Scripts\jquery.easing.1.3.js" />

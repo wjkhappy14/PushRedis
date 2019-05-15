@@ -16,10 +16,12 @@ jQuery.fn.flash = function (color, duration) {
         .animate({ backgroundColor: current }, duration / 2);
 };
 
-$(function () {
 
-    var ticker = $.connection.stockTicker, // the generated client-side hub proxy
-        up = '↑',
+
+$(function () {
+    var ticker = $.connection.stockTicker;
+
+    var up = '↑',
         down = '↓',
         $stockTable = $('#stockTable'),
         $stockTableBody = $stockTable.find('tbody'),
@@ -32,7 +34,7 @@ $(function () {
         return $.extend(stock, {
             Price: stock.BidPrice,
             CurrentTime: +(new Date()),
-            TimeDiff: timestamp()-stock.Time,
+            TimeDiff: timestamp() - stock.Time,
             PercentChange: (stock.BidPrice * 100).toFixed(2) + '%',
             Direction: stock.BidPrice === 0 ? '' : stock.BidPrice >= 0 ? up : down,
             DirectionClass: stock.BidPrice === 0 ? 'even' : stock.BidPrice >= 0 ? 'up' : 'down'
@@ -53,6 +55,15 @@ $(function () {
         return ticker.server.getAllStocks().done(function (stocks) {
             $stockTableBody.empty();
             $stockTickerUl.empty();
+            $.each(stocks, function () {
+                var stock = formatStock(this);
+                $stockTableBody.append(rowTemplate.supplant(stock));
+                $stockTickerUl.append(liTemplate.supplant(stock));
+            });
+        });
+    };
+    function initSymbols() {
+        return ticker.server.getSymbols().done(function (stocks) {
             $.each(stocks, function () {
                 var stock = formatStock(this);
                 $stockTableBody.append(rowTemplate.supplant(stock));
@@ -93,6 +104,13 @@ $(function () {
             $("#reset").prop("disabled", false);
             stopTicker();
         },
+        unSubscribe: function () {
+            console.log(this);
+
+        },
+        subscribe: function () {
+            console.log(this);
+        },
 
         marketReset: function () {
             return init();
@@ -100,9 +118,12 @@ $(function () {
     });
 
     // Start the connection
-    $.connection.hub.start()
+    $.connection.hub.logging = true;
+    $.connection.hub.start({ transport: ['webSockets'] })
         .then(init)
+        .then(initSymbols)
         .then(function () {
+
             return ticker.server.getMarketState();
         })
         .done(function (state) {
