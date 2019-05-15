@@ -141,12 +141,12 @@ $(function () {
         }
     };
 
-    $('#send-message').submit(function () {
-        // var command = $('#new-message').val();
+    $('#send').click(function () {
+        var msg = $('#new-message').val();
         var command = {
             Id: 1,
             User: 'Tom',
-            Text: 'Hello',
+            Text: msg,
             CmdType: 2
         };
         chat.server.sendCmd(command)
@@ -183,7 +183,7 @@ $(function () {
             Id: 1,
             User: 'Tom',
             Text: 'Hello',
-            CmdType:2
+            CmdType: 2
         };
         chat.server.unSubscribe(command)
             .fail(function (e) {
