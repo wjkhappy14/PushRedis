@@ -98,11 +98,12 @@ $(function () {
         // Set the connection Id to the specified value or the generated SignalR value
         var connectionIdToJoin = connectionTextInput.val() || $.connection.hub.id;
 
-        hubConnectionAPI.server.joinGroup(connectionIdToJoin, groupNameTextInput.val()).done(function (value1) {
-            writeLine("Succeeded at joinGroup: " + value1);
-        }).fail(function (e) {
-            writeError("Failed at joinGroup: " + e);
-        });
+        hubConnectionAPI.server.joinGroup(connectionIdToJoin, groupNameTextInput.val())
+            .done(function (value1) {
+                writeLine("Succeeded at joinGroup: " + value1);
+            }).fail(function (e) {
+                writeError("Failed at joinGroup: " + e);
+            });
     });
 
     $('#leaveGroup').click(function () {
