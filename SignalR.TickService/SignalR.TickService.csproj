@@ -466,7 +466,7 @@
     <Content Include="Hubs\StockTicker\Subscribe.js" />
     <Content Include="Hubs\StockTicker\SignalR.StockTicker.js" />
     <Content Include="Hubs\StockTicker\StockTicker.css" />
-    <None Include="Views\Hubs\StockTicker.cshtml" />
+    <None Include="Properties\PublishProfiles\localhost.pubxml" />
     <Content Include="Hubs\Test\chat.aspx" />
     <Content Include="Hubs\Test\chat.js" />
     <Content Include="Hubs\Test\clientsCaller.aspx" />
@@ -544,6 +544,8 @@
     <Content Include="Views\Home\Main.cshtml" />
     <Content Include="Views\Member\Login.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Hubs\Index.cshtml" />
+    <Content Include="Views\Hubs\StockTicker.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BackgroundThread.cs" />
