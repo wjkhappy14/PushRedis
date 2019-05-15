@@ -119,7 +119,7 @@ $(function () {
 
     // Start the connection
     $.connection.hub.logging = true;
-    $.connection.hub.start({ transport: ['webSockets'] })
+    $.connection.hub.start({ transport:['webSockets'] })
         .then(init)
         .then(initSymbols)
         .then(function () {
