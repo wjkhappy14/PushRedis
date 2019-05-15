@@ -88,52 +88,16 @@ namespace SignalR.Tick.Hubs.StockTicker
             StockTicker.OpenMarket();
             StockTicker.CloseMarket();
             StockTicker.Reset();
-            if (!TryHandleCommand(cmd))
+
+            dynamic g = Clients.Group(cmd.Text);
+            cmd.Text += $@"{UnixTimeMilliseconds}@{cmd.User}";
+            g.addMessage(cmd.Id, cmd.User, cmd.Text);
+            if (Clients != null)
             {
-                string roomName = Clients.Caller.room;
-                string name = Clients.Caller.name;
-
-                EnsureUserAndRoom();
-
-                string messageText = Transform(content, out HashSet<string> links);
-
-                ChannelGroups[roomName].Messages.Add(cmd);
-
-                Clients.Group(roomName).addMessage(cmd.Id, cmd.User, cmd.Text);
-
-                if (links.Any())
-                {
-                    // REVIEW: is this safe to do? We're holding on to this instance 
-                    // when this should really be a fire and forget.
-                    Task<string>[] contentTasks = links.Select(ExtractContent).ToArray();
-                    Task.Factory.ContinueWhenAll(contentTasks, tasks =>
-                    {
-                        foreach (Task<string> task in tasks)
-                        {
-                            if (task.IsFaulted)
-                            {
-                                Trace.TraceError(task.Exception.GetBaseException().Message);
-                                continue;
-                            }
-
-                            if (string.IsNullOrEmpty(task.Result))
-                            {
-                                continue;
-                            }
-                            // Try to get content from each url we're resolved in the query
-                            string extractedContent = "<p>" + task.Result + "</p>";
-
-                            // If we did get something, update the message and notify all clients
-                            cmd.Text += extractedContent;
-
-                            Clients.Group(roomName).addMessageContent(cmd.Id, extractedContent);
-                        }
-                    });
-                }
+                g.addMessageContent(cmd.Id, cmd.Text);
             }
         }
-
-        public long GetUnixTimeMilliseconds() => DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        private long UnixTimeMilliseconds => DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
         public string GetTimeNow() => DateTime.Now.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss.FFFFFFF");
 
@@ -424,7 +388,6 @@ namespace SignalR.Tick.Hubs.StockTicker
                 throw new InvalidOperationException(String.Format("You're not in '{0}'. Use '/join {0}' to join it.", room));
             }
         }
-
         private void EnsureUser()
         {
             string name = Clients.Caller.name;
@@ -433,41 +396,14 @@ namespace SignalR.Tick.Hubs.StockTicker
                 throw new InvalidOperationException("You don't have a name. Pick a name using '/nick nickname'.");
             }
         }
-
-        private string Transform(string message, out HashSet<string> extractedUrls)
-        {
-            const string urlPattern = @"((https?|ftp)://|www\.)[\w]+(.[\w]+)([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])";
-
-            HashSet<string> urls = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            message = Regex.Replace(message, urlPattern, m =>
-            {
-                string httpPortion = String.Empty;
-                if (!m.Value.Contains("://"))
-                {
-                    httpPortion = "http://";
-                }
-
-                string url = httpPortion + m.Value;
-
-                urls.Add(url);
-
-                return string.Format(CultureInfo.InvariantCulture,
-                                     "<a rel=\"nofollow external\" target=\"_blank\" href=\"{0}\" title=\"{1}\">{1}</a>",
-                                     url, m.Value);
-            });
-
-            extractedUrls = urls;
-            return message;
-        }
-
         private Task<string> ExtractContent(string url)
         {
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
             Task<WebResponse> requestTask = Task.Factory.FromAsync((cb, state) => request.BeginGetResponse(cb, state), ar => request.EndGetResponse(ar), null);
-            return requestTask.ContinueWith(task => ExtractContent((HttpWebResponse)task.Result));
+            return requestTask.ContinueWith(task => HttpContent((HttpWebResponse)task.Result));
         }
 
-        private string ExtractContent(HttpWebResponse response)
+        private string HttpContent(HttpWebResponse response)
         {
             return response.CharacterSet;
         }

@@ -5,8 +5,9 @@ $(function () {
     function clearMessages() {
         $('#messages').html('');
     }
-
-    function refreshMessages() { refreshList($('#messages')); }
+    function refreshMessages() {
+        refreshList($('#messages'));
+    }
 
     function clearUsers() {
         $('#users').html('');
@@ -141,11 +142,12 @@ $(function () {
     };
 
     $('#send-message').submit(function () {
-       // var command = $('#new-message').val();
+        // var command = $('#new-message').val();
         var command = {
             Id: 1,
             User: 'Tom',
-            Text:'Hello'
+            Text: 'Hello',
+            CmdType: 2
         };
         chat.server.sendCmd(command)
             .fail(function (e) {
@@ -163,9 +165,10 @@ $(function () {
         var command = {
             Id: 1,
             User: 'Tom',
-            Text: 'Hello'
+            Text: 'GC',
+            CmdType: 3
         };
-        chat.server.subscribe(command)
+        chat.server.sendCmd(command)
             .fail(function (e) {
                 addMessage(e, 'error');
             });
@@ -179,7 +182,8 @@ $(function () {
         var command = {
             Id: 1,
             User: 'Tom',
-            Text: 'Hello'
+            Text: 'Hello',
+            CmdType:2
         };
         chat.server.unSubscribe(command)
             .fail(function (e) {
@@ -243,8 +247,6 @@ $(function () {
 
     $('#new-message').val('');
     $('#new-message').focus();
-
-
     $.connection.hub.start({ transport: ['webSockets'] }, function () {
         chat.server.join()
             .done(function (success) {

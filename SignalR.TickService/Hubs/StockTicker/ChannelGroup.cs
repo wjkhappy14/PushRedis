@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using static SignalR.Tick.Hubs.StockTicker.StockTickerHub;
 
 namespace SignalR.Tick.Hubs.StockTicker
 {
