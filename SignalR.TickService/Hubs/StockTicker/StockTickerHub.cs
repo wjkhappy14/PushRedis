@@ -16,7 +16,7 @@ namespace SignalR.Tick.Hubs.StockTicker
     [HubName("stockTicker")]
     public class StockTickerHub : Hub
     {
-        private static readonly ConcurrentDictionary<string, ClientItem> _users = new ConcurrentDictionary<string, ClientItem>(StringComparer.OrdinalIgnoreCase);
+        private static readonly ConcurrentDictionary<string, ClientItem> ClientItems = new ConcurrentDictionary<string, ClientItem>(StringComparer.OrdinalIgnoreCase);
         private static readonly ConcurrentDictionary<string, HashSet<string>> _userRooms = new ConcurrentDictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
         private static readonly ConcurrentDictionary<string, ChannelGroup> ChannelGroups = new ConcurrentDictionary<string, ChannelGroup>(StringComparer.OrdinalIgnoreCase);
 
@@ -24,7 +24,7 @@ namespace SignalR.Tick.Hubs.StockTicker
         {
             Groups.Add(connectionId, groupName).Wait();
             dynamic g = Clients.Group(groupName);
-            ClientItem user = _users.Values.FirstOrDefault(u => u.Id == groupName);
+            ClientItem user = ClientItems.Values.FirstOrDefault(u => u.ConnectionId == connectionId);
             if (user != null)
             {
                 // Update the users's client id mapping
@@ -36,8 +36,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                 Clients.Caller.hash = user.Hash;
 
                 // Leave all rooms
-                HashSet<string> rooms;
-                if (_userRooms.TryGetValue(user.Name, out rooms))
+                if (_userRooms.TryGetValue(user.Name, out HashSet<string> rooms))
                 {
                     foreach (var room in rooms)
                     {
@@ -46,14 +45,12 @@ namespace SignalR.Tick.Hubs.StockTicker
                         chatRoom.Users.Remove(user.Name);
                     }
                 }
-
                 _userRooms[user.Name] = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
                 // Add this user to the list of users
                 Clients.Caller.addUser(user);
                 return true;
             }
-
             return false;
         }
 
@@ -107,30 +104,18 @@ namespace SignalR.Tick.Hubs.StockTicker
         }
         public override Task OnDisconnected(bool stopCalled)
         {
-            ClientItem user = _users.Values.FirstOrDefault(u => u.ConnectionId == Context.ConnectionId);
-            if (user != null)
-            {
-                _users.TryRemove(user.Name, out ClientItem ignoredUser);
+            ClientItems.TryRemove(Context.ConnectionId, out ClientItem item);
+            return Groups.Remove(Context.ConnectionId, "");
 
-                // Leave all rooms
-                if (_userRooms.TryGetValue(user.Name, out HashSet<string> rooms))
-                {
-                    foreach (var room in rooms)
-                    {
-                        Clients.Group(room).leave(user);
-                        var chatRoom = ChannelGroups[room];
-                        chatRoom.Users.Remove(user.Name);
-                    }
-                }
-
-                _userRooms.TryRemove(user.Name, out HashSet<string> ignoredRoom);
-            }
-
-            return null;
         }
         public override Task OnConnected()
         {
             dynamic all = Clients.All;
+            ClientItems.TryAdd(Context.ConnectionId, new ClientItem()
+            {
+                ConnectionId = Context.ConnectionId,
+                Hash = GetMD5Hash(Context.ConnectionId)
+            });
             return base.OnConnected();
         }
         public IGroupManager GetGroups() => Groups;
@@ -144,13 +129,13 @@ namespace SignalR.Tick.Hubs.StockTicker
             }
 
             return from name in ChannelGroups[room].Users
-                   select _users[name];
+                   select ClientItems[name];
         }
 
-        private string GetMD5Hash(string name)
+        private string GetMD5Hash(string connectionId)
         {
             return string.Join("", MD5.Create()
-                         .ComputeHash(Encoding.Default.GetBytes(name))
+                         .ComputeHash(Encoding.Default.GetBytes(connectionId))
                          .Select(b => b.ToString("x2")));
         }
 
@@ -175,15 +160,15 @@ namespace SignalR.Tick.Hubs.StockTicker
                     throw new InvalidOperationException("That's already your username...");
                 }
 
-                if (!_users.ContainsKey(newUserName))
+                if (!ClientItems.ContainsKey(newUserName))
                 {
-                    if (string.IsNullOrEmpty(name) || !_users.ContainsKey(name))
+                    if (string.IsNullOrEmpty(name) || !ClientItems.ContainsKey(name))
                     {
                         AddUser(newUserName);
                     }
                     else
                     {
-                        ClientItem oldUser = _users[name];
+                        ClientItem oldUser = ClientItems[name];
                         ClientItem newUser = new ClientItem
                         {
                             Name = newUserName,
@@ -192,7 +177,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                             ConnectionId = oldUser.ConnectionId
                         };
 
-                        _users[newUserName] = newUser;
+                        ClientItems[newUserName] = newUser;
                         _userRooms[newUserName] = new HashSet<string>(_userRooms[name]);
 
                         if (_userRooms[name].Any())
@@ -205,7 +190,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                             }
                         }
                         _userRooms.TryRemove(name, out HashSet<string> ignoredRoom);
-                        _users.TryRemove(name, out ClientItem ignoredUser);
+                        ClientItems.TryRemove(name, out ClientItem ignoredUser);
 
                         Clients.Caller.hash = newUser.Hash;
                         Clients.Caller.name = newUser.Name;
@@ -259,7 +244,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                         _userRooms[name].Remove(room);
                         ChannelGroups[room].Users.Remove(name);
 
-                        Clients.Group(room).leave(_users[name]);
+                        Clients.Group(room).leave(ClientItems[name]);
                         Groups.Remove(Context.ConnectionId, room);
                     }
 
@@ -268,7 +253,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                     {
                         throw new InvalidOperationException("You're already in that room!");
                     }
-                    Clients.Group(newRoom).addUser(_users[name]);
+                    Clients.Group(newRoom).addUser(ClientItems[name]);
 
                     // Set the room on the caller
                     Clients.Caller.room = newRoom;
@@ -281,7 +266,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                 }
                 else if (commandName.Equals("msg", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (_users.Count == 1)
+                    if (ClientItems.Count == 1)
                     {
                         throw new InvalidOperationException("You're the only person in here...");
                     }
@@ -297,7 +282,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                         throw new InvalidOperationException("You can't private message yourself!");
                     }
 
-                    if (!_users.ContainsKey(to))
+                    if (!ClientItems.ContainsKey(to))
                     {
                         throw new InvalidOperationException(String.Format("Couldn't find any user named '{0}'.", to));
                     }
@@ -309,7 +294,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                         throw new InvalidOperationException(String.Format("What did you want to say to '{0}'.", to));
                     }
 
-                    string recipientId = _users[to].ConnectionId;
+                    string recipientId = ClientItems[to].ConnectionId;
                     // Send a message to the sender and the sendee                        
                     Clients.Group(recipientId).sendPrivateMessage(name, to, messageText);
                     Clients.Caller.sendPrivateMessage(name, to, messageText);
@@ -337,7 +322,7 @@ namespace SignalR.Tick.Hubs.StockTicker
                             chatRoom.Users.Remove(name);
                             _userRooms[name].Remove(room);
 
-                            Clients.Group(room).leave(_users[name]);
+                            Clients.Group(room).leave(ClientItems[name]);
                         }
 
                         Groups.Remove(Context.ConnectionId, room);
@@ -357,7 +342,7 @@ namespace SignalR.Tick.Hubs.StockTicker
         {
             ClientItem user = new ClientItem(newUserName, GetMD5Hash(newUserName));
             user.ConnectionId = Context.ConnectionId;
-            _users[newUserName] = user;
+            ClientItems[newUserName] = user;
             _userRooms[newUserName] = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             Clients.Caller.name = user.Name;
@@ -389,7 +374,7 @@ namespace SignalR.Tick.Hubs.StockTicker
         private void EnsureUser()
         {
             string name = Clients.Caller.name;
-            if (string.IsNullOrEmpty(name) || !_users.ContainsKey(name))
+            if (string.IsNullOrEmpty(name) || !ClientItems.ContainsKey(name))
             {
                 throw new InvalidOperationException("You don't have a name. Pick a name using '/nick nickname'.");
             }

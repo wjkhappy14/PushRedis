@@ -91,7 +91,7 @@ namespace SignalR.Tick
             {
                 string username = context.Request.Headers.Get("username");
 
-                if (!string.IsNullOrEmpty(username))
+                if (string.IsNullOrEmpty(username))
                 {
                     string authenticated = username == "john" ? "true" : "false";
 
