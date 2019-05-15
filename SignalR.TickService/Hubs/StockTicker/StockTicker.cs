@@ -19,7 +19,7 @@ namespace SignalR.Tick.Hubs.StockTicker
         private readonly object _marketStateLock = new object();
         private readonly object _updateStockPricesLock = new object();
 
-        private readonly ConcurrentDictionary<string, ContractQuoteFull> _stocks = new ConcurrentDictionary<string, ContractQuoteFull>();
+        private readonly ConcurrentDictionary<Tuple<string, string>, ContractQuoteFull> _stocks = new ConcurrentDictionary<Tuple<string, string>, ContractQuoteFull>();
 
         // Stock can go up or down by a percentage of this factor on each change
         private readonly double _rangePercent = 0.002;
@@ -35,7 +35,7 @@ namespace SignalR.Tick.Hubs.StockTicker
             LoadDefaultStocks();
             ContractQuoteFull.Items.ForEach(item =>
             {
-                RedisSub.Subscribe(item, (channel, value) =>
+                RedisSub.Subscribe(item.Item2, (channel, value) =>
                 {
                     //string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     //string msg = $"{now}/{value}";

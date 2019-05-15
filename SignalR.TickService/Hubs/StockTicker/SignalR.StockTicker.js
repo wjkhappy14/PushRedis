@@ -20,7 +20,6 @@ jQuery.fn.flash = function (color, duration) {
 
 $(function () {
     var ticker = $.connection.stockTicker;
-
     var up = '↑',
         down = '↓',
         $stockTable = $('#stockTable'),
@@ -28,7 +27,7 @@ $(function () {
         rowTemplate = '<tr data-symbol="{CommodityNo}"><td>{CommodityNo}</td> <td>{ContractNo}</td><td>{CurrentTime}</td><td>{Time}</td><td>{TimeDiff}</td><td>{HighPrice}</td><td>{LastPrice}</td> <td>{LastSize}</td><td>{LowPrice}</td> <td>{NowClosePrice}</td><td>{ClosePrice}</td> <td>{OpenPrice}</td><td>{PercentChange}</td><td>{PositionQty}</td> <td>{PrePositionQty}</td> <td>{PreSettlePrice}</td> <td>{TotalQty}</td><td>{TotalVolume}</td><td>{Volume}</td><td>{AskPrice}</td><td>{AskSize}</td><td>{BidPrice}</td><td>{BidSize}</td></tr>',
         $stockTicker = $('#stockTicker'),
         $stockTickerUl = $stockTicker.find('ul'),
-        liTemplate = '<li data-symbol="{CommodityNo}"><span>{CommodityNo}</span> <span>{ContractNo}</span><span>{CurrentTime}</span><span>{HighPrice}</span><span>{LastPrice}</span> <span>{LastSize}</span><span>{LowPrice}</span> <span>{NowClosePrice}</span><span>{ClosePrice}</span> <span>{OpenPrice}</span><span>{PercentChange}</span><span>{PositionQty}</span> <span>{PrePositionQty}</span> <span>{PreSettlePrice}</span> <span>{TotalQty}</span><span>{TotalVolume}</span><span>{Volume}</span><span>{AskPrice}</span><span>{AskSize}</span><span>{BidPrice}</span><span>{BidSize}</span></li>';
+        liTemplate = '<li data-symbol="{Item2}"><span>{Item2}</span></li>';
 
     function formatStock(stock) {
         return $.extend(stock, {
@@ -39,7 +38,13 @@ $(function () {
             Direction: stock.BidPrice === 0 ? '' : stock.BidPrice >= 0 ? up : down,
             DirectionClass: stock.BidPrice === 0 ? 'even' : stock.BidPrice >= 0 ? 'up' : 'down'
         });
-    }
+    };
+    function formatSymbol(symbol) {
+        return $.extend(symbol, {
+            symbol: symbol,
+            CurrentTime: +(new Date())
+        });
+    };
 
     function scrollTicker() {
         var w = $stockTickerUl.width();
@@ -63,13 +68,15 @@ $(function () {
         });
     };
     function initSymbols() {
-        return ticker.server.getSymbols().done(function (stocks) {
-            $.each(stocks, function () {
-                var stock = formatStock(this);
-                $stockTableBody.append(rowTemplate.supplant(stock));
-                $stockTickerUl.append(liTemplate.supplant(stock));
+        return ticker.server.getSymbols()
+            .done(function (symbols) {
+                $stockTickerUl.empty();
+                $.each(symbols, function (index) {
+                    var symbol = symbols[index];
+                    var el = liTemplate.supplant(symbol);
+                    $stockTickerUl.append(el);
+                });
             });
-        });
     }
 
     // Add client-side hub methods that the server will call
@@ -119,11 +126,10 @@ $(function () {
 
     // Start the connection
     $.connection.hub.logging = true;
-    $.connection.hub.start({ transport:['webSockets'] })
+    $.connection.hub.start({ transport: ['webSockets'] })
         .then(init)
         .then(initSymbols)
         .then(function () {
-
             return ticker.server.getMarketState();
         })
         .done(function (state) {

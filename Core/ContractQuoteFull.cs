@@ -13,20 +13,20 @@ namespace Core
 
         }
 
-        public static List<string> Items = new List<string>() {
-           "AD1906",
-           "BP1906",
-           "CD1906",
-           "CL1906",
-           "CN1905",
-           "DAX1906",
-           "EC1906",
-           "GC1906",
-           "HG1907",
-           "HSI1905",
-           "MHI1905",
-           "NQ1906",
-           "SI1907"
+        public static List<Tuple<string, string>> Items = new List<Tuple<string, string>>() {
+            Tuple.Create("AD", "AD1906"),
+            Tuple.Create("BP", "BP1906"),
+            Tuple.Create("CD", "CD1906"),
+            Tuple.Create("CL", "CL1906"),
+            Tuple.Create("CN", "CN1905"),
+            Tuple.Create("HG", "HG1907"),
+            Tuple.Create("GC", "GC1906"),
+            Tuple.Create("EC", "EC1906"),
+            Tuple.Create("HSI", "HSI1905"),
+            Tuple.Create("MHI", "MHI1905"),
+            Tuple.Create("DAX", "DAX1906"),
+            Tuple.Create("NQ", "NQ1906"),
+            Tuple.Create("SI", "SI1907")
         };
 
         public static Dictionary<string, string> SymbolItems = new Dictionary<string, string>() {
@@ -45,16 +45,16 @@ namespace Core
            {"SI1907", "SI" }
 
         };
-        public static ContractQuoteFull Default(string key)
+        public static ContractQuoteFull Default(Tuple<string, string> item)
         {
-            string rel = Items.First(x => x == key);
-            string value = SymbolItems[rel];
-            ContractQuoteFull item = new ContractQuoteFull()
+            Tuple<string, string> rel = Items.First(x => x == item);
+            string value = SymbolItems[rel.Item2];
+            ContractQuoteFull contract = new ContractQuoteFull()
             {
                 CommodityNo = value,
                 BidPrice = "12564"
             };
-            return item;
+            return contract;
         }
 
         public static Dictionary<string, string> Fake(string contractNo)

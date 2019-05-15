@@ -5,6 +5,10 @@
     color: green;
 }
 
+#main-content {
+    width: 100px;
+}
+
 #stockTable table {
     border-collapse: collapse;
     text-align: center;
@@ -24,14 +28,13 @@
 }
 
 #stockTicker {
-    overflow: hidden;
     width: 100%;
-    height: 24px;
-    border: 1px solid #999;
+    height: 25px;
 }
 
     #stockTicker .inner {
-        width: 9999px;
+        width: 960px;
+        border: 1px solid #999;
     }
 
     #stockTicker ul {
