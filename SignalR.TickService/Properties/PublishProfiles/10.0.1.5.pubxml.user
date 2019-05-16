@@ -10,19 +10,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>05/15/2019 18:53:57</publishTime>
+      <publishTime>05/16/2019 14:42:59</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>05/15/2019 18:53:57</publishTime>
+      <publishTime>05/16/2019 14:42:59</publishTime>
     </File>
     <File Include="bin/App_global.asax.pdb">
-      <publishTime>05/15/2019 18:53:57</publishTime>
+      <publishTime>05/16/2019 14:42:59</publishTime>
     </File>
     <File Include="bin/Core.dll">
-      <publishTime>05/15/2019 16:39:35</publishTime>
+      <publishTime>05/16/2019 14:42:52</publishTime>
     </File>
     <File Include="bin/Core.pdb">
-      <publishTime>05/15/2019 16:39:35</publishTime>
+      <publishTime>05/16/2019 14:42:52</publishTime>
     </File>
     <File Include="bin/dotnetty.com.pfx">
       <publishTime>04/29/2019 13:45:10</publishTime>
@@ -85,10 +85,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/13/2012 12:19:34</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.dll">
-      <publishTime>05/15/2019 18:53:51</publishTime>
+      <publishTime>05/16/2019 14:42:53</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.pdb">
-      <publishTime>05/15/2019 18:53:51</publishTime>
+      <publishTime>05/16/2019 14:42:53</publishTime>
     </File>
     <File Include="bin/StackExchange.Redis.dll">
       <publishTime>04/29/2019 13:45:10</publishTime>
@@ -1072,10 +1072,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/04/2019 17:51:13</publishTime>
     </File>
     <File Include="Hubs/HubConnectionAPI/Default.aspx">
-      <publishTime>05/14/2019 14:15:26</publishTime>
+      <publishTime>05/16/2019 00:32:11</publishTime>
     </File>
     <File Include="Hubs/HubConnectionAPI/HubConnectionAPI.js">
-      <publishTime>05/15/2019 18:46:31</publishTime>
+      <publishTime>05/16/2019 00:31:51</publishTime>
     </File>
     <File Include="Hubs/MessageLoops/Default.aspx">
       <publishTime>05/03/2019 19:22:08</publishTime>
@@ -1099,7 +1099,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/08/2019 11:44:14</publishTime>
     </File>
     <File Include="Hubs/Raw/Default.aspx">
-      <publishTime>05/03/2019 19:22:08</publishTime>
+      <publishTime>05/16/2019 14:35:45</publishTime>
     </File>
     <File Include="Hubs/Raw/eventSource.html">
       <publishTime>05/08/2019 11:42:55</publishTime>
@@ -1138,7 +1138,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/14/2019 14:24:19</publishTime>
     </File>
     <File Include="Hubs/StockTicker/SignalR.StockTicker.js">
-      <publishTime>05/15/2019 16:39:11</publishTime>
+      <publishTime>05/15/2019 23:35:12</publishTime>
     </File>
     <File Include="Hubs/StockTicker/StockTicker.css">
       <publishTime>05/15/2019 16:39:11</publishTime>
@@ -1147,7 +1147,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/10/2019 15:33:36</publishTime>
     </File>
     <File Include="Hubs/StockTicker/Subscribe.js">
-      <publishTime>05/15/2019 18:46:31</publishTime>
+      <publishTime>05/15/2019 23:36:24</publishTime>
     </File>
     <File Include="Hubs/Streaming/Default.aspx">
       <publishTime>05/09/2019 16:25:50</publishTime>
@@ -1189,7 +1189,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2019 16:42:09</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>05/15/2019 18:53:53</publishTime>
+      <publishTime>05/16/2019 14:42:56</publishTime>
     </File>
     <File Include="Raw/crossdomain.htm">
       <publishTime>05/08/2019 11:44:14</publishTime>
@@ -1327,7 +1327,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/15/2019 16:39:11</publishTime>
     </File>
     <File Include="Views/Hubs/StockTicker.cshtml">
-      <publishTime>05/15/2019 16:39:11</publishTime>
+      <publishTime>05/15/2019 19:15:26</publishTime>
     </File>
     <File Include="Views/Member/Login.cshtml">
       <publishTime>05/05/2019 15:09:37</publishTime>
