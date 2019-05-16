@@ -1,4 +1,4 @@
-﻿<%@ Page Title="ASP.NET SignalR: Connection API" Language="C#" MasterPageFile="~/SignalR.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SignalR.Tick.Raw.Default" %>
+﻿<%@ Page Title="订阅行情推送API" Language="C#" MasterPageFile="~/SignalR.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SignalR.Tick.Raw.Default" %>
 
 <asp:Content runat="server" ContentPlaceHolderID="MainContent">
     <ul class="breadcrumb">
@@ -7,29 +7,37 @@
     </ul>
 
     <div class="page-header">
-        <h2>Connection API <small>Low-level connection abstraction</small></h2>
+        <h2>订阅行情推送API <small>实时，低延迟</small></h2>
         <p>
-            Demonstrates all features of the lower-level connection API including starting and stopping, sending and
-           receiving messages, and managing groups.
+            对接demo
         </p>
     </div>
-
-    <a href="crossdomain.htm">Cross Domain</a>
-    <h4>To Everybody</h4>
+    <a href="crossdomain.htm">跨域(Cross Domain)</a>
+    <h4>To All</h4>
     <form class="form-inline">
         <div class="input-append">
             <input type="text" id="msg" placeholder="Type a message" value="Hello  hao are  you ?" />
             <select id="group">
-                <option value="GC1906" selected="selected">GC1906</option>
-                <option value="CN1906">CN1906</option>
-                <option value="MSH1906">MSH1906</option>
-                <option value="SI1906">SI1906</option>
+                <option value="All" selected="selected">All</option>
+                <option value="AD1906">AD1906</option>
+                <option value="BP1906">BP1906</option>
+                <option value="CD1906">CD1906</option>
+                <option value="CL1906">CL1906</option>
+                <option value="CN1905">CL1906</option>
+                <option value="HG1907">CL1906</option>
+                <option value="GC1906">CL1906</option>
+                <option value="EC1906">CL1906</option>
+                <option value="HSI1905">CL1906</option>
+                <option value="MHI1905">CL1906</option>
+                <option value="DAX1906">DAX1906</option>
+                <option value="NQ1906">NQ1906</option>
+                <option value="SI1907">SI1907</option>
             </select>
-            <input type="button" id="broadcast" class="btn" value="Broadcast" />
+            <input type="button" id="broadcast" class="btn" value="广播" />
             <input type="button" id="broadcast-exceptme" class="btn" value="Broadcast (All Except Me)" />
             <input type="button" id="join" class="btn" value="Enter Name" />
-            <input type="button" id="join-group" class="btn" value="Join Group" />
-            <input type="button" id="leave-group" class="btn" value="Leave Group" />
+            <input type="button" id="join-group" class="btn" value="订阅" />
+            <input type="button" id="leave-group" class="btn" value="取消" />
         </div>
     </form>
 
@@ -41,7 +49,7 @@
         </div>
     </form>
 
-    <h4>Private Message</h4>
+    <h4>私信 </h4>
     <form class="form-inline">
         <div class="input-prepend input-append">
             <input type="text" name="message" id="message" placeholder="Type a message" />
@@ -63,7 +71,6 @@
     <script src="<%: ResolveUrl("~/Scripts/jquery.cookie.js") %>"></script>
     <script type="text/javascript">
         window.onload = function () {
-
             $.cookie("user", +(new Date()));
         };
     </script>
@@ -120,17 +127,6 @@
                 $("<li/>").html(oldState + " => " + newState)
                     .appendTo($("#messages"));
             });
-
-            // Uncomment this block to enable custom JSON parser
-            //connection.json = {
-            //    parse: function (text, reviver) {
-            //        console.log("Parsing JSON");
-            //        return window.JSON.parse(text, reviver);
-            //    },
-            //    stringify: function (value, replacer, space) {
-            //        return window.JSON.stringify(value, replacer, space);
-            //    }
-            //};
 
             var start = function () {
                 connection.start({ transport: activeTransport, jsonp: isJsonp })

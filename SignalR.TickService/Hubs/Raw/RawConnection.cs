@@ -2,19 +2,33 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace SignalR.Tick
 {
     public class RawConnection : PersistentConnection
     {
+        private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
+        public static ISubscriber RedisSub { get; } = Redis.GetSubscriber();
         private static readonly ConcurrentDictionary<string, string> _users = new ConcurrentDictionary<string, string>();
         private static readonly ConcurrentDictionary<string, string> Clients = new ConcurrentDictionary<string, string>();
 
         public RawConnection()
         {
-
+            ContractQuoteFull.Items.ForEach(item =>
+            {
+                RedisSub.Subscribe(item.Item2, (channel, value) =>
+                {
+                    //string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    //string msg = $"{now}/{value}";
+                    ContractQuoteFull data = JsonConvert.DeserializeObject<ContractQuoteFull>(value);
+                    Groups.Send(channel, data);
+                    Groups.Send("All", data);
+                });
+            });
         }
         protected override Task OnConnected(IRequest request, string connectionId)
         {
@@ -55,7 +69,7 @@ namespace SignalR.Tick
                 case MessageType.Broadcast:
                     Connection.Broadcast(new
                     {
-                        type = MessageType.Broadcast.ToString(),
+                        type = MessageType.Broadcast,
                         from = GetUser(connectionId),
                         data = message.Value
                     });
@@ -63,7 +77,7 @@ namespace SignalR.Tick
                 case MessageType.BroadcastExceptMe:
                     Connection.Broadcast(new
                     {
-                        type = MessageType.Broadcast.ToString(),
+                        type = MessageType.Broadcast,
                         from = GetUser(connectionId),
                         data = message.Value
                     },
