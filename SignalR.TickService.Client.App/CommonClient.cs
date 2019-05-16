@@ -22,7 +22,8 @@ namespace SignalR.TickService.Client.App
         {
             try
             {
-                await RunStockTickerDemo(url);
+                await RunRawConnection(url);
+                //await RunStockTickerDemo(url);
             }
             catch (HttpClientException httpClientException)
             {

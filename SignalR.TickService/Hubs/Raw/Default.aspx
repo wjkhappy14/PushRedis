@@ -8,16 +8,23 @@
 
     <div class="page-header">
         <h2>Connection API <small>Low-level connection abstraction</small></h2>
-        <p>Demonstrates all features of the lower-level connection API including starting and stopping, sending and
-           receiving messages, and managing groups.</p>
+        <p>
+            Demonstrates all features of the lower-level connection API including starting and stopping, sending and
+           receiving messages, and managing groups.
+        </p>
     </div>
 
     <a href="crossdomain.htm">Cross Domain</a>
-    
     <h4>To Everybody</h4>
     <form class="form-inline">
         <div class="input-append">
-            <input type="text" id="msg" placeholder="Type a message, name or group" />
+            <input type="text" id="msg" placeholder="Type a message" value="Hello  hao are  you ?" />
+            <select id="group">
+                <option value="GC1906" selected="selected">GC1906</option>
+                <option value="CN1906">CN1906</option>
+                <option value="MSH1906">MSH1906</option>
+                <option value="SI1906">SI1906</option>
+            </select>
             <input type="button" id="broadcast" class="btn" value="Broadcast" />
             <input type="button" id="broadcast-exceptme" class="btn" value="Broadcast (All Except Me)" />
             <input type="button" id="join" class="btn" value="Enter Name" />
@@ -25,12 +32,12 @@
             <input type="button" id="leave-group" class="btn" value="Leave Group" />
         </div>
     </form>
-    
+
     <h4>To Me</h4>
     <form class="form-inline">
         <div class="input-append">
             <input type="text" id="me" placeholder="Type a message" />
-            <input type="button" id="send" class="btn" value="Send to me" />
+            <input type="button" id="sendtome" class="btn" value="Send to me" />
         </div>
     </form>
 
@@ -39,13 +46,13 @@
         <div class="input-prepend input-append">
             <input type="text" name="message" id="message" placeholder="Type a message" />
             <input type="text" name="user" id="user" placeholder="Type a user or group name" />
-        
+
             <input type="button" id="privatemsg" class="btn" value="Send to user" />
             <input type="button" id="groupmsg" class="btn" value="Send to group" />
         </div>
     </form>
 
-    <button id="stopStart" class="btn btn-info btn-small" disabled="disabled"><i class="icon-stop icon-white"></i> <span>Stop Connection</span></button>
+    <button id="stopStart" class="btn btn-info btn-small" disabled="disabled"><i class="icon-stop icon-white"></i><span>Stop Connection</span></button>
 
     <h4>Messages</h4>
     <ul id="messages">
@@ -54,11 +61,17 @@
 
 <asp:Content runat="server" ContentPlaceHolderID="Scripts">
     <script src="<%: ResolveUrl("~/Scripts/jquery.cookie.js") %>"></script>
-    <script>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            $.cookie("user", +(new Date()));
+        };
+    </script>
+    <script type="text/javascript">
         $(function () {
             "use strict";
 
-            var connection = $.connection("../raw-connection");
+            var connection = $.connection("/raw-connection");
             connection.logging = true;
 
             connection.received(function (data) {
@@ -70,25 +83,25 @@
 
             connection.reconnected(function () {
                 $("<li/>").css("background-color", "green")
-                          .css("color", "white")
-                          .html("[" + new Date().toTimeString() + "]: Connection re-established")
-                          .appendTo($("#messages"));
+                    .css("color", "white")
+                    .html("[" + new Date().toTimeString() + "]: Connection re-established")
+                    .appendTo($("#messages"));
             });
 
             connection.error(function (err) {
                 $("<li/>").html(err || "Error occurred")
-                          .appendTo($("#messages"));
+                    .appendTo($("#messages"));
             });
 
             connection.disconnected(function () {
                 $("#stopStart")
                     .prop("disabled", false)
                     .find("span")
-                        .text("Start Connection")
-                        .end()
+                    .text("Start Connection")
+                    .end()
                     .find("i")
-                        .removeClass("icon-stop")
-                        .addClass("icon-play");
+                    .removeClass("icon-stop")
+                    .addClass("icon-play");
             });
 
             connection.stateChanged(function (change) {
@@ -105,7 +118,7 @@
                 }
 
                 $("<li/>").html(oldState + " => " + newState)
-                          .appendTo($("#messages"));
+                    .appendTo($("#messages"));
             });
 
             // Uncomment this block to enable custom JSON parser
@@ -123,49 +136,74 @@
                 connection.start({ transport: activeTransport, jsonp: isJsonp })
                     .then(function () {
                         $("#stopStart")
-                           .prop("disabled", false)
-                           .find("span")
-                               .text("Stop Connection")
-                               .end()
-                           .find("i")
-                               .removeClass("icon-play")
-                               .addClass("icon-stop");
+                            .prop("disabled", false)
+                            .find("span")
+                            .text("Stop Connection")
+                            .end()
+                            .find("i")
+                            .removeClass("icon-play")
+                            .addClass("icon-stop");
                     });
             };
             start();
-
-            $("#send").click(function () {
-                connection.send({ type: 0, value: $("#me").val() });
+            //send to me
+            $("#sendtome").click(function () {
+                connection.send({
+                    type: 0,
+                    value: $("#me").val()
+                });
             });
-
+            //Broadcast
             $("#broadcast").click(function () {
-                connection.send({ type: 1, value: $("#msg").val() });
+                connection.send({
+                    type: 1,
+                    value: $("#msg").val()
+                });
             });
 
-            $("#broadcast-exceptme").click(function () {
-                connection.send({ type: 7, value: $("#msg").val() });
-            });
-
+            //Join
             $("#join").click(function () {
-                connection.send({ type: 2, value: $("#msg").val() });
+                connection.send({
+                    type: 2,
+                    value: $("#msg").val()
+                });
             });
-
+            //PrivateMessage
             $("#privatemsg").click(function () {
-                connection.send({ type: 3, value: $("#user").val() + "|" + $("#message").val() });
+                connection.send({
+                    type: 3,
+                    value: $("#user").val() + "|" + $("#message").val()
+                });
             });
-
+            //AddToGroup
             $('#join-group').click(function () {
-                connection.send({ type: 4, value: $("#msg").val() });
+                connection.send({
+                    type: 4,
+                    value: $("#group").val()
+                });
             });
-
+            //RemoveFromGroup
             $('#leave-group').click(function () {
-                connection.send({ type: 5, value: $("#msg").val() });
+                connection.send({
+                    type: 5,
+                    value: $("#msg").val()
+                });
             });
 
+            //SendToGroup
             $("#groupmsg").click(function () {
-                connection.send({ type: 6, value: $("#user").val() + "|" + $("#message").val() });
+                connection.send({
+                    type: 6,
+                    value: $("#user").val() + "|" + $("#message").val()
+                });
             });
-
+            //BroadcastExceptMe
+            $("#broadcast-exceptme").click(function () {
+                connection.send({
+                    type: 7,
+                    value: $("#msg").val()
+                });
+            });
             $("#stopStart").click(function () {
                 var $el = $(this);
 

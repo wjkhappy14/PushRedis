@@ -1,7 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,25 +10,24 @@ namespace SignalR.Tick
     public class RawConnection : PersistentConnection
     {
         private static readonly ConcurrentDictionary<string, string> _users = new ConcurrentDictionary<string, string>();
-        private static readonly ConcurrentDictionary<string, string> _clients = new ConcurrentDictionary<string, string>();
+        private static readonly ConcurrentDictionary<string, string> Clients = new ConcurrentDictionary<string, string>();
 
+        public RawConnection()
+        {
+
+        }
         protected override Task OnConnected(IRequest request, string connectionId)
         {
-            Cookie userNameCookie;
-            if (request.Cookies.TryGetValue("user", out userNameCookie) &&
-                userNameCookie != null)
-            {
-                _clients[connectionId] = userNameCookie.Value;
-                _users[userNameCookie.Value] = connectionId;
-            }
+            string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            Clients[connectionId] = now;
+            _users[now] = connectionId;
 
             string clientIp = GetClientIP(request);
 
             string user = GetUser(connectionId);
             string msg = $"@{DateTime.Now } :  [{user}]  加入 from  [{clientIp}]";
 
-            return Groups.Add(connectionId, "foo").ContinueWith(x =>
-                   Connection.Broadcast(msg)).Unwrap();
+            return Groups.Add(connectionId, "All").ContinueWith(x => Connection.Broadcast(msg)).Unwrap();
         }
 
         protected override Task OnReconnected(IRequest request, string connectionId)
@@ -73,21 +69,21 @@ namespace SignalR.Tick
                     },
                     connectionId);
                     break;
-                case MessageType.Send:
+                case MessageType.SendToMe:
                     Connection.Send(connectionId, new
                     {
-                        type = MessageType.Send.ToString(),
+                        type = MessageType.SendToMe,
                         from = GetUser(connectionId),
                         data = message.Value
                     });
                     break;
                 case MessageType.Join:
                     string name = message.Value;
-                    _clients[connectionId] = name;
+                    Clients[connectionId] = name;
                     _users[name] = connectionId;
                     Connection.Send(connectionId, new
                     {
-                        type = MessageType.Join.ToString(),
+                        type = MessageType.Join,
                         data = message.Value
                     });
                     break;
@@ -120,38 +116,34 @@ namespace SignalR.Tick
 
             return base.OnReceived(request, connectionId, data);
         }
+        protected override IList<string> OnRejoiningGroups(IRequest request, IList<string> groups, string connectionId)
+        {
+            return base.OnRejoiningGroups(request, groups, connectionId);
+        }
 
         private string GetUser(string connectionId)
         {
-            if (!_clients.TryGetValue(connectionId, out string user))
-            {
-                return connectionId;
-            }
-            return user;
+            return !Clients.TryGetValue(connectionId, out string user) ? connectionId : user;
         }
 
         private string GetClient(string user)
         {
-            if (_users.TryGetValue(user, out string connectionId))
-            {
-                return connectionId;
-            }
-            return null;
+            return _users.TryGetValue(user, out string connectionId) ? connectionId : null;
         }
 
-        enum MessageType
+        private enum MessageType
         {
-            Send,
-            Broadcast,
-            Join,
-            PrivateMessage,
-            AddToGroup,
-            RemoveFromGroup,
-            SendToGroup,
-            BroadcastExceptMe,
+            SendToMe = 0,
+            Broadcast = 1,
+            Join = 2,
+            PrivateMessage = 3,
+            AddToGroup = 4,
+            RemoveFromGroup = 5,
+            SendToGroup = 6,
+            BroadcastExceptMe = 7,
         }
 
-        class Message
+        private class Message
         {
             public MessageType Type { get; set; }
             public string Value { get; set; }
@@ -164,8 +156,7 @@ namespace SignalR.Tick
 
         private static T Get<T>(IDictionary<string, object> env, string key)
         {
-            object value;
-            return env.TryGetValue(key, out value) ? (T)value : default(T);
+            return env.TryGetValue(key, out object value) ? (T)value : default(T);
         }
     }
 }

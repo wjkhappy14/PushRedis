@@ -17,7 +17,7 @@ namespace SignalR.TickService.Client.App
 
             CommonClient client = new CommonClient(writer);
 
-            client.Run("http://10.0.1.5:8081/");
+            client.Run("http://10.0.1.4/");
 
             Console.ReadKey();
         }
