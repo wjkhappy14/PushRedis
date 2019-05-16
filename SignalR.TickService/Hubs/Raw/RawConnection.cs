@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using Core;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
+using SignalR.Tick.Connections;
 using StackExchange.Redis;
 
 namespace SignalR.Tick
 {
-    public class RawConnection : PersistentConnection
+    public class RawConnection : AddGroupOnConnectedConnection
     {
         private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
         public static ISubscriber RedisSub { get; } = Redis.GetSubscriber();

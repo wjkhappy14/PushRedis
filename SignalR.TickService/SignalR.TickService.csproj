@@ -557,8 +557,6 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Connections\AddGroupOnConnectedConnection.cs" />
     <Compile Include="Connections\MyGroupConnection.cs" />
-    <Compile Include="Connections\MyReconnect.cs" />
-    <Compile Include="Connections\MyRejoinGroupsConnection.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommodityController.cs" />

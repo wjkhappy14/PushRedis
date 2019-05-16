@@ -1,11 +1,23 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json.Linq;
 
 namespace SignalR.Tick.Connections
 {
-    public class MyGroupConnection : MyReconnect
+    public abstract class MyGroupConnection : PersistentConnection
     {
+        private readonly Action _onReconnected;
+        public MyGroupConnection() : this(onReconnected: () => { })
+        {
+
+        }
+
+        private MyGroupConnection(Action onReconnected)
+        {
+
+            _onReconnected = onReconnected;
+        }
         protected override Task OnReceived(IRequest request, string connectionId, string data)
         {
             JObject operation = JObject.Parse(data);
@@ -28,6 +40,16 @@ namespace SignalR.Tick.Connections
             }
 
             return base.OnReceived(request, connectionId, data);
+        }
+        protected override Task OnConnected(IRequest request, string connectionId)
+        {
+            return null;
+        }
+
+        protected override Task OnReconnected(IRequest request, string connectionId)
+        {
+            _onReconnected();
+            return base.OnReconnected(request, connectionId);
         }
     }
 

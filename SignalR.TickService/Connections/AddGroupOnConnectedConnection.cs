@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SignalR.Tick.Connections
 {
-  public  class AddGroupOnConnectedConnection : MyRejoinGroupsConnection
+    public class AddGroupOnConnectedConnection : MyGroupConnection
     {
         protected override async Task OnConnected(IRequest request, string connectionId)
         {
@@ -64,7 +64,7 @@ namespace SignalR.Tick.Connections
         {
             string redirectWhen = "____Never____";
 
-            if (!String.IsNullOrEmpty(context.Request.QueryString["redirectWhen"]))
+            if (!string.IsNullOrEmpty(context.Request.QueryString["redirectWhen"]))
             {
                 redirectWhen = context.Request.QueryString["redirectWhen"];
             }
