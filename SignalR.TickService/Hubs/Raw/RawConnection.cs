@@ -60,6 +60,10 @@ namespace SignalR.Tick
                 Groups.Add(connectionId, "admin").ContinueWith(x => Connection.Send(connectionId, reply));
             }
             reply.Message = msg;
+            Connection.Send(connectionId, reply);
+
+            reply.CmdType = CommandType.Join;
+            reply.Result = clientIp;
             return Groups.Add(connectionId, "All").ContinueWith(x => Connection.Broadcast(reply)).Unwrap();
         }
 

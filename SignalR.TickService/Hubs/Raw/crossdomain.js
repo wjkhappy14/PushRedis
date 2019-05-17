@@ -6,6 +6,11 @@
     var connection = $.connection('/raw-connection');
     var rowTemplate = '<tr data-symbol="{CommodityNo}"><td>{CommodityNo}</td> <td>{ContractNo}</td><td>{CurrentTime}</td><td>{Time}</td><td>{TimeDiff}</td><td>{HighPrice}</td><td>{LastPrice}</td> <td>{LastSize}</td><td>{LowPrice}</td> <td>{NowClosePrice}</td><td>{ClosePrice}</td> <td>{OpenPrice}</td><td>{PercentChange}</td><td>{PositionQty}</td> <td>{PrePositionQty}</td> <td>{PreSettlePrice}</td> <td>{TotalQty}</td><td>{TotalVolume}</td><td>{Volume}</td><td>{AskPrice}</td><td>{AskSize}</td><td>{BidPrice}</td><td>{BidSize}</td></tr>';
     connection.logging = true;
+    $.getJSON("https://api.db-ip.com/v2/free/self").then(addrInfo => {
+        var t = "您的IP是:" + addrInfo.ipAddress + " 位于： " + addrInfo.city + ", " + addrInfo.stateProv + "," + addrInfo.countryName;
+        $('#my-location').html('<i>' + t + '</i>');
+    });
+
 
     connection.received(function (data) {
         console.dir(data);
@@ -23,6 +28,19 @@
             }
             if (data.CmdType == 5) {
                 $('#time-now').html('<i>' + data.Result + '</i>');
+            }
+            if (data.CmdType == 12) {
+                var url = "https://api.db-ip.com/v2/free/" + data.Result;
+                $.getJSON(url).then(addrInfo => {
+                    if (addrInfo.errorCode == "RESTRICTED") {
+                        $('#clients').append('<tr><th>' + data.Result + addrInfo + '</th></tr>');
+                    }
+                    else {
+                        var addr = addrInfo.ipAddress + " is in " + addrInfo.city + ", " + addrInfo.stateProv + "," + addrInfo.countryName;
+                        $('#clients').append('<tr><th>' + addr + '</th></tr>');
+                    }
+                }
+                );
             }
         }
     });
