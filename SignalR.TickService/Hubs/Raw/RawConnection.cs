@@ -14,7 +14,7 @@ namespace SignalR.Tick
     {
         private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
         public static ISubscriber RedisSub { get; } = Redis.GetSubscriber();
-        private static readonly ConcurrentDictionary<string, string> _users = new ConcurrentDictionary<string, string>();
+        private static readonly ConcurrentDictionary<string, string> Users = new ConcurrentDictionary<string, string>();
         private static readonly ConcurrentDictionary<string, string> Clients = new ConcurrentDictionary<string, string>();
 
         public RawConnection()
@@ -35,13 +35,16 @@ namespace SignalR.Tick
         {
             string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
             Clients[connectionId] = now;
-            _users[now] = connectionId;
-
+            Users[now] = connectionId;
             string clientIp = GetClientIP(request);
-
             string user = GetUser(connectionId);
-            string msg = $"@{DateTime.Now } :  [{user}]  加入 from  [{clientIp}]";
 
+            string msg = $"@{DateTime.Now } :  [{user}]  加入 from  [{clientIp}]";
+            if (clientIp == "10.0.1.4")
+            {
+                msg += "You are  in  admin group!";
+                Groups.Add(connectionId, "admin").ContinueWith(x => Connection.Send(connectionId, msg));
+            }
             return Groups.Add(connectionId, "All").ContinueWith(x => Connection.Broadcast(msg)).Unwrap();
         }
 
@@ -54,7 +57,7 @@ namespace SignalR.Tick
 
         protected override Task OnDisconnected(IRequest request, string connectionId, bool stopCalled)
         {
-            _users.TryRemove(connectionId, out string ignored);
+            Users.TryRemove(connectionId, out string ignored);
 
             string suffix = stopCalled ? "cleanly" : "uncleanly";
             string msg = $"@{DateTime.Now}: User { GetUser(connectionId)}  断开: {suffix}";
@@ -95,18 +98,21 @@ namespace SignalR.Tick
                 case MessageType.Join:
                     string name = message.Value;
                     Clients[connectionId] = name;
-                    _users[name] = connectionId;
+                    Users[name] = connectionId;
+
                     Connection.Send(connectionId, new
                     {
                         type = MessageType.Join,
                         data = message.Value
                     });
+
                     break;
                 case MessageType.PrivateMessage:
                     var parts = message.Value.Split('|');
                     string user = parts[0];
                     string msg = parts[1];
                     string id = GetClient(user);
+
                     Connection.Send(id, new
                     {
                         from = GetUser(connectionId),
@@ -143,7 +149,7 @@ namespace SignalR.Tick
 
         private string GetClient(string user)
         {
-            return _users.TryGetValue(user, out string connectionId) ? connectionId : null;
+            return Users.TryGetValue(user, out string connectionId) ? connectionId : null;
         }
 
         private enum MessageType

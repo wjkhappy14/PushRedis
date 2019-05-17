@@ -513,7 +513,6 @@
     <Content Include="Hubs\Raw\crossdomain.htm" />
     <Content Include="Hubs\Raw\eventSource.html" />
     <Content Include="Hubs\Raw\test\connect-reconnect.htm" />
-    <Content Include="Hubs\Raw\test\sending.htm" />
     <Content Include="Scripts\hubs.js" />
     <Content Include="Scripts\jcanvas.js" />
     <Content Include="Hubs\DrawingPad\drawingpad.js" />
@@ -684,7 +683,6 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Hubs\Raw\RawConnection.cs" />
-    <Compile Include="Hubs\Raw\SendingConnection.cs" />
     <Compile Include="Hubs\Raw\TestConnection.cs" />
     <Compile Include="SignalR.Master.cs">
       <DependentUpon>SignalR.Master</DependentUpon>

@@ -18,7 +18,7 @@ namespace SignalR.Tick
     {
         public void Configuration(IAppBuilder app)
         {
-            app.MapSignalR<SendingConnection>("/sending-connection");
+            app.MapSignalR<AddGroupOnConnectedConnection>("/sending-connection");
             app.MapSignalR<TestConnection>("/test-connection");
             app.MapSignalR<RawConnection>("/raw-connection");
             app.MapSignalR<StreamingConnection>("/streaming-connection");

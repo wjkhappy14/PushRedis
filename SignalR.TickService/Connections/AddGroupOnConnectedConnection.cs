@@ -47,7 +47,7 @@ namespace SignalR.Tick.Connections
         }
         protected override bool AuthorizeRequest(IRequest request)
         {
-            return request.User != null && request.User.Identity.IsAuthenticated;
+            return true;//(request.User != null && request.User.Identity.IsAuthenticated);
         }
         private Task PrintEnvironment(string method, IRequest request, string connectionId)
         {
