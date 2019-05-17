@@ -1,12 +1,11 @@
 ﻿$(function () {
     "use strict";
-    var connection = $.connection('https://www.angkorw.cn/raw-connection');
+    var connection = $.connection('https://65.52.173.5/raw-connection');
     connection.logging = true;
 
     connection.received(function (data) {
-        $("<li/>").html(window.JSON.stringify(data)).appendTo($("#messages"));
-        if (data.type == 2) {
-            $.cookie('user', data.data);
+        if (data.Code == 200) {
+            $.tmpl("<li>${Name}</li>", data).appendTo($("#messages"));
         }
     });
 
@@ -29,7 +28,6 @@
             if ($.signalR.connectionState[p] === change.oldState) {
                 oldState = p;
             }
-
             if ($.signalR.connectionState[p] === change.newState) {
                 newState = p;
             }

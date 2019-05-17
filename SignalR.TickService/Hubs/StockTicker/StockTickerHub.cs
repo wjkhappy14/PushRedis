@@ -1,6 +1,7 @@
 ﻿using Core;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using SignalR.Tick.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

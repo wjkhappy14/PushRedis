@@ -659,7 +659,7 @@
     <Compile Include="Hubs\StockTicker\ChannelGroup.cs" />
     <Compile Include="Hubs\StockTicker\ClientItem.cs" />
     <Compile Include="Hubs\StockTicker\Command.cs" />
-    <Compile Include="Hubs\StockTicker\CommandType.cs" />
+    <Compile Include="Models\CommandType.cs" />
     <Compile Include="Hubs\StockTicker\StockTicker.cs" />
     <Compile Include="Hubs\StockTicker\StockTickerHub.cs" />
     <Compile Include="Hubs\Test\LongRunningHub.cs" />
@@ -674,6 +674,8 @@
     <Compile Include="Hubs\Test\StressHub.cs" />
     <Compile Include="Hubs\Test\TestHub.cs" />
     <Compile Include="Models\ElementTag.cs" />
+    <Compile Include="Models\ReplyObject.cs" />
+    <Compile Include="Models\RequestCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Hubs\Raw\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
