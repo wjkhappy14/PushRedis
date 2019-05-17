@@ -18,11 +18,12 @@
                 });
             }
             if (data.CmdType == 18) {
-                $row = $(rowTemplate.supplant(data.Result));
-                $stockTableBody.find('tr[data-symbol=' + data.Result.CommodityNo + ']').replaceWith($row);
+                var row = rowTemplate.supplant(data.Result);
+                $stockTableBody.find('tr[data-symbol=' + data.Result.CommodityNo + ']').replaceWith(row);
             }
         }
     });
+
 
     connection.reconnected(function () {
         $("<li/>").css("background-color", "green")

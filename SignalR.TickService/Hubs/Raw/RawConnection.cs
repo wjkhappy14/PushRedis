@@ -18,8 +18,12 @@ namespace SignalR.Tick
         private static readonly ConcurrentDictionary<string, string> Users = new ConcurrentDictionary<string, string>();
         private static readonly ConcurrentDictionary<string, string> Clients = new ConcurrentDictionary<string, string>();
 
+        private readonly ConcurrentDictionary<Tuple<string, string>, ContractQuoteFull> Topics = new ConcurrentDictionary<Tuple<string, string>, ContractQuoteFull>();
+
         public RawConnection()
         {
+            ContractQuoteFull.Items.ForEach(topic => Topics.TryAdd(topic, ContractQuoteFull.Default(topic)));
+
             ReplyContent<object> reply = new ReplyContent<object>();
             ContractQuoteFull.Items.ForEach(item =>
             {
@@ -28,6 +32,7 @@ namespace SignalR.Tick
                     //string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     //string msg = $"{now}/{value}";
                     ContractQuoteFull contract = JsonConvert.DeserializeObject<ContractQuoteFull>(value);
+                    reply.CmdType = CommandType.Publish;
                     reply.Result = contract;
                     Groups.Send(channel, reply);
                     Groups.Send("All", reply);
@@ -40,9 +45,7 @@ namespace SignalR.Tick
             reply.CmdType = CommandType.Connected;
 
             string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            Dictionary<string, string> contractQuoteFull = ContractQuoteFull.Fake("GC1906");
-            reply.Result = new List<object> { contractQuoteFull, contractQuoteFull
-        };
+            reply.Result = Topics.Values;
 
             Clients[connectionId] = now;
             Users[now] = connectionId;
@@ -81,7 +84,7 @@ namespace SignalR.Tick
         {
             RequestCommand<string> requestCommand = RequestCommand<string>.GetRequestCommand(data);
             ReplyContent<object> reply = new ReplyContent<object>();
-            reply.CmdType = CommandType.Publish; ;
+            reply.CmdType = CommandType.Publish;
             reply.RequestNo = requestCommand.RequestNo;
             reply.Result = new
             {
