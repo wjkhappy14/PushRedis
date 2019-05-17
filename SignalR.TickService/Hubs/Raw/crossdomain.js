@@ -3,7 +3,7 @@
     var $stockTable = $('#stockTable');
     var $stockTableBody = $stockTable.find('tbody');
 
-    var connection = $.connection('https://65.52.173.5/raw-connection');
+    var connection = $.connection('/raw-connection');
     var rowTemplate = '<tr data-symbol="{CommodityNo}"><td>{CommodityNo}</td> <td>{ContractNo}</td><td>{CurrentTime}</td><td>{Time}</td><td>{TimeDiff}</td><td>{HighPrice}</td><td>{LastPrice}</td> <td>{LastSize}</td><td>{LowPrice}</td> <td>{NowClosePrice}</td><td>{ClosePrice}</td> <td>{OpenPrice}</td><td>{PercentChange}</td><td>{PositionQty}</td> <td>{PrePositionQty}</td> <td>{PreSettlePrice}</td> <td>{TotalQty}</td><td>{TotalVolume}</td><td>{Volume}</td><td>{AskPrice}</td><td>{AskSize}</td><td>{BidPrice}</td><td>{BidSize}</td></tr>';
     connection.logging = true;
 
@@ -21,9 +21,11 @@
                 var row = rowTemplate.supplant(data.Result);
                 $stockTableBody.find('tr[data-symbol=' + data.Result.CommodityNo + ']').replaceWith(row);
             }
+            if (data.CmdType == 5) {
+                $('#time-now').html('<i>' + data.Result + '</i>');
+            }
         }
     });
-
 
     connection.reconnected(function () {
         $("<li/>").css("background-color", "green")

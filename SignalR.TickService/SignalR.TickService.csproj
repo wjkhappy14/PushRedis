@@ -527,7 +527,6 @@
     <Content Include="Scripts\remedial.js" />
     <Content Include="Scripts\jquery.signalR.js" />
     <Content Include="Scripts\jquery.signalR.min.js" />
-    <Content Include="Hubs\Streaming\Default.aspx" />
     <Content Include="Styles\style.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -693,14 +692,6 @@
     <Compile Include="SignalR.Master.designer.cs">
       <DependentUpon>SignalR.Master</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\Streaming\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Hubs\Streaming\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Hubs\Streaming\StreamingConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

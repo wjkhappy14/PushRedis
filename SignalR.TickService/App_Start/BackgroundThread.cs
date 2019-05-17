@@ -4,6 +4,7 @@ using System.Threading;
 using Core;
 using Microsoft.AspNet.SignalR;
 using SignalR.Tick.Hubs.DemoHub;
+using SignalR.Tick.Models;
 using StackExchange.Redis;
 
 namespace SignalR.Tick
@@ -14,18 +15,20 @@ namespace SignalR.Tick
         static readonly IDatabase DB = Redis.GetDatabase(2);
         public static void Start()
         {
+            ReplyContent<string> reply = new ReplyContent<string>();
+            reply.CmdType = CommandType.TimeNow;
             ThreadPool.QueueUserWorkItem(x =>
             {
-                IPersistentConnectionContext context = GlobalHost.ConnectionManager.GetConnectionContext<StreamingConnection>();
+                IPersistentConnectionContext context = GlobalHost.ConnectionManager.GetConnectionContext<RawConnection>();
                 IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<DemoHub>();
                 while (true)
                 {
                     try
                     {
-                        string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-                        DB.PublishAsync("now", now);
-                        context.Connection.Broadcast(now);
-                        hubContext.Clients.All.fromArbitraryCode(now);
+                        reply.Result = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                        DB.PublishAsync("now", reply.Result);
+                        context.Connection.Broadcast(reply);
+                        hubContext.Clients.All.fromArbitraryCode(reply);
                     }
                     catch (Exception ex)
                     {

@@ -3,6 +3,7 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.Owin;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -81,6 +82,10 @@ namespace SignalR.Tick.Connections
                 //  return TaskAsyncHelper.Empty;
             }
             return base.ProcessRequest(context);
+        }
+        protected override IList<string> GetSignals(string userId, string connectionId)
+        {
+            return base.GetSignals(userId, connectionId);
         }
 
     }

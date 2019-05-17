@@ -69,7 +69,7 @@ namespace SignalR.Tick.Hubs.StockTicker
             {
                 Groups.Remove(Context.ConnectionId, cmd.Text);
             }
-            else if (cmd.CmdType == CommandType.Now)
+            else if (cmd.CmdType == CommandType.TimeNow)
             {
                 string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 Clients.Client(Context.ConnectionId);
