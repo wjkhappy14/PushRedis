@@ -36,9 +36,14 @@ namespace SignalR.Tick
         }
         protected override Task OnConnected(IRequest request, string connectionId)
         {
-            ReplyContent<string> reply = new ReplyContent<string>();
+            ReplyContent<object> reply = new ReplyContent<object>();
+            reply.CmdType = CommandType.Connected;
 
             string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            Dictionary<string, string> contractQuoteFull = ContractQuoteFull.Fake("GC1906");
+            reply.Result = new List<object> { contractQuoteFull, contractQuoteFull
+        };
+
             Clients[connectionId] = now;
             Users[now] = connectionId;
             string clientIp = GetClientIP(request);
@@ -76,6 +81,7 @@ namespace SignalR.Tick
         {
             RequestCommand<string> requestCommand = RequestCommand<string>.GetRequestCommand(data);
             ReplyContent<object> reply = new ReplyContent<object>();
+            reply.CmdType = CommandType.Publish; ;
             reply.RequestNo = requestCommand.RequestNo;
             reply.Result = new
             {

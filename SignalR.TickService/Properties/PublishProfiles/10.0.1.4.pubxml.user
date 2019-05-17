@@ -10,10 +10,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Core.dll">
-      <publishTime>05/16/2019 18:15:24</publishTime>
+      <publishTime>05/17/2019 11:50:48</publishTime>
     </File>
     <File Include="bin/Core.pdb">
-      <publishTime>05/16/2019 18:15:24</publishTime>
+      <publishTime>05/17/2019 11:50:48</publishTime>
     </File>
     <File Include="bin/dotnetty.com.pfx">
       <publishTime>04/29/2019 13:45:10</publishTime>
@@ -76,10 +76,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/13/2012 12:19:34</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.dll">
-      <publishTime>05/16/2019 18:15:26</publishTime>
+      <publishTime>05/17/2019 11:51:19</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.pdb">
-      <publishTime>05/16/2019 18:15:26</publishTime>
+      <publishTime>05/17/2019 11:51:19</publishTime>
     </File>
     <File Include="bin/StackExchange.Redis.StrongName.dll">
       <publishTime>01/25/2018 09:26:38</publishTime>
@@ -1054,7 +1054,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/14/2019 17:46:02</publishTime>
     </File>
     <File Include="Hubs/DemoHub/DemoHub.js">
-      <publishTime>05/02/2019 00:54:06</publishTime>
+      <publishTime>05/17/2019 09:52:43</publishTime>
     </File>
     <File Include="Hubs/DrawingPad/Default.aspx">
       <publishTime>05/03/2019 21:20:37</publishTime>
@@ -1090,7 +1090,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/16/2019 18:12:46</publishTime>
     </File>
     <File Include="Hubs/Raw/crossdomain.js">
-      <publishTime>05/16/2019 14:58:49</publishTime>
+      <publishTime>05/17/2019 11:45:49</publishTime>
     </File>
     <File Include="Hubs/Raw/Default.aspx">
       <publishTime>05/16/2019 14:35:45</publishTime>
@@ -1306,7 +1306,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/09/2019 16:25:50</publishTime>
     </File>
     <File Include="Styles/style.css">
-      <publishTime>05/05/2019 15:09:59</publishTime>
+      <publishTime>05/17/2019 09:30:12</publishTime>
     </File>
     <File Include="Views/Home/App.cshtml">
       <publishTime>05/15/2019 12:18:51</publishTime>
@@ -1333,7 +1333,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2019 15:09:37</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/16/2019 15:17:15</publishTime>
+      <publishTime>05/17/2019 11:51:20</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 {
     public enum CommandType
     {
+        Connected = 0,
         Ping = 1,
         Stop = 2,
         Subscribe = 3,  //订阅
@@ -17,6 +18,7 @@
         AddToGroup = 14,
         RemoveFromGroup = 15,
         SendToGroup = 16,
-        BroadcastExceptMe = 17
+        BroadcastExceptMe = 17,
+        Publish=18
     }
 }

@@ -89,8 +89,7 @@ $(function () {
                     ? '255,148,148' // red
                     : '154,240,117'; // green
 
-            $stockTableBody.find('tr[data-symbol=' + stock.CommodityNo + ']')
-                .replaceWith($row);
+            $stockTableBody.find('tr[data-symbol=' + stock.CommodityNo + ']').replaceWith($row);
             $stockTickerUl.find('li[data-symbol=' + stock.CommodityNo + ']')
                 .replaceWith($li);
 
