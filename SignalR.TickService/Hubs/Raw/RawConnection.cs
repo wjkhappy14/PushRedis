@@ -5,129 +5,137 @@ using System.Threading.Tasks;
 using Core;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
+using SignalR.Tick.Connections;
+using SignalR.Tick.Models;
 using StackExchange.Redis;
 
 namespace SignalR.Tick
 {
-    public class RawConnection : PersistentConnection
+    public class RawConnection : AddGroupOnConnectedConnection
     {
         private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
         public static ISubscriber RedisSub { get; } = Redis.GetSubscriber();
-        private static readonly ConcurrentDictionary<string, string> _users = new ConcurrentDictionary<string, string>();
+        private static readonly ConcurrentDictionary<string, string> Users = new ConcurrentDictionary<string, string>();
         private static readonly ConcurrentDictionary<string, string> Clients = new ConcurrentDictionary<string, string>();
+
+        private readonly ConcurrentDictionary<Tuple<string, string>, ContractQuoteFull> Topics = new ConcurrentDictionary<Tuple<string, string>, ContractQuoteFull>();
 
         public RawConnection()
         {
+            ContractQuoteFull.Items.ForEach(topic => Topics.TryAdd(topic, ContractQuoteFull.Default(topic)));
+
+            ReplyContent<object> reply = new ReplyContent<object>();
             ContractQuoteFull.Items.ForEach(item =>
             {
                 RedisSub.Subscribe(item.Item2, (channel, value) =>
                 {
                     //string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     //string msg = $"{now}/{value}";
-                    ContractQuoteFull data = JsonConvert.DeserializeObject<ContractQuoteFull>(value);
-                    Groups.Send(channel, data);
-                    Groups.Send("All", data);
+                    ContractQuoteFull contract = JsonConvert.DeserializeObject<ContractQuoteFull>(value);
+                    reply.CmdType = CommandType.Publish;
+                    reply.Result = contract;
+                    Groups.Send(channel, reply);
+                    Groups.Send("All", reply);
                 });
             });
         }
         protected override Task OnConnected(IRequest request, string connectionId)
         {
+            ReplyContent<object> reply = new ReplyContent<object>();
+            reply.CmdType = CommandType.Connected;
+
             string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            reply.Result = Topics.Values;
+
             Clients[connectionId] = now;
-            _users[now] = connectionId;
-
+            Users[now] = connectionId;
             string clientIp = GetClientIP(request);
-
             string user = GetUser(connectionId);
-            string msg = $"@{DateTime.Now } :  [{user}]  加入 from  [{clientIp}]";
 
-            return Groups.Add(connectionId, "All").ContinueWith(x => Connection.Broadcast(msg)).Unwrap();
+            string msg = $"@{DateTime.Now } :  [{user}]  加入 from  [{clientIp}]";
+            if (clientIp == "10.0.1.4")
+            {
+                msg += "You are  in  admin group!";
+                reply.Message = msg;
+                Groups.Add(connectionId, "admin").ContinueWith(x => Connection.Send(connectionId, reply));
+            }
+            reply.Message = msg;
+            Connection.Send(connectionId, reply);
+
+            reply.CmdType = CommandType.Join;
+            reply.Result = clientIp;
+            return Groups.Add(connectionId, "All").ContinueWith(x => Connection.Broadcast(reply)).Unwrap();
         }
 
         protected override Task OnReconnected(IRequest request, string connectionId)
         {
             string user = GetUser(connectionId);
-
-            return Connection.Broadcast(DateTime.Now + ": " + user + " 重连");
+            ReplyContent<object> reply = new ReplyContent<object>();
+            reply.Message = DateTime.Now + ": " + user + " 重连";
+            return Connection.Broadcast(reply);
         }
 
         protected override Task OnDisconnected(IRequest request, string connectionId, bool stopCalled)
         {
-            _users.TryRemove(connectionId, out string ignored);
-
+            Users.TryRemove(connectionId, out string ignored);
+            ReplyContent<object> reply = new ReplyContent<object>();
             string suffix = stopCalled ? "cleanly" : "uncleanly";
-            string msg = $"@{DateTime.Now}: User { GetUser(connectionId)}  断开: {suffix}";
-            return Connection.Broadcast(msg);
+            reply.Message = $"@{DateTime.Now}: User { GetUser(connectionId)}  断开: {suffix}";
+            return Connection.Broadcast(reply);
         }
 
         protected override Task OnReceived(IRequest request, string connectionId, string data)
         {
-            Message message = JsonConvert.DeserializeObject<Message>(data);
-
-            switch (message.Type)
+            RequestCommand<string> requestCommand = RequestCommand<string>.GetRequestCommand(data);
+            ReplyContent<object> reply = new ReplyContent<object>();
+            reply.CmdType = CommandType.Publish;
+            reply.RequestNo = requestCommand.RequestNo;
+            reply.Result = new
             {
-                case MessageType.Broadcast:
-                    Connection.Broadcast(new
-                    {
-                        type = MessageType.Broadcast,
-                        from = GetUser(connectionId),
-                        data = message.Value
-                    });
+                type = CommandType.Broadcast,
+                from = GetUser(connectionId),
+                data = ""
+            };
+
+            switch (requestCommand.CmdType)
+            {
+                case CommandType.Broadcast:
+                    Connection.Broadcast(reply);
                     break;
-                case MessageType.BroadcastExceptMe:
-                    Connection.Broadcast(new
-                    {
-                        type = MessageType.Broadcast,
-                        from = GetUser(connectionId),
-                        data = message.Value
-                    },
-                    connectionId);
+                case CommandType.BroadcastExceptMe:
+                    Connection.Broadcast(reply, connectionId);
                     break;
-                case MessageType.SendToMe:
-                    Connection.Send(connectionId, new
-                    {
-                        type = MessageType.SendToMe,
-                        from = GetUser(connectionId),
-                        data = message.Value
-                    });
+                case CommandType.SendToMe:
+                    Connection.Send(connectionId, reply);
                     break;
-                case MessageType.Join:
-                    string name = message.Value;
+                case CommandType.Join:
+                    string name = requestCommand.RequestNo;
                     Clients[connectionId] = name;
-                    _users[name] = connectionId;
-                    Connection.Send(connectionId, new
-                    {
-                        type = MessageType.Join,
-                        data = message.Value
-                    });
+                    Users[name] = connectionId;
+
+                    Connection.Send(connectionId, reply);
+
                     break;
-                case MessageType.PrivateMessage:
-                    var parts = message.Value.Split('|');
-                    string user = parts[0];
-                    string msg = parts[1];
+                case CommandType.PrivateMessage:
+                    string user = "";
                     string id = GetClient(user);
-                    Connection.Send(id, new
-                    {
-                        from = GetUser(connectionId),
-                        data = msg
-                    });
+
+                    Connection.Send(id, reply);
                     break;
-                case MessageType.AddToGroup:
-                    Groups.Add(connectionId, message.Value);
+                case CommandType.AddToGroup:
+                    Groups.Add(connectionId, "");
                     break;
-                case MessageType.RemoveFromGroup:
-                    Groups.Remove(connectionId, message.Value);
+                case CommandType.RemoveFromGroup:
+                    Groups.Remove(connectionId, "");
                     break;
-                case MessageType.SendToGroup:
-                    var parts2 = message.Value.Split('|');
-                    string groupName = parts2[0];
-                    string val = parts2[1];
+                case CommandType.SendToGroup:
+                    string groupName = "";
+                    string val = "";
                     Groups.Send(groupName, val);
                     break;
                 default:
                     break;
             }
-
             return base.OnReceived(request, connectionId, data);
         }
         protected override IList<string> OnRejoiningGroups(IRequest request, IList<string> groups, string connectionId)
@@ -142,27 +150,8 @@ namespace SignalR.Tick
 
         private string GetClient(string user)
         {
-            return _users.TryGetValue(user, out string connectionId) ? connectionId : null;
+            return Users.TryGetValue(user, out string connectionId) ? connectionId : null;
         }
-
-        private enum MessageType
-        {
-            SendToMe = 0,
-            Broadcast = 1,
-            Join = 2,
-            PrivateMessage = 3,
-            AddToGroup = 4,
-            RemoveFromGroup = 5,
-            SendToGroup = 6,
-            BroadcastExceptMe = 7,
-        }
-
-        private class Message
-        {
-            public MessageType Type { get; set; }
-            public string Value { get; set; }
-        }
-
         private static string GetClientIP(IRequest request)
         {
             return Get<string>(request.Environment, "server.RemoteIpAddress");

@@ -1,6 +1,7 @@
 ﻿using Core;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using SignalR.Tick.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -68,7 +69,7 @@ namespace SignalR.Tick.Hubs.StockTicker
             {
                 Groups.Remove(Context.ConnectionId, cmd.Text);
             }
-            else if (cmd.CmdType == CommandType.Now)
+            else if (cmd.CmdType == CommandType.TimeNow)
             {
                 string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 Clients.Client(Context.ConnectionId);

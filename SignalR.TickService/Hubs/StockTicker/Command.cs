@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SignalR.Tick.Models;
+using System;
 
 namespace SignalR.Tick.Hubs.StockTicker
 {

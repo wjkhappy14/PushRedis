@@ -3,12 +3,13 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hosting;
 using Microsoft.Owin;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SignalR.Tick.Connections
 {
-  public  class AddGroupOnConnectedConnection : MyRejoinGroupsConnection
+    public class AddGroupOnConnectedConnection : MyGroupConnection
     {
         protected override async Task OnConnected(IRequest request, string connectionId)
         {
@@ -47,7 +48,7 @@ namespace SignalR.Tick.Connections
         }
         protected override bool AuthorizeRequest(IRequest request)
         {
-            return request.User != null && request.User.Identity.IsAuthenticated;
+            return true;//(request.User != null && request.User.Identity.IsAuthenticated);
         }
         private Task PrintEnvironment(string method, IRequest request, string connectionId)
         {
@@ -64,7 +65,7 @@ namespace SignalR.Tick.Connections
         {
             string redirectWhen = "____Never____";
 
-            if (!String.IsNullOrEmpty(context.Request.QueryString["redirectWhen"]))
+            if (!string.IsNullOrEmpty(context.Request.QueryString["redirectWhen"]))
             {
                 redirectWhen = context.Request.QueryString["redirectWhen"];
             }
@@ -81,6 +82,10 @@ namespace SignalR.Tick.Connections
                 //  return TaskAsyncHelper.Empty;
             }
             return base.ProcessRequest(context);
+        }
+        protected override IList<string> GetSignals(string userId, string connectionId)
+        {
+            return base.GetSignals(userId, connectionId);
         }
 
     }

@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using SignalR.Tick;
@@ -18,10 +17,9 @@ namespace SignalR.Tick
     {
         public void Configuration(IAppBuilder app)
         {
-            app.MapSignalR<SendingConnection>("/sending-connection");
+            app.MapSignalR<AddGroupOnConnectedConnection>("/sending-connection");
             app.MapSignalR<TestConnection>("/test-connection");
             app.MapSignalR<RawConnection>("/raw-connection");
-            app.MapSignalR<StreamingConnection>("/streaming-connection");
 
             app.Use(typeof(ClaimsMiddleware));
             ConfigureSignalR(GlobalHost.DependencyResolver, GlobalHost.HubPipeline);

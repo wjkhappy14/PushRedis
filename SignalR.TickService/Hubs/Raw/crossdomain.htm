@@ -7,7 +7,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="x5-orientation" content="portrait">
-    <link rel="shortcut icon" href="./static/favicon.ico">
+    <link rel="shortcut icon" href="/Content/bg.jpg">
     <title>Subscribe</title>
     <script src="/Scripts/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
     <script src="/Scripts/jquery.signalR.js" type="text/javascript" charset="utf-8" async=""></script>
@@ -20,136 +20,18 @@
     <script src="/Scripts/json2.min.js" type="text/javascript"></script>
     <script src="/Hubs/Raw/crossdomain.js" type="text/javascript" charset="utf-8" async=""></script>
     <link href="/Hubs/Raw/style.css" rel="stylesheet" />
+    <script src="/Scripts/App.js"></script>
 </head>
 <body style="font-family: Arial;">
     <div id="app">
         <div class="Home">
             <div class="header flex">
-                <a href="/default.aspx"> 
+                <a href="/default.aspx">
                     <span>
                         <img src="/Content/images/icons-svg/cloud-white.svg" class="log-img" />
                     </span>
                 </a>
                 <span class="shu" style="display: none;">
-                </span>
-                <span class="with-i flex" style="display: none;">
-                    <div role="tooltip" id="el-popover-334" aria-hidden="true" class="el-popover el-popper share-msg-popover" tabindex="0" style="width: 600px; display: none;">
-                        <!----><div class="share-msg">
-                            <div class="heade-table">
-                                <div class="el-tabs el-tabs--top el-tabs--border-card">
-                                    <div class="el-tabs__header is-top">
-                                        <div class="el-tabs__nav-wrap is-top">
-                                            <div class="el-tabs__nav-scroll">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="el-tabs__content"><div role="tabpanel" id="pane-0" aria-labelledby="tab-0" class="el-tab-pane" style=""></div><div role="tabpanel" aria-hidden="true" id="pane-1" aria-labelledby="tab-1" class="el-tab-pane" style="display: none;"></div><div role="tabpanel" aria-hidden="true" id="pane-2" aria-labelledby="tab-2" class="el-tab-pane" style="display: none;"></div><div role="tabpanel" aria-hidden="true" id="pane-3" aria-labelledby="tab-3" class="el-tab-pane" style="display: none;"></div><div role="tabpanel" aria-hidden="true" id="pane-4" aria-labelledby="tab-4" class="el-tab-pane" style="display: none;"></div><div role="tabpanel" aria-hidden="true" id="pane-5" aria-labelledby="tab-5" class="el-tab-pane" style="display: none;"></div></div>
-                                </div> <div class="el-table heade-table-table el-table--fit el-table--scrollable-x el-table--enable-row-hover el-table--enable-row-transition" style="height: 250px;">
-                                    <div class="hidden-columns">
-                                        <div></div><div></div><div></div>
-                                        <div></div> <div></div>
-                                    </div><div class="el-table__header-wrapper">
-                                        <table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 474px;">
-                                            <colgroup>
-                                                <col name="el-table_1_column_1" width="140">
-                                                <col name="el-table_1_column_2" width="80">
-                                                <col name="el-table_1_column_3" width="80">
-                                                <col name="el-table_1_column_4" width="80">
-                                                <col name="el-table_1_column_5" width="94">
-                                                <col name="gutter" width="0">
-                                            </colgroup>
-                                            <thead class="has-gutter">
-                                                <tr class="">
-                                                    <th colspan="1" rowspan="1" class="el-table_1_column_1     is-leaf">
-                                                        <div class="cell">合约名称</div>
-                                                    </th>
-                                                    <th colspan="1" rowspan="1" class="el-table_1_column_2     is-leaf"><div class="cell">最新价</div></th>
-                                                    <th colspan="1" rowspan="1" class="el-table_1_column_3     is-leaf"><div class="cell">24H成交量</div></th>
-                                                    <th colspan="1" rowspan="1" class="el-table_1_column_4     is-leaf"><div class="cell">涨跌</div></th>
-                                                    <th colspan="1" rowspan="1" class="el-table_1_column_5     is-leaf"><div class="cell">增幅%</div></th>
-                                                    <th class="gutter" style="width: 0px; display: none;"></th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div><div class="el-table__body-wrapper is-scrolling-left">
-                                        <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 474px;">
-                                            <colgroup><col name="el-table_1_column_1" width="140"><col name="el-table_1_column_2" width="80"><col name="el-table_1_column_3" width="80"><col name="el-table_1_column_4" width="80"><col name="el-table_1_column_5" width="94"></colgroup>
-                                            <tbody>
-                                                <tr class="el-table__row">
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_1   ">
-                                                        <div class="cell el-tooltip" style="width: 139px;">恒生指数HSI1905</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_2   "><div class="cell el-tooltip" style="width: 79px;">28087</div></td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_3   "><div class="cell el-tooltip" style="width: 79px;">140182</div></td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_4   red"><div class="cell el-tooltip" style="width: 79px;">24</div></td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_5   "><div class="cell"><div class="table-scope-div hong">0.09</div></div></td>
-                                                </tr>
-                                                <tr class="el-table__row">
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_1   ">
-                                                        <div class="cell el-tooltip" style="width: 139px;">美黄金GC1906</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_2   ">
-                                                        <div class="cell el-tooltip" style="width: 79px;">1295.7</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_3   ">
-                                                        <div class="cell el-tooltip" style="width: 79px;">51828</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_4   green">
-                                                        <div class="cell el-tooltip" style="width: 79px;">-2.1</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_5   ">
-                                                        <div class="cell"><div class="table-scope-div lv">-0.16</div></div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="el-table__row">
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_1   ">
-                                                        <div class="cell el-tooltip" style="width: 139px;">英镑BP1906</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_2   ">
-                                                        <div class="cell el-tooltip" style="width: 79px;">1.2857</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_3   ">
-                                                        <div class="cell el-tooltip" style="width: 79px;">19083</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_4   green">
-                                                        <div class="cell el-tooltip" style="width: 79px;">-0.0007</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_5   ">
-                                                        <div class="cell"><div class="table-scope-div lv">-0.05</div></div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="el-table__row">
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_1   ">
-                                                        <div class="cell el-tooltip" style="width: 139px;">德指DAX1906</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_2   ">
-                                                        <div class="cell el-tooltip" style="width: 79px;">12068.5</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_3   ">
-                                                        <div class="cell el-tooltip" style="width: 79px;">31436</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_4   green">
-                                                        <div class="cell el-tooltip" style="width: 79px;">-28.0</div>
-                                                    </td>
-                                                    <td rowspan="1" colspan="1" class="el-table_1_column_5   ">
-                                                        <div class="cell">
-                                                            <div class="table-scope-div lv">-0.23</div>
-                                                        </div>
-                                                    </td>
-                                                </tr><!---->
-                                            </tbody>
-                                        </table><!----><!---->
-                                    </div><!----><!----><!----><!---->
-                                    <div class="el-table__column-resize-proxy" style="display: none;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="share flex with-i el-popover__reference" aria-describedby="el-popover-334" tabindex="0">
-                        恒生指数HSI1905
-                        <i class="share-i"></i>
-                    </div>
                 </span>
                 <nav class="flex">
                     <ul class="nav flex">
@@ -204,7 +86,8 @@
                             <table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 1988px;">
                                 <colgroup>
                                     <col name="el-table_2_column_6" width="80">
-                                    <col name="el-table_2_column_7" width="150">
+                                    <col name="el-table_2_column_7" width="80">
+                                    <col name="el-table_2_column_7" width="80">
                                     <col name="el-table_2_column_8" width="88">
                                     <col name="el-table_2_column_9" width="88">
                                     <col name="el-table_2_column_10" width="88">
@@ -227,36 +110,97 @@
                                 </colgroup>
                                 <thead class="has-gutter">
                                     <tr class="">
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_6     is-leaf"><div class="cell">自选</div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_7     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">合约名称</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_8     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">最新</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_9     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">买价</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_10     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">买量</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_11     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">卖价</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_12     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">卖量</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_13     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">成交量</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_14     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">涨跌</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_15     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">增幅%</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_16     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">开盘</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_17     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">最高</div></div></th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_6     is-leaf">
+                                            <div class="cell">品种代码</div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_22     is-leaf">
+                                            <div class="cell">
+                                                <div class="table-head" style="width: 100%;">合约代码</div>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_7     is-leaf">
+                                            <div class="cell"><div class="table-head" style="width: 100%;">合约名称</div></div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_8     is-leaf">
+                                            <div class="cell">
+                                                <div class="table-head" style="width: 100%;">最新</div>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_8     is-leaf">
+                                            <div class="cell">
+                                                <div class="table-head" style="width: 100%;">最新</div>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_8     is-leaf">
+                                            <div class="cell">
+                                                <div class="table-head" style="width: 100%;">最新</div>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_9     is-leaf">
+                                            <div class="cell"><div class="table-head" style="width: 100%;">买价</div></div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_10     is-leaf">
+                                            <div class="cell"><div class="table-head" style="width: 100%;">买量</div></div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_11     is-leaf">
+                                            <div class="cell"><div class="table-head" style="width: 100%;">卖价</div></div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_12     is-leaf">
+                                            <div class="cell"><div class="table-head" style="width: 100%;">卖量</div></div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_13     is-leaf">
+                                            <div class="cell"><div class="table-head" style="width: 100%;">成交量</div></div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_14     is-leaf">
+                                            <div class="cell"><div class="table-head" style="width: 100%;">涨跌</div></div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_15     is-leaf">
+                                            <div class="cell"><div class="table-head" style="width: 100%;">增幅%</div></div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_16     is-leaf">
+                                            <div class="cell"><div class="table-head" style="width: 100%;">开盘</div></div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_17     is-leaf">
+                                            <div class="cell"><div class="table-head" style="width: 100%;">最高</div></div>
+                                        </th>
                                         <th colspan="1" rowspan="1" class="el-table_2_column_18     is-leaf">
                                             <div class="cell"><div class="table-head" style="width: 100%;">最低</div></div>
                                         </th>
                                         <th colspan="1" rowspan="1" class="el-table_2_column_19     is-leaf">
-                                            <div class="cell"><div class="table-head" style="width: 100%;">昨结</div></div>
+                                            <div class="cell">
+                                                <div class="table-head" style="width: 100%;">昨结</div>
+                                            </div>
                                         </th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_20     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">报价单位</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_21     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">交易单位</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_22     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">交易代码</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_23     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">更新时间</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_24     is-leaf"><div class="cell"><div class="table-head" style="width: 100%;">交易状态</div></div></th>
-                                        <th colspan="1" rowspan="1" class="el-table_2_column_25    eee is-leaf"><div class="cell eee">交易规则</div></th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_20     is-leaf">
+                                            <div class="cell">
+                                                <div class="table-head" style="width: 100%;">报价单位</div>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_22     is-leaf">
+                                            <div class="cell">
+                                                <div class="table-head" style="width: 100%;">交易代码</div>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_23     is-leaf">
+                                            <div class="cell">
+                                                <div class="table-head" style="width: 100%;">更新时间</div>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_24     is-leaf">
+                                            <div class="cell">
+                                                <div class="table-head" style="width: 100%;">交易状态</div>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" rowspan="1" class="el-table_2_column_25    eee is-leaf">
+                                            <div class="cell eee">交易规则</div>
+                                        </th>
                                         <th class="gutter" style="width: 0px; display: none;"></th>
                                     </tr>
                                 </thead>
                             </table>
-                        </div><div class="el-table__body-wrapper is-scrolling-left" style="height: 419px;">
-                            <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 1988px;">
+                        </div>
+                        <div class="el-table__body-wrapper is-scrolling-left" style="height: 419px;">
+                            <table id="stockTable" cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 1988px; color:forestgreen;">
                                 <colgroup>
                                     <col name="el-table_2_column_6" width="80">
                                     <col name="el-table_2_column_7" width="150">
@@ -281,19 +225,33 @@
                                 </colgroup>
                                 <tbody>
                                     <tr class="el-table__row">
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_6   "><div class="cell"><i data-v-2ca2a61a="" class="nor ico-table"></i></div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_7   "><div class="cell el-tooltip" style="width: 149px;">恒生指数HSI1905</div></td>
+                                        <td rowspan="1" colspan="1" class="el-table_2_column_6   ">
+                                            <div class="cell el-tooltip" style="width: 149px;">HSI</div>
+                                        </td>
+                                        <td rowspan="1" colspan="1" class="el-table_2_column_7   ">
+                                            <div class="cell el-tooltip" style="width: 149px;">1905</div>
+                                        </td>
                                         <td rowspan="1" colspan="1" class="el-table_2_column_8   red">
                                             <div class="cell el-tooltip" style="width: 87px;">28087</div>
                                         </td>
                                         <td rowspan="1" colspan="1" class="el-table_2_column_9   red">
                                             <div class="cell el-tooltip" style="width: 87px;">28079</div>
                                         </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_10   "><div class="cell el-tooltip" style="width: 87px;">2</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_11   red"><div class="cell el-tooltip" style="width: 87px;">28090</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_12   "><div class="cell el-tooltip" style="width: 87px;">187</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_13   "><div class="cell el-tooltip" style="width: 103px;">140182</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_14   red"><div class="cell el-tooltip" style="width: 87px;">24</div></td>
+                                        <td rowspan="1" colspan="1" class="el-table_2_column_10   ">
+                                            <div class="cell el-tooltip" style="width: 87px;">2</div>
+                                        </td>
+                                        <td rowspan="1" colspan="1" class="el-table_2_column_11   red">
+                                            <div class="cell el-tooltip" style="width: 87px;">28090</div>
+                                        </td>
+                                        <td rowspan="1" colspan="1" class="el-table_2_column_12   ">
+                                            <div class="cell el-tooltip" style="width: 87px;">187</div>
+                                        </td>
+                                        <td rowspan="1" colspan="1" class="el-table_2_column_13   ">
+                                            <div class="cell el-tooltip" style="width: 103px;">140182</div>
+                                        </td>
+                                        <td rowspan="1" colspan="1" class="el-table_2_column_14   red">
+                                            <div class="cell el-tooltip" style="width: 87px;">24</div>
+                                        </td>
                                         <td rowspan="1" colspan="1" class="el-table_2_column_15   red"><div class="cell el-tooltip" style="width: 103px;">0.09</div></td>
                                         <td rowspan="1" colspan="1" class="el-table_2_column_16   green"><div class="cell el-tooltip" style="width: 87px;">27833</div></td>
                                         <td rowspan="1" colspan="1" class="el-table_2_column_17   red"><div class="cell el-tooltip" style="width: 87px;">28153</div></td>
@@ -306,116 +264,6 @@
                                         <td rowspan="1" colspan="1" class="el-table_2_column_24   closedmarket"><div class="cell el-tooltip" style="width: 99px;">休市中</div></td>
                                         <td rowspan="1" colspan="1" class="el-table_2_column_25   "><div class="cell"><button data-v-2ca2a61a="" type="button" class="el-button el-button--text" style="font-size: 16px;"><!----><!----><span>查看</span></button></div></td>
                                     </tr>
-                                    <tr class="el-table__row">
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_6   "><div class="cell"><i data-v-2ca2a61a="" class="nor ico-table"></i></div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_7   "><div class="cell el-tooltip" style="width: 149px;">美黄金GC1906</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_8   green"><div class="cell el-tooltip" style="width: 87px;">1295.7</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_9   green"><div class="cell el-tooltip" style="width: 87px;">1295.7</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_10   "><div class="cell el-tooltip" style="width: 87px;">27</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_11   green"><div class="cell el-tooltip" style="width: 87px;">1295.8</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_12   "><div class="cell el-tooltip" style="width: 87px;">88</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_13   "><div class="cell el-tooltip" style="width: 103px;">51828</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_14   green"><div class="cell el-tooltip" style="width: 87px;">-2.1</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_15   green"><div class="cell el-tooltip" style="width: 103px;">-0.16</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_16   green"><div class="cell el-tooltip" style="width: 87px;">1297.7</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_17   red"><div class="cell el-tooltip" style="width: 87px;">1299.3</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_18   green"><div class="cell el-tooltip" style="width: 87px;">1295.0</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_19   "><div class="cell el-tooltip" style="width: 87px;">1297.8</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_20   "><div class="cell el-tooltip" style="width: 149px;">美元/盎司/及美分/盎司</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_21   "><div class="cell el-tooltip" style="width: 119px;">100盎司/手</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_22   "><div class="cell el-tooltip" style="width: 79px;">GC</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_23   "><div class="cell el-tooltip" style="width: 119px;">16:47:16</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_24   openmarket"><div class="cell el-tooltip" style="width: 99px;">交易中</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_25   "><div class="cell"><button data-v-2ca2a61a="" type="button" class="el-button el-button--text" style="font-size: 16px;"><!----><!----><span>查看</span></button></div></td>
-                                    </tr>
-                                    <tr class="el-table__row">
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_6   "><div class="cell"><i data-v-2ca2a61a="" class="nor ico-table"></i></div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_7   "><div class="cell el-tooltip" style="width: 149px;">英镑BP1906</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_8   green"><div class="cell el-tooltip" style="width: 87px;">1.2857</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_9   green"><div class="cell el-tooltip" style="width: 87px;">1.2856</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_10   "><div class="cell el-tooltip" style="width: 87px;">57</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_11   green"><div class="cell el-tooltip" style="width: 87px;">1.2858</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_12   "><div class="cell el-tooltip" style="width: 87px;">47</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_13   "><div class="cell el-tooltip" style="width: 103px;">19083</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_14   green"><div class="cell el-tooltip" style="width: 87px;">-0.0007</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_15   green"><div class="cell el-tooltip" style="width: 103px;">-0.05</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_16   white animate"><div class="cell el-tooltip" style="width: 87px;">1.2864</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_17   red"><div class="cell el-tooltip" style="width: 87px;">1.2871</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_18   green"><div class="cell el-tooltip" style="width: 87px;">1.2839</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_19   "><div class="cell el-tooltip" style="width: 87px;">1.2864</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_20   "><div class="cell el-tooltip" style="width: 149px;">美元/英镑</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_21   "><div class="cell el-tooltip" style="width: 119px;">62,500英镑/手</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_22   "><div class="cell el-tooltip" style="width: 79px;">BP</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_23   "><div class="cell el-tooltip" style="width: 119px;">16:47:15</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_24   openmarket"><div class="cell el-tooltip" style="width: 99px;">交易中</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_25   ">
-                                            <div class="cell">
-                                                <button data-v-2ca2a61a="" type="button" class="el-button el-button--text" style="font-size: 16px;">
-                                                    <!----><!----><span>查看</span>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="el-table__row">
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_6   ">
-                                            <div class="cell"><i data-v-2ca2a61a="" class="nor ico-table"></i></div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_7   ">
-                                            <div class="cell el-tooltip" style="width: 149px;">德指DAX1906</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_8   green">
-                                            <div class="cell el-tooltip" style="width: 87px;">12068.5</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_9   green">
-                                            <div class="cell el-tooltip" style="width: 87px;">12068.5</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_10   ">
-                                            <div class="cell el-tooltip" style="width: 87px;">1</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_11   green">
-                                            <div class="cell el-tooltip" style="width: 87px;">12069.0</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_12   ">
-                                            <div class="cell el-tooltip" style="width: 87px;">2</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_13   ">
-                                            <div class="cell el-tooltip" style="width: 103px;">31436</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_14   green">
-                                            <div class="cell el-tooltip" style="width: 87px;">-28.0</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_15   green">
-                                            <div class="cell el-tooltip" style="width: 103px;">-0.23</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_16   green">
-                                            <div class="cell el-tooltip" style="width: 87px;">12082.0</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_17   green">
-                                            <div class="cell el-tooltip" style="width: 87px;">12082.0</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_18   green">
-                                            <div class="cell el-tooltip" style="width: 87px;">11992.5</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_19   ">
-                                            <div class="cell el-tooltip" style="width: 87px;">12096.5</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_20   ">
-                                            <div class="cell el-tooltip" style="width: 149px;">欧元</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_21   ">
-                                            <div class="cell el-tooltip" style="width: 119px;">25&nbsp;/欧元/手</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_22   ">
-                                            <div class="cell el-tooltip" style="width: 79px;">DAX</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_23   ">
-                                            <div class="cell el-tooltip" style="width: 119px;">16:47:16</div>
-                                        </td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_24   openmarket"><div class="cell el-tooltip" style="width: 99px;">交易中</div></td>
-                                        <td rowspan="1" colspan="1" class="el-table_2_column_25   ">
-                                            <div class="cell"><button data-v-2ca2a61a="" type="button" class="el-button el-button--text" style="font-size: 16px;"><!----><!----><span>查看</span></button></div>
-                                        </td>
-                                    </tr><!---->
                                 </tbody>
                             </table><!----><!---->
                         </div><!----><!----><!----><!----><div class="el-table__column-resize-proxy" style="display: none;">
@@ -423,7 +271,7 @@
                     </div>
                 </div>
             </div>
-            <div class="eleDrag resizable vdr" style="position: absolute; top: 561px; left: 0px; width: 1430px; z-index: 99; user-select: auto; height: 370px;">
+            <div class="eleDrag resizable vdr" style="position: absolute; top: 561px; left: 0px; width: 100%; z-index: 99; user-select: auto; height: 370px;">
                 <div class="handle handle-tl" style="display: none; opacity: 0;"></div>
                 <div class="handle handle-tm" style="display: none; opacity: 0;"></div>
                 <div class="handle handle-tr" style="display: none; opacity: 0;"></div>
@@ -457,16 +305,13 @@
                             </li>
                         </ul>
                         <button type="button" class="el-button handle-button el-button--default">
-                            <!----><!---->
                             <span>连接</span>
                         </button>
                         <button type="button" class="el-button handle-button el-button--default">
-                            <!----><!---->
                             <span>断开</span>
                         </button>
                         <i class="draggable in"></i>
                         <button type="button" class="el-button text-button el-button--text">
-                            <!----><!---->
                             <span>查看更多</span>
                         </button>
                     </header>
@@ -477,7 +322,10 @@
                                     <div class="el-form-item flex">
                                         <label class="el-form-item__label">订阅</label>
                                         <div class="el-form-item__content">
-                                            <div class="el-input"><!----><input type="text" readonly="readonly" autocomplete="off" class="el-input__inner"><!----><!----><!----></div><!---->
+                                            <div class="el-input">
+                                                <!----><input type="text" readonly="readonly" autocomplete="off" class="el-input__inner">
+                                                <!----><!----><!---->
+                                            </div><!---->
                                         </div>
                                     </div>
                                     <div class="el-form-item flex">
@@ -501,19 +349,21 @@
                                 </form>
                                 <div class="trading-form-button">
                                     <button type="button" class="el-button btn-hover-hover fuwei el-button--default">
-                                        <!----><!----><span>复位</span>
+                                        <span>复位</span>
                                     </button>
                                     <div class="flex form-button-b">
                                         <button type="button" class="el-button el-button--default zhiding">
                                             <span>发送</span>
-                                        </button> <button type="button" class="el-button el-button--default duishou"><!----><!----><span>委托价</span></button>
+                                        </button> <button type="button" class="el-button el-button--default duishou">
+                                            <span>委托价</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                             <ul class="flex trading-form-m">
                                 <li>
                                     <button type="button" class="el-button box-button box-button-l el-button--default">
-                                        <!----><!----><span>
+                                        <span>
                                             <p>28090</p>
                                             <div class="box-button-heng buy-heng"></div> <p>买多</p>
                                         </span>
@@ -521,7 +371,7 @@
                                 </li>
                                 <li>
                                     <button type="button" class="el-button box-button box-button-c el-button--default">
-                                        <!----><!----><span>
+                                        <span>
                                             <p>28079</p> <div class="box-button-heng sel-heng"></div>
                                             <p>卖空</p>
                                         </span>
@@ -529,7 +379,7 @@
                                 </li>
                                 <li>
                                     <button type="button" class="el-button box-button box-button-r el-button--default">
-                                        <!----><!----><span>
+                                        <span>
                                             <p>--</p>
                                             <div class="box-button-heng ping-heng"></div>
                                             <p>无仓</p>
@@ -551,20 +401,12 @@
                                             <button type="button" aria-label="Close" class="el-dialog__headerbtn">
                                                 <i class="el-dialog__close el-icon el-icon-close"></i>
                                             </button>
-                                        </div><!----><!---->
+                                        </div>
                                     </div>
                                 </div> <div data-v-3dcf5426="" class="table-style">
                                     <div data-v-3dcf5426="" class="el-table el-table--fit el-table--scrollable-x el-table--enable-row-hover" style="width: 100%; height: 100%;">
-                                        <div class="hidden-columns">
-                                            <div data-v-3dcf5426=""></div><div data-v-3dcf5426=""></div>
-                                            <div data-v-3dcf5426=""></div><div data-v-3dcf5426=""></div>
-                                            <div data-v-3dcf5426=""></div><div data-v-3dcf5426=""></div>
-                                            <div data-v-3dcf5426=""></div><div data-v-3dcf5426=""></div>
-                                            <div data-v-3dcf5426=""></div><div data-v-3dcf5426=""></div>
-                                            <div data-v-3dcf5426=""></div><div data-v-3dcf5426=""></div>
-                                        </div>
                                         <div class="el-table__header-wrapper">
-                                            <table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 1170px;">
+                                            <table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width:100%;">
                                                 <colgroup>
                                                     <col name="el-table_3_column_26" width="140">
                                                     <col name="el-table_3_column_27" width="90">
@@ -591,26 +433,27 @@
                                                         </th>
                                                         <th colspan="1" rowspan="1" class="el-table_3_column_27     is-leaf">
                                                             <div class="cell">
-                                                                买卖<span class="el-table__column-filter-trigger">
+                                                                IP<span class="el-table__column-filter-trigger">
                                                                     <i class="el-icon-arrow-down"></i>
                                                                 </span>
                                                             </div>
                                                         </th>
-                                                        <th colspan="1" rowspan="1" class="el-table_3_column_28     is-leaf"><div class="cell">总持仓</div></th>
-                                                        <th colspan="1" rowspan="1" class="el-table_3_column_29     is-leaf"><div class="cell">可平仓</div></th>
-                                                        <th colspan="1" rowspan="1" class="el-table_3_column_30     is-leaf"><div class="cell">持仓均价</div></th>
-                                                        <th colspan="1" rowspan="1" class="el-table_3_column_31     is-leaf"><div class="cell">最新价</div></th>
-                                                        <th colspan="1" rowspan="1" class="el-table_3_column_32     is-leaf"><div class="cell">浮动盈亏</div></th>
-                                                        <th colspan="1" rowspan="1" class="el-table_3_column_36     is-leaf"><div class="cell">止盈</div></th>
-                                                        <th colspan="1" rowspan="1" class="el-table_3_column_37     is-leaf"><div class="cell">状态</div></th>
+                                                        <th colspan="1" rowspan="1" class="el-table_3_column_28     is-leaf"><div class="cell">连接时间</div></th>
+                                                        <th colspan="1" rowspan="1" class="el-table_3_column_29     is-leaf"><div class="cell">持续时间</div></th>
+                                                        <th colspan="1" rowspan="1" class="el-table_3_column_30     is-leaf"><div class="cell">来自地区</div></th>
+                                                        <th colspan="1" rowspan="1" class="el-table_3_column_31     is-leaf"><div class="cell">客户端类型</div></th>
+                                                        <th colspan="1" rowspan="1" class="el-table_3_column_32     is-leaf"><div class="cell">网络状态</div></th>
+                                                        <th colspan="1" rowspan="1" class="el-table_3_column_36     is-leaf"><div class="cell">操作</div></th>
+                                                        <th colspan="1" rowspan="1" class="el-table_3_column_37     is-leaf"><div class="cell">拉黑?</div></th>
                                                         <th class="gutter" style="width: 0px; display: none;">
 
                                                         </th>
                                                     </tr>
                                                 </thead>
                                             </table>
-                                        </div><div class="el-table__body-wrapper is-scrolling-left" style="height: 97px;">
-                                            <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 1170px;">
+                                        </div>
+                                        <div class="el-table__body-wrapper is-scrolling-left">
+                                            <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width:100%;">
                                                 <colgroup>
                                                     <col name="el-table_3_column_26" width="140">
                                                     <col name="el-table_3_column_27" width="90">
@@ -625,47 +468,13 @@
                                                     <col name="el-table_3_column_36" width="80">
                                                     <col name="el-table_3_column_37" width="80">
                                                 </colgroup>
-                                                <tbody><!----></tbody>
+                                                <tbody></tbody>
                                             </table>
-                                            <div class="el-table__empty-block" style="width: 1170px;">
+                                            <div class="el-table__empty-block" style="width: 100%;">
                                                 <div data-v-3dcf5426="" class="table-style" style="width: 100%; height: calc(100% - 29px);">
                                                     <div data-v-3dcf5426="" class="el-table el-table--fit el-table--scrollable-x el-table--enable-row-hover" style="width: 100%; height: 100%;">
                                                         <div class="el-table__header-wrapper">
-                                                            <h2>
-                                                                To Everybody
-                                                            </h2>
-                                                            <form>
-                                                                <input type="text" id="msg" />
-                                                                <input type="button" id="broadcast" value="Broadcast" />
-                                                                <input type="button" id="broadcast-exceptme" value="Broadcast (All Except Me)" />
-                                                                <input type="button" id="join" value="Enter Name" />
-                                                                <input type="button" id="join-group" value="Join Group" />
-                                                                <input type="button" id="leave-group" value="Leave Group" />
-                                                            </form>
-                                                            <h2>
-                                                                To Me
-                                                            </h2>
-                                                            <form>
-                                                                <input type="text" id="me" />
-                                                                <input type="button" id="send" value="Send" />
-                                                            </form>
-                                                            <h2>
-                                                                Private Message
-                                                            </h2>
-                                                            <form>
-                                                                <label for="message">
-                                                                    Message:
-                                                                </label>
-                                                                <input type="text" name="message" id="message" />
-                                                                <label for="user">
-                                                                    User/Group:
-                                                                </label>
-                                                                <input type="text" name="user" id="user" />
-                                                                <input type="button" id="privatemsg" value="Send to user" />
-                                                                <input type="button" id="groupmsg" value="Send to group" />
-                                                            </form>
-                                                            <ul id="messages"></ul>
-                                                            <input id="stopStart" type="button" value="Stop" disabled="disabled" />
+                                                            <h2>Hello</h2>
                                                         </div>
                                                         <div class="el-table__body-wrapper is-scrolling-left" style="height: 87px;">
                                                             <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 1370px;">
@@ -686,25 +495,11 @@
                                                                     <col name="el-table_4_column_51" width="80">
                                                                     <col name="el-table_4_column_52" width="160">
                                                                 </colgroup>
-                                                                <tbody><!----></tbody>
+                                                                <tbody id="clients" style="color:red">
+                                                                    <tr> <th>123</th></tr>
+                                                                </tbody>
                                                             </table>
-                                                            <div class="el-table__empty-block" style="width: 1370px;">
-                                                                <span class="el-table__empty-text">暂无数据</span>
-                                                            </div><!---->
                                                         </div>
-                                                    </div>
-                                                    <div data-v-3dcf5426="" class="position-button position-button">
-                                                        <button data-v-3dcf5426="" type="button" class="el-button btn-hover el-button--default">
-                                                            <!----><!---->
-                                                            <span>止损止盈</span>
-                                                        </button>
-                                                        <button data-v-3dcf5426="" type="button" class="el-button btn-hover el-button--default">
-                                                            <!----><!---->
-                                                            <span>全部取消</span>
-                                                        </button>
-                                                        <button data-v-3dcf5426="" type="button" class="el-button btn-hover el-button--default">
-                                                            <!----><!----><span>取消委托</span>
-                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -714,6 +509,12 @@
                             </div>
                         </div>
                     </footer> <div data-v-21b55a82="" class="bottom-tips">
+                        <div style="color:yellow">
+                            <h3 id="time-now">2019-05-17 17:30 </h3>
+                        </div>
+                        <div style="color:greenyellow">
+                            <h3 id="my-location">x.x.x.x is in Hong Kong, Central and Western </h3>
+                        </div>
                         <div data-v-21b55a82="" class="wifi flex">
                             <i data-v-21b55a82="" class="net-img net-nor"></i>
                             网络正常
@@ -731,7 +532,7 @@
                         <button type="button" aria-label="Close" class="el-dialog__headerbtn">
                             <i class="el-dialog__close el-icon el-icon-close"></i>
                         </button>
-                    </div><!----><!---->
+                    </div>
                 </div>
             </div>
         </div>
@@ -742,9 +543,13 @@
                     <button type="button" aria-label="Close" class="el-dialog__headerbtn">
                         <i class="el-dialog__close el-icon el-icon-close"></i>
                     </button>
-                </div><!----><div class="el-dialog__footer">
+                </div>
+                <div class="el-dialog__footer">
                     <div data-v-8f837bd2="" class="messgeBox-bottom flex">
-                        <button data-v-8f837bd2="" type="button" class="el-button box_btn el-button--primary"><!----><!----><span>确 定</span></button> <label data-v-8f837bd2="" role="checkbox" class="el-checkbox box_checkbox">
+                        <button data-v-8f837bd2="" type="button" class="el-button box_btn el-button--primary">
+                            <span>确 定</span>
+                        </button>
+                        <label data-v-8f837bd2="" role="checkbox" class="el-checkbox box_checkbox">
                             <span aria-checked="mixed" class="el-checkbox__input">
                                 <span class="el-checkbox__inner"></span>
                                 <input type="checkbox" aria-hidden="true" class="el-checkbox__original" value="">
@@ -754,7 +559,8 @@
                     </div>
                 </div>
             </div>
-        </div> <div class="el-dialog__wrapper empty-dialog" style="display: none;">
+        </div>
+        <div class="el-dialog__wrapper empty-dialog" style="display: none;">
             <div role="dialog" aria-modal="true" aria-label="dialog" class="el-dialog" style="margin-top: 15vh;">
                 <div class="el-dialog__header">
                     <span class="el-dialog__title"></span>
@@ -762,7 +568,7 @@
                         <i class="el-dialog__close el-icon el-icon-close">
                         </i>
                     </button>
-                </div><!----><!---->
+                </div>
             </div>
         </div> <div class="el-dialog__wrapper notify-box" style="display: none;">
             <div role="dialog" aria-modal="true" aria-label="消息" class="el-dialog" style="margin-top: 15vh; width: 800px;">
@@ -771,10 +577,10 @@
                     <button type="button" aria-label="Close" class="el-dialog__headerbtn">
                         <i class="el-dialog__close el-icon el-icon-close"></i>
                     </button>
-                </div><!----><div class="el-dialog__footer">
+                </div>
+                <div class="el-dialog__footer">
                     <div class="notify-box-bottom">
                         <button type="button" class="el-button box_btn el-button--primary">
-                            <!----><!---->
                             <span>知道了</span>
                         </button>
                     </div>
@@ -788,11 +594,13 @@
                     <button type="button" aria-label="Close" class="el-dialog__headerbtn">
                         <i class="el-dialog__close el-icon el-icon-close"></i>
                     </button>
-                </div><!----><div class="el-dialog__footer">
+                </div>
+                <div class="el-dialog__footer">
                     <div data-v-555e54e4="" class="messgeBox-bottom">
-                        <button data-v-555e54e4="" type="button" class="el-button box_btn close el-button--primary"><!----><!----><span>取消</span></button>
+                        <button data-v-555e54e4="" type="button" class="el-button box_btn close el-button--primary">
+                            <span>取消</span>
+                        </button>
                         <button data-v-555e54e4="" type="button" class="el-button box_btn el-button--primary">
-                            <!----><!---->
                             <span>确定</span>
                         </button>
                     </div>
