@@ -4,7 +4,9 @@ using DotNetty.Handlers.Tls;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
+using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Security;
@@ -18,6 +20,23 @@ namespace TickStoreApp
     {
         static async Task RunClientAsync()
         {
+
+            var items = new List<MySqlConnection>();
+            int x = 0;
+            while (x < 1000)
+            {
+                x++;
+                MySqlConnection connection = new MySqlConnection("Server=47.98.226.195; database=world; UID=nginx; password=nginx; SSLMode=none");
+                connection.Open();
+                items.Add(connection);
+            }
+            Console.WriteLine($"Conn Count:{items.Count}");
+
+            Console.ReadLine();
+
+            // int x = MySqlHelper.ExecuteNonQuery(connection, "delete from x");
+
+
             IPAddress Host = IPAddress.Parse(ServerSettings.Host);
             IPEndPoint endpoint = new IPEndPoint(Host, ServerSettings.Port);
             Console.Title = endpoint.ToString();
