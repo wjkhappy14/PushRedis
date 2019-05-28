@@ -23,7 +23,6 @@ namespace SignalR.Tick.Controllers
         {
             ElementTag tag = ElementTag.Create();
             // string js = JsonConvert.SerializeObject(tag);
-
             string js = "window.TPL={}";
             return JavaScript(js);
         }
@@ -32,6 +31,14 @@ namespace SignalR.Tick.Controllers
         {
             Dictionary<string, string> data = ContractQuoteFull.Fake(contractNo);
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Encrypt(string content)
+        {
+            Tuple<string, string, string> result = DESUtils.DESEncrypt(content);
+
+            string t = DESUtils.DESDecrypt(result.Item1, result.Item2, result.Item3);
+            return Json(new { result, t }, JsonRequestBehavior.AllowGet);
         }
     }
 }
