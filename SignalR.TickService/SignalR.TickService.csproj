@@ -528,6 +528,7 @@
     <Content Include="Scripts\remedial.js" />
     <Content Include="Scripts\jquery.signalR.js" />
     <Content Include="Scripts\jquery.signalR.min.js" />
+    <Content Include="Scripts\xss.js" />
     <Content Include="Styles\style.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
