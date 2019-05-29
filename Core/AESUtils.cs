@@ -10,6 +10,7 @@ namespace Core
     /// </summary>
     public static class AESUtils
     {
+        
         static public Tuple<string, string, string> Encrypt(string content)
         {
             byte[] input = Encoding.UTF8.GetBytes(content);

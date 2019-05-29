@@ -1,8 +1,9 @@
 ﻿using Core;
 using SignalR.Tick.Models;
-using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Mvc;
 
 namespace SignalR.Tick.Controllers
@@ -46,6 +47,14 @@ namespace SignalR.Tick.Controllers
 
             string t = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
             return Json(new { result, t }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult RSA(string content)
+        {
+            Tuple<RSAParameters, byte[]> result = RSAUtils.Encrypt(content);
+            string data = Convert.ToBase64String(result.Item2);
+            string t = RSAUtils.Decrypt(data, result.Item1);
+            return Json(new { result.Item1, data, t }, JsonRequestBehavior.AllowGet);
         }
     }
 }
