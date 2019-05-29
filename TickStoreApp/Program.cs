@@ -20,10 +20,19 @@ namespace TickStoreApp
     {
         static async Task RunClientAsync()
         {
+            var bin = Convert.ToString(79, 2);
+            var dec = Convert.ToString(79, 8);
+            var hex = Convert.ToString(79, 16);
+
+            byte[] bytes = BitConverter.GetBytes(17);
+            byte[] data = new byte[] { byte.MinValue, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 254, byte.MaxValue };
+
+            string s = BitConverter.ToString(data);
+
 
             var items = new List<MySqlConnection>();
             int x = 0;
-            while (x < 1000)
+            while (x < 500)
             {
                 x++;
                 MySqlConnection connection = new MySqlConnection("Server=47.98.226.195; database=world; UID=nginx; password=nginx; SSLMode=none");

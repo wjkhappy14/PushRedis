@@ -18,6 +18,7 @@ namespace Core
             DESCryptoServiceProvider desProvider = new DESCryptoServiceProvider();
             desProvider.GenerateKey();
             desProvider.GenerateIV();
+            
             MemoryStream ms = new MemoryStream();
             ICryptoTransform encryptor = desProvider.CreateEncryptor();
             CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write);
