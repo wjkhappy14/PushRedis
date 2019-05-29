@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AESUtils.cs" />
     <Compile Include="ContractQuoteFull.cs" />
     <Compile Include="DESUtils.cs" />
     <Compile Include="Extensions\StackExchangeRedisExtension.cs" />

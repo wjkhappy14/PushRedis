@@ -6,44 +6,37 @@ using System.Text;
 namespace Core
 {
     /// <summary>
-    /// 64位（8字节）Key，64位IV DES加密/解密
+    /// 256位(32字节)Key，128位（16字节）IV AES加密/解密
     /// </summary>
-    public static class DESUtils
+    public static class AESUtils
     {
-        /// <summary>
-        /// 64位DES加密       
-        /// </summary>
-        /// <returns></returns>
-        public static Tuple<string, string, string> Encrypt(string content)
+        static public Tuple<string, string, string> Encrypt(string content)
         {
             byte[] input = Encoding.UTF8.GetBytes(content);
-            DESCryptoServiceProvider desProvider = new DESCryptoServiceProvider();
-            desProvider.GenerateKey();
-            desProvider.GenerateIV();
+            AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider();
+            aesProvider.GenerateIV();
+            aesProvider.GenerateKey();
 
+            ICryptoTransform encryptor = aesProvider.CreateEncryptor();
             MemoryStream ms = new MemoryStream();
-            ICryptoTransform encryptor = desProvider.CreateEncryptor();
             CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write);
             cs.Write(input, 0, input.Length);
             cs.FlushFinalBlock();
             byte[] data = ms.ToArray();
-            Tuple<string, string, string> result = Tuple.Create(Convert.ToBase64String(data), Convert.ToBase64String(desProvider.Key), Convert.ToBase64String(desProvider.IV));
+
+            Tuple<string, string, string> result = Tuple.Create(Convert.ToBase64String(data), Convert.ToBase64String(aesProvider.Key), Convert.ToBase64String(aesProvider.IV));
             return result;
         }
-        /// <summary>
-        /// 64位DES解密       
-        /// </summary>
-        /// <returns></returns>
         public static string Decrypt(string data, string key, string iv)
         {
-            DESCryptoServiceProvider desProvider = new DESCryptoServiceProvider()
+            byte[] input = Convert.FromBase64String(data);
+            AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider()
             {
                 Key = Convert.FromBase64String(key),
                 IV = Convert.FromBase64String(iv)
             };
-            byte[] input = Convert.FromBase64String(data);
+            ICryptoTransform decryptor = aesProvider.CreateDecryptor();
             MemoryStream ms = new MemoryStream();
-            ICryptoTransform decryptor = desProvider.CreateDecryptor();
             CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Write);
             cs.Write(input, 0, input.Length);
             cs.FlushFinalBlock();

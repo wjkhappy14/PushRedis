@@ -29,7 +29,6 @@ namespace TickStoreApp
 
             string s = BitConverter.ToString(data);
 
-
             var items = new List<MySqlConnection>();
             int x = 0;
             while (x < 500)

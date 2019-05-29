@@ -33,11 +33,18 @@ namespace SignalR.Tick.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Encrypt(string content)
+        public JsonResult DES(string content)
         {
-            Tuple<string, string, string> result = DESUtils.DESEncrypt(content);
+            Tuple<string, string, string> result = DESUtils.Encrypt(content);
 
-            string t = DESUtils.DESDecrypt(result.Item1, result.Item2, result.Item3);
+            string t = DESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
+            return Json(new { result, t }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult AES(string content)
+        {
+            Tuple<string, string, string> result = AESUtils.Encrypt(content);
+
+            string t = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
             return Json(new { result, t }, JsonRequestBehavior.AllowGet);
         }
     }
