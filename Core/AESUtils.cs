@@ -10,11 +10,14 @@ namespace Core
     /// </summary>
     public static class AESUtils
     {
-        
         static public Tuple<string, string, string> Encrypt(string content)
         {
             byte[] input = Encoding.UTF8.GetBytes(content);
-            AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider();
+            AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider()
+            {
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7
+            };
             aesProvider.GenerateIV();
             aesProvider.GenerateKey();
 
@@ -34,7 +37,9 @@ namespace Core
             AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider()
             {
                 Key = Convert.FromBase64String(key),
-                IV = Convert.FromBase64String(iv)
+                IV = Convert.FromBase64String(iv),
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7
             };
             ICryptoTransform decryptor = aesProvider.CreateDecryptor();
             MemoryStream ms = new MemoryStream();
