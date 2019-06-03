@@ -20,6 +20,10 @@ namespace TickStoreApp
     {
         static async Task RunClientAsync()
         {
+            string sss = "g4kdLwdQEXPyForIrAddAqoLORN12bNH40E/T/i08EQ=";
+            byte[] base64 =  Convert.FromBase64String(sss);
+           var www=  Encoding.UTF8.GetString(Convert.FromBase64String(sss));
+
             int a = 32;
             int b = 23;
             int c = a | b;
