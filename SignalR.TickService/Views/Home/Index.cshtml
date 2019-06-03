@@ -5,8 +5,13 @@
 }
 <script type="text/javascript">
     window.onload = function () {
+        encBase64();
+        encUtf8();
+    }
+
+    function encUtf8() {
         // 1. 加密 & 解密
-        var data = "Hello word ! ";
+        var data = "Hello";
         var key = CryptoJS.enc.Utf8.parse('0123456789ABCDEF');
         var iv = CryptoJS.enc.Utf8.parse('0123456789abcdef');
         // 加密
@@ -27,6 +32,33 @@
             });
         var result = decrypted.toString(CryptoJS.enc.Utf8);
         console.log(result);
+
+    }
+    function encBase64() {
+        // 1. 加密 & 解密
+        var data = "Hello";
+        var key = CryptoJS.enc.Base64.parse('MDEyMzQ1Njc4OUFCQ0RFRg==');
+        console.log(key.toString());
+        var iv = CryptoJS.enc.Base64.parse('MDEyMzQ1Njc4OWFiY2RlZg==');
+        // 加密
+        var encrypted = CryptoJS.AES.encrypt(data,
+            key,
+            {
+                iv: iv,
+                mode: CryptoJS.mode.ECB,
+                padding: CryptoJS.pad.Pkcs7
+            });
+        console.log(encrypted.toString());
+        // 解密
+        var decrypted = CryptoJS.AES.decrypt(encrypted,
+            key, {
+                iv: iv,
+                mode: CryptoJS.mode.ECB,
+                padding: CryptoJS.pad.Pkcs7
+            });
+        var result = decrypted.toString(CryptoJS.enc.Base64);
+        var raw = window.atob(result);
+        console.log(raw);
     }
 </script>
 
