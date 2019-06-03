@@ -20,6 +20,11 @@ namespace TickStoreApp
     {
         static async Task RunClientAsync()
         {
+            int a = 32;
+            int b = 23;
+            int c = a | b;
+            c = a & b;
+            c = a ^ b;
             var bin = Convert.ToString(79, 2);
             var dec = Convert.ToString(79, 8);
             var hex = Convert.ToString(79, 16);

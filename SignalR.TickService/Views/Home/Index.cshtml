@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Home/App.cshtml";
+}
+<script type="text/javascript">
+    window.onload = function () {
+        //解密
+        var aseKey = window.atob("g4kdLwdQEXPyForIrAddAqoLORN12bNH40E/T/i08EQ=");     //秘钥必须为：8/16/32位
+        var data = window.atob("dInEHaZD1ubLMiyTuzRqxiOupHPm0wMnECcq6CrdHm0=");
+        var iv = window.atob("tRDWBXebc6rWgG0Eo+3dqw==");
+        var decrypt = CryptoJS.AES.decrypt(data, CryptoJS.enc.Utf8.parse(aseKey),
+            {
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            }).toString(CryptoJS.enc.Utf8);
+
+        console.log(decrypt);
+    }
+</script>
+

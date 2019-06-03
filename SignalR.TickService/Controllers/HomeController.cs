@@ -3,7 +3,6 @@ using SignalR.Tick.Models;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Text;
 using System.Web.Mvc;
 
 namespace SignalR.Tick.Controllers
@@ -12,7 +11,7 @@ namespace SignalR.Tick.Controllers
     {
         public ActionResult Index()
         {
-            return Json(new { DateTime.Now }, JsonRequestBehavior.AllowGet);
+            return View();
         }
         public ActionResult Main()
         {
