@@ -1,14 +1,19 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Home/App.cshtml";
 }
 <script type="text/javascript">
     window.onload = function () {
+        gateway();
         encBase64();
         encUtf8();
     }
-
+    function gateway() {
+        $.get("/Home/Gateway", function (result) {
+            var json = JSON.parse(result);
+            console.dir(json);
+        });
+    }
     function encUtf8() {
         // 1. 加密 & 解密
         var data = "Hello";

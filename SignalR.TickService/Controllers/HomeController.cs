@@ -62,11 +62,7 @@ namespace SignalR.Tick.Controllers
         {
             string path = Server.MapPath("/App_Data/gateway.txt");
             string text = System.IO.File.ReadAllText(path);
-            return Json(new
-            {
-                Path = path,
-                Content = text
-            }, JsonRequestBehavior.AllowGet);
+            return Json(text, JsonRequestBehavior.AllowGet);
         }
     }
 }
