@@ -57,5 +57,16 @@ namespace SignalR.Tick.Controllers
             string t = RSAUtils.Decrypt(data, result.Item1);
             return Json(new { result.Item1, data, t }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Gateway()
+        {
+            string path = Server.MapPath("/App_Data/gateway.txt");
+            string text = System.IO.File.ReadAllText(path);
+            return Json(new
+            {
+                Path = path,
+                Content = text
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
