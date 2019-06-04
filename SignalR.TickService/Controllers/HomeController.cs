@@ -62,7 +62,18 @@ namespace SignalR.Tick.Controllers
         {
             string path = Server.MapPath("/App_Data/gateway.txt");
             string text = System.IO.File.ReadAllText(path);
-            return Json(text, JsonRequestBehavior.AllowGet);
+            //key: 0123456789ABCDEF
+            //IV: 0123456789abcdef
+            Tuple<string, string, string> result = AESUtils.Encrypt(text, "MDEyMzQ1Njc4OUFCQ0RFRg==", "MDEyMzQ1Njc4OWFiY2RlZg==");
+
+            string t = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
+            return Json(new
+            {
+                Base64AESText = result.Item1,
+                Base64Key = result.Item2,
+                Base64IV = result.Item3,
+                Text = t
+            }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult XGateway()
         {
