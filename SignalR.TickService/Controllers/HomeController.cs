@@ -64,5 +64,14 @@ namespace SignalR.Tick.Controllers
             string text = System.IO.File.ReadAllText(path);
             return Json(text, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult XGateway()
+        {
+            string path = Server.MapPath("/App_Data/gateway.txt");
+            string text = System.IO.File.ReadAllText(path);
+            byte[] allBytes = System.Text.Encoding.Default.GetBytes(text);
+
+            FileContentResult fileContentResult = new FileContentResult(allBytes, "text/plain");
+            return fileContentResult;
+        }
     }
 }
