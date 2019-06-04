@@ -47,8 +47,10 @@ namespace SignalR.Tick.Controllers
             Tuple<string, string, string> result = AESUtils.Encrypt(content, "MDEyMzQ1Njc4OUFCQ0RFRg==", "MDEyMzQ1Njc4OWFiY2RlZg==");
 
             string t = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
+            string comment = $"调试对称AES加密/解密 对{content}使用Key={result.Item1}IV={result.Item2} 用Pkcs7，ECB 加密的结果为{result.Item1} 对输入的Key，IV，【加密后的结果都做了Base64编码】";
             return Json(new
             {
+                Comment= comment,
                 Cotent = content,
                 Base64AESText = result.Item1,
                 Key = "0123456789ABCDEF",
