@@ -47,7 +47,16 @@ namespace SignalR.Tick.Controllers
             Tuple<string, string, string> result = AESUtils.Encrypt(content, "MDEyMzQ1Njc4OUFCQ0RFRg==", "MDEyMzQ1Njc4OWFiY2RlZg==");
 
             string t = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
-            return Json(new { result, t }, JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                Cotent = content,
+                Base64AESText = result.Item1,
+                Key = "0123456789ABCDEF",
+                Base64Key = result.Item2,
+                IV = "0123456789abcdef",
+                Base64IV = result.Item3,
+                Text = t
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult RSA(string content)
