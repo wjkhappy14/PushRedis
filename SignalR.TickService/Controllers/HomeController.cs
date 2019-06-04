@@ -95,5 +95,12 @@ namespace SignalR.Tick.Controllers
             FileContentResult fileContentResult = new FileContentResult(allBytes, "text/plain");
             return fileContentResult;
         }
+
+
+        public ActionResult ECDiffieHellman()
+        {
+            ECDiffieHellmanUtils.X();
+            return View();
+        }
     }
 }
