@@ -10,10 +10,19 @@ namespace SignalR.TickService.Client.App
     {
         private static void Main(string[] args)
         {
+
+            byte[] hello = Convert.FromBase64String("MDEyMzQ1Njc4OUFCQ0RFRg==");
+
+
+            ArraySegment<byte> myArrSegMid = new ArraySegment<byte>(hello, 2, 5);
+
+
             TextWriter writer = Console.Out;
-            string local = "ws://47.98.226.195:7102/ws";
+            string local = "ws://47.98.226.195:8502/ws";
             ClientWebSocket ws = new ClientWebSocket();
             ws.ConnectAsync(new Uri(local), new CancellationToken());
+            ws.SendAsync(myArrSegMid, WebSocketMessageType.Text, true, new CancellationToken());
+
             Thread.Sleep(TimeSpan.FromSeconds(1));
 
             //2019-05-14T10:41:20.2345454+08:00

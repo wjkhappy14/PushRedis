@@ -9,6 +9,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <_PublishTargetUrl>\\pc2\ShareDocs\Publish</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
+    <File Include="App_Data/gateway.txt">
+      <publishTime>06/05/2019 11:42:52</publishTime>
+    </File>
     <File Include="bin/App_global.asax.compiled">
       <publishTime>05/17/2019 15:50:13</publishTime>
     </File>
@@ -19,10 +22,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/17/2019 15:50:12</publishTime>
     </File>
     <File Include="bin/Core.dll">
-      <publishTime>05/28/2019 15:41:08</publishTime>
+      <publishTime>06/05/2019 11:36:37</publishTime>
     </File>
     <File Include="bin/Core.pdb">
-      <publishTime>05/28/2019 15:41:08</publishTime>
+      <publishTime>06/05/2019 11:36:37</publishTime>
     </File>
     <File Include="bin/dotnetty.com.pfx">
       <publishTime>04/29/2019 13:45:10</publishTime>
@@ -85,10 +88,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/13/2012 12:19:34</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.dll">
-      <publishTime>05/28/2019 15:41:08</publishTime>
+      <publishTime>06/05/2019 14:38:57</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.pdb">
-      <publishTime>05/28/2019 15:41:08</publishTime>
+      <publishTime>06/05/2019 14:38:57</publishTime>
     </File>
     <File Include="bin/StackExchange.Redis.dll">
       <publishTime>04/29/2019 13:45:10</publishTime>
@@ -1330,13 +1333,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/17/2019 09:30:12</publishTime>
     </File>
     <File Include="Views/Home/App.cshtml">
-      <publishTime>05/21/2019 16:47:06</publishTime>
+      <publishTime>06/05/2019 11:09:22</publishTime>
     </File>
     <File Include="Views/Home/Error.cshtml">
       <publishTime>05/10/2019 10:53:48</publishTime>
     </File>
+    <File Include="Views/Home/Index.cshtml">
+      <publishTime>06/04/2019 11:42:26</publishTime>
+    </File>
     <File Include="Views/Home/Main.cshtml">
       <publishTime>05/05/2019 15:09:37</publishTime>
+    </File>
+    <File Include="Views/Home/WebSocket.cshtml">
+      <publishTime>06/05/2019 14:37:43</publishTime>
     </File>
     <File Include="Views/Hubs/Index.cshtml">
       <publishTime>05/15/2019 16:39:11</publishTime>
@@ -1354,7 +1363,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2019 15:09:37</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/28/2019 15:41:09</publishTime>
+      <publishTime>06/05/2019 14:38:59</publishTime>
     </File>
   </ItemGroup>
 </Project>
