@@ -14,7 +14,7 @@ namespace SignalR.TickService.Client.App
             byte[] hello = Convert.FromBase64String("MDEyMzQ1Njc4OUFCQ0RFRg==");
 
 
-            ArraySegment<byte> myArrSegMid = new ArraySegment<byte>(hello, 2, 5);
+            ArraySegment<byte> myArrSegMid = new ArraySegment<byte>(hello, 0, hello.Length);
 
 
             TextWriter writer = Console.Out;
