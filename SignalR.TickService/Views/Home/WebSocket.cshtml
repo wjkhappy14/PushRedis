@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "WebSocket";
+    Layout = "~/Views/Home/App.cshtml";
+}
+<script type="text/javascript">
+    window.onload = function () {
+        var ws = new ReconnectingWebSocket('ws://47.103.53.150:7102/ws');
+        console.log(ws);
+    }
+</script>
+

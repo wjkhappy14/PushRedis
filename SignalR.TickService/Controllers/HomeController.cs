@@ -102,5 +102,9 @@ namespace SignalR.Tick.Controllers
             ECDiffieHellmanUtils.X();
             return View();
         }
+        public ActionResult WebSocket()
+        {
+            return View();
+        }
     }
 }
