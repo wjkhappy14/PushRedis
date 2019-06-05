@@ -5,7 +5,17 @@
 }
 <script type="text/javascript">
     window.onload = function () {
-        var ws = new ReconnectingWebSocket('ws://47.103.53.150:7102/ws');
+        var ws = new ReconnectingWebSocket('ws://47.98.226.195:7102/ws');
+        ws.open();
+        var x = 1;
+        do {
+            x++;
+            ws.send({
+                msg: 'Hello',
+                n: x
+            });
+        }
+        while (x < 1000);
         console.log(ws);
     }
 </script>
