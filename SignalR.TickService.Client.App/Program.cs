@@ -1,4 +1,5 @@
 
+using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.IO;
 using System.Net.WebSockets;
@@ -10,17 +11,18 @@ namespace SignalR.TickService.Client.App
     {
         private static void Main(string[] args)
         {
+            string wsUrl = "ws://47.98.226.195:8502/ws";
+            Connection conn = new Connection(wsUrl);
+            conn.Start();
+            conn.Send("Hello");
 
             byte[] hello = Convert.FromBase64String("MDEyMzQ1Njc4OUFCQ0RFRg==");
-
-
             ArraySegment<byte> myArrSegMid = new ArraySegment<byte>(hello, 0, hello.Length);
 
-
             TextWriter writer = Console.Out;
-            string local = "ws://47.98.226.195:8502/ws";
+
             ClientWebSocket ws = new ClientWebSocket();
-            ws.ConnectAsync(new Uri(local), new CancellationToken());
+            ws.ConnectAsync(new Uri(wsUrl), new CancellationToken());
             ws.SendAsync(myArrSegMid, WebSocketMessageType.Text, true, new CancellationToken());
 
             Thread.Sleep(TimeSpan.FromSeconds(1));
