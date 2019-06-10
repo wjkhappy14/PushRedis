@@ -11,7 +11,7 @@ namespace SignalR.TickService.Client.App
     {
         private static void Main(string[] args)
         {
-            string wsUrl = "ws://47.98.226.195:8502/ws";
+            string wsUrl = "ws://65.52.173.5:2048/ws";
             Connection conn = new Connection(wsUrl);
             conn.Start();
             conn.Send("Hello");
