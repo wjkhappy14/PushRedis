@@ -10,13 +10,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Data/gateway.txt">
-      <publishTime>06/05/2019 11:42:52</publishTime>
+      <publishTime>06/10/2019 17:15:44</publishTime>
     </File>
     <File Include="bin/Core.dll">
-      <publishTime>06/05/2019 11:36:37</publishTime>
+      <publishTime>06/10/2019 16:58:52</publishTime>
     </File>
     <File Include="bin/Core.pdb">
-      <publishTime>06/05/2019 11:36:37</publishTime>
+      <publishTime>06/10/2019 16:58:52</publishTime>
     </File>
     <File Include="bin/dotnetty.com.pfx">
       <publishTime>04/29/2019 13:45:10</publishTime>
@@ -79,10 +79,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/13/2012 12:19:34</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.dll">
-      <publishTime>06/05/2019 14:37:55</publishTime>
+      <publishTime>06/10/2019 17:15:52</publishTime>
     </File>
     <File Include="bin/SignalR.Tick.pdb">
-      <publishTime>06/05/2019 14:37:55</publishTime>
+      <publishTime>06/10/2019 17:15:52</publishTime>
     </File>
     <File Include="bin/StackExchange.Redis.StrongName.dll">
       <publishTime>01/25/2018 09:26:38</publishTime>
@@ -1348,7 +1348,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2019 15:09:37</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/05/2019 14:37:56</publishTime>
+      <publishTime>06/10/2019 17:10:58</publishTime>
     </File>
   </ItemGroup>
 </Project>

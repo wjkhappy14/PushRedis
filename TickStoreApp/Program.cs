@@ -42,16 +42,13 @@ namespace TickStoreApp
 
             var items = new List<MySqlConnection>();
             int x = 0;
-            while (x < 500)
-            {
+          
                 x++;
                 MySqlConnection connection = new MySqlConnection("Server=47.98.226.195; database=world; UID=nginx; password=nginx; SSLMode=none");
                 connection.Open();
                 items.Add(connection);
-            }
             Console.WriteLine($"Conn Count:{items.Count}");
 
-            Console.ReadLine();
 
             // int x = MySqlHelper.ExecuteNonQuery(connection, "delete from x");
 
@@ -65,7 +62,8 @@ namespace TickStoreApp
             string targetHost = null;
             if (ServerSettings.IsSsl)
             {
-                cert = new X509Certificate2(Path.Combine(ServerSettings.X509Cert, "dotnetty.com.pfx"), "password");
+             
+                cert = new X509Certificate2(@"C:\Users\finance\Documents\Code\QuotePushRedis\shared\certificate.crt", "password");
                 targetHost = cert.GetNameInfo(X509NameType.DnsName, false);
             }
             try
@@ -123,6 +121,8 @@ namespace TickStoreApp
             {
                 //group.ShutdownGracefullyAsync().Wait(1000);
             }
+
+            Console.ReadLine();
         }
         static void Main() =>
             //Console.WriteLine("正在启动……");
