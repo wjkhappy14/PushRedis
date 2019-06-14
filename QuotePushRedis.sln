@@ -13,8 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{67009167-2A76-455D-8272-DEDA0FD54108}"
 	ProjectSection(SolutionItems) = preProject
+		shared\certificate.cer = shared\certificate.cer
+		shared\certificate.crt = shared\certificate.crt
 		shared\contoso.com.pfx = shared\contoso.com.pfx
 		shared\dotnetty.com.pfx = shared\dotnetty.com.pfx
+		shared\privatekey.key = shared\privatekey.key
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TickReplayApp", "TickReplayApp\TickReplayApp\TickReplayApp.vcxproj", "{14999BFA-1FA8-48D3-9DA6-0B39FFD0D62C}"
