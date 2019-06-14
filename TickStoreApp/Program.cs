@@ -7,8 +7,8 @@ using DotNetty.Transport.Channels.Sockets;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -20,11 +20,29 @@ namespace TickStoreApp
     {
         static async Task RunClientAsync()
         {
+            List<MySqlConnection> items = new List<MySqlConnection>();
+            HttpClient httpClient = new HttpClient();
+            int x = 1;
+            do
+            {
+                string url = $"http://42.51.45.70:7100/kline/list?contractNo=1906&count=1000&time=1560333861068&type=MINUTE15&commodityNo=AD&X={x}";
+                x++;
+                string result = await httpClient.GetStringAsync(url);
+                Console.WriteLine(result);
+              
+                MySqlConnection connection = new MySqlConnection("Server=42.51.45.70; database=world; UID=google; password=google; SSLMode=none");
+                connection.Open();
+                items.Add(connection);
+                Console.WriteLine($"Conn Count:{items.Count}");
+                System.Threading.Thread.Sleep(TimeSpan.FromMinutes(5));
+            }
+            while (x < 1000);
+
 
             string sss = "MDEyMzQ1Njc4OUFCQ0RFRg==";
 
-            byte[] base64 =  Convert.FromBase64String(sss);
-           var www=  Encoding.UTF8.GetString(Convert.FromBase64String(sss));
+            byte[] base64 = Convert.FromBase64String(sss);
+            var www = Encoding.UTF8.GetString(Convert.FromBase64String(sss));
 
             int a = 32;
             int b = 23;
@@ -40,14 +58,7 @@ namespace TickStoreApp
 
             string s = BitConverter.ToString(data);
 
-            var items = new List<MySqlConnection>();
-            int x = 0;
-          
-                x++;
-                MySqlConnection connection = new MySqlConnection("Server=47.98.226.195; database=world; UID=nginx; password=nginx; SSLMode=none");
-                connection.Open();
-                items.Add(connection);
-            Console.WriteLine($"Conn Count:{items.Count}");
+
 
 
             // int x = MySqlHelper.ExecuteNonQuery(connection, "delete from x");
@@ -62,7 +73,7 @@ namespace TickStoreApp
             string targetHost = null;
             if (ServerSettings.IsSsl)
             {
-             
+
                 cert = new X509Certificate2(@"C:\Users\finance\Documents\Code\QuotePushRedis\shared\certificate.crt", "password");
                 targetHost = cert.GetNameInfo(X509NameType.DnsName, false);
             }
