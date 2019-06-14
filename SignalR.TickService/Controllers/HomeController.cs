@@ -69,6 +69,7 @@ namespace SignalR.Tick.Controllers
             return Json(new { result.Item1, data, t }, JsonRequestBehavior.AllowGet);
         }
 
+        [AllowCrossSiteJson]
         public ActionResult Gateway()
         {
             string path = Server.MapPath("/App_Data/gateway.txt");
@@ -86,6 +87,7 @@ namespace SignalR.Tick.Controllers
                 Text = t
             }, JsonRequestBehavior.AllowGet);
         }
+        [AllowCrossSiteJson]
         public ActionResult XGateway()
         {
             string path = Server.MapPath("/App_Data/gateway.txt");

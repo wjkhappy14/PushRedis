@@ -553,6 +553,7 @@
     <Content Include="Views\Home\WebSocket.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllowCrossSiteJsonAttribute.cs" />
     <Compile Include="App_Start\BackgroundThread.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
