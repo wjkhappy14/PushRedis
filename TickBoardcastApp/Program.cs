@@ -20,7 +20,7 @@ namespace TickBoardcastApp
 {
     internal class Program
     {
-        static async Task RunServerAsync()
+        private static async Task RunServerAsync()
         {
             MultithreadEventLoopGroup bossGroup = new MultithreadEventLoopGroup();
             MultithreadEventLoopGroup workerGroup = new MultithreadEventLoopGroup();
