@@ -679,6 +679,7 @@
     <Compile Include="Hubs\Test\StressHub.cs" />
     <Compile Include="Hubs\Test\TestHub.cs" />
     <Compile Include="Models\ElementTag.cs" />
+    <Compile Include="Models\GatewayItem.cs" />
     <Compile Include="Models\ReplyObject.cs" />
     <Compile Include="Models\RequestCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

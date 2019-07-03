@@ -1,8 +1,12 @@
 ﻿using Core;
+using Newtonsoft.Json;
 using SignalR.Tick.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace SignalR.Tick.Controllers
@@ -50,7 +54,7 @@ namespace SignalR.Tick.Controllers
             string comment = $"调试对称AES加密/解密 对{content}使用Key={result.Item1}IV={result.Item2} 用Pkcs7，ECB 加密的结果为{result.Item1} 对输入的Key，IV，【加密后的结果都做了Base64编码】";
             return Json(new
             {
-                Comment= comment,
+                Comment = comment,
                 Cotent = content,
                 Base64AESText = result.Item1,
                 Key = "0123456789ABCDEF",
@@ -74,6 +78,9 @@ namespace SignalR.Tick.Controllers
         {
             string path = Server.MapPath("/App_Data/gateway.txt");
             string text = System.IO.File.ReadAllText(path);
+            text = text.Replace("\r\n", string.Empty);
+            // text = text.Replace("\"", "'");
+            text = Regex.Replace(text, @"\s+", string.Empty);
             //key: 0123456789ABCDEF
             //IV: 0123456789abcdef
             Tuple<string, string, string> result = AESUtils.Encrypt(text, "MDEyMzQ1Njc4OUFCQ0RFRg==", "MDEyMzQ1Njc4OWFiY2RlZg==");
@@ -83,8 +90,8 @@ namespace SignalR.Tick.Controllers
             {
                 Base64AESText = result.Item1,
                 Base64Key = result.Item2,
-                Base64IV = result.Item3,
-                Text = t
+                Base64IV = result.Item3
+                // Text = t
             }, JsonRequestBehavior.AllowGet);
         }
         [AllowCrossSiteJson]
@@ -92,10 +99,11 @@ namespace SignalR.Tick.Controllers
         {
             string path = Server.MapPath("/App_Data/gateway.txt");
             string text = System.IO.File.ReadAllText(path);
-            byte[] allBytes = System.Text.Encoding.Default.GetBytes(text);
-
-            FileContentResult fileContentResult = new FileContentResult(allBytes, "text/plain");
-            return fileContentResult;
+            text = text.Replace("\r\n", string.Empty);
+            //   text = text.Replace("\"", "'");
+            text = Regex.Replace(text, @"\s+", string.Empty);
+            byte[] allBytes = Encoding.UTF8.GetBytes(text);
+            return Content(text);
         }
 
 
@@ -103,6 +111,17 @@ namespace SignalR.Tick.Controllers
         {
             ECDiffieHellmanUtils.X();
             return View();
+        }
+
+        public ActionResult Demo()
+        {
+            string path = Server.MapPath("/App_Data/gateway.txt");
+            using (StreamReader r = new StreamReader(path))
+            {
+                string json = r.ReadToEnd();
+                List<GatewayItem> items = JsonConvert.DeserializeObject<List<GatewayItem>>(json);
+                return Json(items, JsonRequestBehavior.AllowGet);
+            }
         }
         public ActionResult WebSocket()
         {
