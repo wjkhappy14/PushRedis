@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
@@ -31,10 +30,11 @@ namespace SignalR.Tick.Controllers
             return JavaScript(js);
         }
 
-        public JsonResult Info(string contractNo)
+        public ActionResult Info(int t=1)
         {
-            Dictionary<string, string> data = ContractQuoteFull.Fake(contractNo);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            List<GatewayItem> items = t == 1 ? GatewayItem.A : GatewayItem.B;
+            string json = JsonConvert.SerializeObject(items);
+            return Content(json);
         }
 
         public JsonResult DES(string content)
