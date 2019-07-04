@@ -44,10 +44,10 @@ namespace SignalR.Tick.Controllers
             string t = DESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
             return Json(new { result, t }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult AES(int t = 1)
+        public ActionResult AES(int t = 1)
         {
-            string key = t == 1 ? "cTEyMzRyNjd4OWFCQ2hFRjAxUTM0NWc3ODlhYmNkRXc=":"MDFkMzR1Njc4cEFCQ3lFRjAxMmM0NWI3ODlhYkNkZXM=";
-            string iv = t == 1 ? "MDEybjQ1Zzc4OWFiY2RFaw==" : "MDF4MzRkNjc4cEFCQ3pFRg==";
+            string key = t == 1 ? "1Q345g789abcdEwX" : "01d34u678pABCyEF";
+            string iv = t == 1 ? "012n45g789abcdEk" : "01x34d678pA9CzEb";
             string filename = t == 1 ? "/App_Data/gateway-a.txt" : "/App_Data/gateway-b.txt";
 
             string path = Server.MapPath(filename);
@@ -56,7 +56,8 @@ namespace SignalR.Tick.Controllers
             Tuple<string, string, string> result = AESUtils.Encrypt(content, key, iv);
 
             string dec = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
-            return Json(new
+
+            var obj = new
             {
                 Cotent = content,
                 Base64AESText = result.Item1,
@@ -64,7 +65,9 @@ namespace SignalR.Tick.Controllers
                 Base64Key = result.Item2,
                 IV = iv,
                 Base64IV = result.Item3
-            }, JsonRequestBehavior.AllowGet);
+            };
+            string json = JsonConvert.SerializeObject(obj);
+            return Content(result.Item1);
         }
 
         public JsonResult RSA(string content)
@@ -78,7 +81,7 @@ namespace SignalR.Tick.Controllers
         [AllowCrossSiteJson]
         public ActionResult Gateway()
         {
-            string path = Server.MapPath("/App_Data/gateway-a.txt");
+            string path = Server.MapPath("/App_Data/gateway-a-test.txt");
             string text = System.IO.File.ReadAllText(path);
             text = text.Replace("\r\n", string.Empty);
             text = Regex.Replace(text, @"\s+", string.Empty);
@@ -89,6 +92,8 @@ namespace SignalR.Tick.Controllers
             var obj = new { data = result.Item1 };
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
+
+
         [AllowCrossSiteJson]
         public ActionResult XGateway()
         {
