@@ -79,20 +79,13 @@ namespace SignalR.Tick.Controllers
             string path = Server.MapPath("/App_Data/gateway.txt");
             string text = System.IO.File.ReadAllText(path);
             text = text.Replace("\r\n", string.Empty);
-            // text = text.Replace("\"", "'");
             text = Regex.Replace(text, @"\s+", string.Empty);
             //key: 0123456789ABCDEF
             //IV: 0123456789abcdef
             Tuple<string, string, string> result = AESUtils.Encrypt(text, "MDEyMzQ1Njc4OUFCQ0RFRg==", "MDEyMzQ1Njc4OWFiY2RlZg==");
-
-            string t = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
-            return Json(new
-            {
-                Base64AESText = result.Item1,
-                Base64Key = result.Item2,
-                Base64IV = result.Item3
-                // Text = t
-            }, JsonRequestBehavior.AllowGet);
+            // string t = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
+            var obj = new { data = result.Item1 };
+            return Json(obj, JsonRequestBehavior.AllowGet);
         }
         [AllowCrossSiteJson]
         public ActionResult XGateway()
@@ -100,9 +93,7 @@ namespace SignalR.Tick.Controllers
             string path = Server.MapPath("/App_Data/gateway.txt");
             string text = System.IO.File.ReadAllText(path);
             text = text.Replace("\r\n", string.Empty);
-            //   text = text.Replace("\"", "'");
             text = Regex.Replace(text, @"\s+", string.Empty);
-            byte[] allBytes = Encoding.UTF8.GetBytes(text);
             return Content(text);
         }
 
@@ -120,12 +111,25 @@ namespace SignalR.Tick.Controllers
             {
                 string json = r.ReadToEnd();
                 List<GatewayItem> items = JsonConvert.DeserializeObject<List<GatewayItem>>(json);
-                return Json(items, JsonRequestBehavior.AllowGet);
+                var obj = new
+                {
+                    standby = new List<string>() { "http://42.51.45.70/gateway.txt", "http://65.52.173.5/home/xgateway", "http://65.52.173.5/home/gateway" },
+                    entry = items
+                };
+                json = JsonConvert.SerializeObject(obj);
+                return Content(json);
             }
         }
         public ActionResult WebSocket()
         {
             return View();
+        }
+
+        [AllowCrossSiteJson]
+        public ActionResult Ping()
+        {
+            string base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+            return Content(base64);
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SignalR.Tick.Models
 {
@@ -31,15 +28,27 @@ namespace SignalR.Tick.Models
 
     public class TreadeItem
     {
+        [JsonProperty("http")]
+        public string Http { get; set; }
 
+        [JsonProperty("ws")]
+        public string Ws { get; set; }
+
+        [JsonProperty("tcp")]
+        public string Tcp { get; set; }
 
 
     }
     public class QuoteItem
     {
+        [JsonProperty("http")]
+        public string Http { get; set; }
 
+        [JsonProperty("ws")]
+        public string Ws { get; set; }
+
+        [JsonProperty("tcp")]
+        public Dictionary<string,string> Tcp { get; set; }
 
     }
-
-
 }

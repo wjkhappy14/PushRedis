@@ -139,7 +139,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\AES.txt" />
     <Content Include="App_Data\gateway.txt" />
+    <Content Include="App_Data\host.txt" />
     <Content Include="clientaccesspolicy.xml" />
     <Content Include="Content\bg-body.jpg" />
     <Content Include="Content\bg.jpg" />
