@@ -30,7 +30,7 @@ namespace SignalR.Tick.Controllers
             return JavaScript(js);
         }
 
-        public ActionResult Info(int t=1)
+        public ActionResult Info(int t = 1)
         {
             List<GatewayItem> items = t == 1 ? GatewayItem.A : GatewayItem.B;
             string json = JsonConvert.SerializeObject(items);
@@ -44,24 +44,26 @@ namespace SignalR.Tick.Controllers
             string t = DESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
             return Json(new { result, t }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult AES(string content)
+        public JsonResult AES(int t = 1)
         {
-            //key: 0123456789ABCDEF
-            //IV: 0123456789abcdef
-            Tuple<string, string, string> result = AESUtils.Encrypt(content, "MDEyMzQ1Njc4OUFCQ0RFRg==", "MDEyMzQ1Njc4OWFiY2RlZg==");
+            string key = t == 1 ? "cTEyMzRyNjd4OWFCQ2hFRjAxUTM0NWc3ODlhYmNkRXc=":"MDFkMzR1Njc4cEFCQ3lFRjAxMmM0NWI3ODlhYkNkZXM=";
+            string iv = t == 1 ? "MDEybjQ1Zzc4OWFiY2RFaw==" : "MDF4MzRkNjc4cEFCQ3pFRg==";
+            string filename = t == 1 ? "/App_Data/gateway-a.txt" : "/App_Data/gateway-b.txt";
 
-            string t = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
-            string comment = $"调试对称AES加密/解密 对{content}使用Key={result.Item1}IV={result.Item2} 用Pkcs7，ECB 加密的结果为{result.Item1} 对输入的Key，IV，【加密后的结果都做了Base64编码】";
+            string path = Server.MapPath(filename);
+            string content = System.IO.File.ReadAllText(path);
+
+            Tuple<string, string, string> result = AESUtils.Encrypt(content, key, iv);
+
+            string dec = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
             return Json(new
             {
-                Comment = comment,
                 Cotent = content,
                 Base64AESText = result.Item1,
-                Key = "0123456789ABCDEF",
+                Key = key,
                 Base64Key = result.Item2,
-                IV = "0123456789abcdef",
-                Base64IV = result.Item3,
-                Text = t
+                IV = iv,
+                Base64IV = result.Item3
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -76,7 +78,7 @@ namespace SignalR.Tick.Controllers
         [AllowCrossSiteJson]
         public ActionResult Gateway()
         {
-            string path = Server.MapPath("/App_Data/gateway.txt");
+            string path = Server.MapPath("/App_Data/gateway-a.txt");
             string text = System.IO.File.ReadAllText(path);
             text = text.Replace("\r\n", string.Empty);
             text = Regex.Replace(text, @"\s+", string.Empty);
@@ -90,7 +92,7 @@ namespace SignalR.Tick.Controllers
         [AllowCrossSiteJson]
         public ActionResult XGateway()
         {
-            string path = Server.MapPath("/App_Data/gateway.txt");
+            string path = Server.MapPath("/App_Data/gateway-a.txt");
             string text = System.IO.File.ReadAllText(path);
             text = text.Replace("\r\n", string.Empty);
             text = Regex.Replace(text, @"\s+", string.Empty);
@@ -113,7 +115,10 @@ namespace SignalR.Tick.Controllers
                 List<GatewayItem> items = JsonConvert.DeserializeObject<List<GatewayItem>>(json);
                 var obj = new
                 {
-                    standby = new List<string>() { "http://42.51.45.70/gateway.txt", "http://65.52.173.5/home/xgateway", "http://65.52.173.5/home/gateway" },
+                    standby = new List<string>() {
+                        "http://42.51.45.70/gateway.txt",
+                        "http://65.52.173.5/home/xgateway",
+                        "http://65.52.173.5/home/gateway" },
                     entry = items
                 };
                 json = JsonConvert.SerializeObject(obj);
