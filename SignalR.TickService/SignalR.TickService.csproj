@@ -139,15 +139,18 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\AES-A-Test.txt" />
-    <Content Include="App_Data\AES-A.txt" />
-    <Content Include="App_Data\AES-B-Test.txt" />
-    <Content Include="App_Data\AES-B.txt" />
-    <Content Include="App_Data\gateway-a-test.txt" />
-    <Content Include="App_Data\gateway-b-test.txt" />
-    <Content Include="App_Data\gateway-b.txt" />
-    <Content Include="App_Data\gateway-a.txt" />
+    <Content Include="App_Data\YingTou\AES-A-Test.txt" />
+    <Content Include="App_Data\YingTou\AES-A.txt" />
+    <Content Include="App_Data\Ethereum\gateway-c.txt" />
+    <Content Include="App_Data\Schroder\AES-B-Test.txt" />
+    <Content Include="App_Data\Schroder\AES-B.txt" />
+    <Content Include="App_Data\Ethereum\gateway-c-test.txt" />
+    <Content Include="App_Data\YingTou\gateway-a-test.txt" />
+    <Content Include="App_Data\Schroder\gateway-b-test.txt" />
+    <Content Include="App_Data\Schroder\gateway-b.txt" />
+    <Content Include="App_Data\YingTou\gateway-a.txt" />
     <Content Include="App_Data\host.txt" />
+    <Content Include="App_Data\Ethereum\AES-C.txt" />
     <Content Include="clientaccesspolicy.xml" />
     <Content Include="Content\bg-body.jpg" />
     <Content Include="Content\bg.jpg" />

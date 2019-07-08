@@ -13,7 +13,7 @@ namespace SignalR.Tick.Controllers
         [AllowCrossSiteJson]
         public ActionResult Schroder()
         {
-            string path = Server.MapPath("/App_Data/gateway-b-test.txt");
+            string path = Server.MapPath("/App_Data/Schroder/gateway-b-test.txt");
             string text = System.IO.File.ReadAllText(path);
             List<GatewayItem> items = JsonConvert.DeserializeObject<List<GatewayItem>>(text);
             string json = JsonConvert.SerializeObject(items);
@@ -27,7 +27,7 @@ namespace SignalR.Tick.Controllers
         [AllowCrossSiteJson]
         public ActionResult XSchroder()
         {
-            string path = Server.MapPath("/App_Data/gateway-b-test.txt");
+            string path = Server.MapPath("/App_Data/Schroder/gateway-b-test.txt");
             string text = System.IO.File.ReadAllText(path);
             text = text.Replace("\r\n", string.Empty);
             text = Regex.Replace(text, @"\s+", string.Empty);
@@ -39,7 +39,7 @@ namespace SignalR.Tick.Controllers
         [AllowCrossSiteJson]
         public ActionResult YingTou()
         {
-            string path = Server.MapPath("/App_Data/gateway-a-test.txt");
+            string path = Server.MapPath("/App_Data/YingTou/gateway-a-test.txt");
             string text = System.IO.File.ReadAllText(path);
             List<GatewayItem> items = JsonConvert.DeserializeObject<List<GatewayItem>>(text);
             string json = JsonConvert.SerializeObject(items);
@@ -53,12 +53,40 @@ namespace SignalR.Tick.Controllers
         [AllowCrossSiteJson]
         public ActionResult XYingTou()
         {
-            string path = Server.MapPath("/App_Data/gateway-a-test.txt");
+            string path = Server.MapPath("/App_Data/YingTou/gateway-a-test.txt");
             string text = System.IO.File.ReadAllText(path);
             text = text.Replace("\r\n", string.Empty);
             text = Regex.Replace(text, @"\s+", string.Empty);
             return Content(text);
         }
 
+
+        /// <summary>
+        /// http://ethereum66.com/#/home
+        /// </summary>
+        /// <returns></returns>
+        [AllowCrossSiteJson]
+        public ActionResult Ethereum()
+        {
+            string path = Server.MapPath("/App_Data/Ethereum/gateway-c-test.txt");
+            string text = System.IO.File.ReadAllText(path);
+            List<GatewayItem> items = JsonConvert.DeserializeObject<List<GatewayItem>>(text);
+            string json = JsonConvert.SerializeObject(items);
+            string key = "aVEzbzVnN2c5YWJjZDB3WA==";
+            string iv = "djEybmM1ZzdzOWFiY2Ruaw==";
+            Tuple<string, string, string> result = AESUtils.Encrypt(json, key, iv);
+            // string t = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
+            var obj = new { data = result.Item1 };
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+        [AllowCrossSiteJson]
+        public ActionResult XEthereum()
+        {
+            string path = Server.MapPath("/App_Data/Ethereum/gateway-c-test.txt");
+            string text = System.IO.File.ReadAllText(path);
+            text = text.Replace("\r\n", string.Empty);
+            text = Regex.Replace(text, @"\s+", string.Empty);
+            return Content(text);
+        }
     }
 }

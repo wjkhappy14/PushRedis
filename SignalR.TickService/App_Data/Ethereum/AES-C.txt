@@ -1,0 +1,9 @@
+﻿Ethereum AES
+key
+iQ3o5g7g9abcd0wX
+iv
+v12nc5g7s9abcdnk
+
+base64
+aVEzbzVnN2c5YWJjZDB3WA==
+djEybmM1ZzdzOWFiY2Ruaw==
