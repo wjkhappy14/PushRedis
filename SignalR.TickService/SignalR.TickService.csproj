@@ -139,6 +139,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\YongFeng\AES-D.txt" />
+    <Content Include="App_Data\YongFeng\gateway-d-test.txt" />
+    <Content Include="App_Data\YongFeng\gateway-d.txt" />
     <Content Include="App_Data\YingTou\AES-A-Test.txt" />
     <Content Include="App_Data\YingTou\AES-A.txt" />
     <Content Include="App_Data\Ethereum\gateway-c.txt" />
@@ -691,6 +694,7 @@
     <Compile Include="Hubs\Test\TestHub.cs" />
     <Compile Include="Models\ElementTag.cs" />
     <Compile Include="Models\GatewayItem.cs" />
+    <Compile Include="Models\PayGateway.cs" />
     <Compile Include="Models\ReplyObject.cs" />
     <Compile Include="Models\RequestCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

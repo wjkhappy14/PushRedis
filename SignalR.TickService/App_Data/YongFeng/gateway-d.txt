@@ -1,0 +1,6 @@
+﻿[
+{"id":413,"updatetime":"2019-07-17","location":"上海","host":"106.14.222.161","payurl":"https://yongfeng66.com/operate/#/charge","trade":{"http":"/","ws":"/ws-trade/ws","tcp":"8511"},"quote":{"http":"/quote","ws":"/ws-quote/ws","tcp":{"android":"7111","ios":"7113"}}},
+{"id":415,"updatetime":"2019-07-17","location":"北京","host":"60.205.176.55","payurl":"https://yongfeng66.com/operate/#/charge","trade":{"http":"/","ws":"/ws-trade/ws","tcp":"8511"},"quote":{"http":"/quote","ws":"/ws-quote/ws","tcp":{"android":"7111","ios":"7113"}}},
+{"id":417,"updatetime":"2019-07-17","location":"深圳","host":"47.112.200.10","payurl":"https://yongfeng66.com/operate/#/charge","trade":{"http":"/","ws":"/ws-trade/ws","tcp":"8511"},"quote":{"http":"/quote","ws":"/ws-quote/ws","tcp":{"android":"7111","ios":"7113"}}},
+{"id":419,"updatetime":"2019-07-17","location":"香港","host":"47.91.138.15","payurl":"https://yongfeng66.com/operate/#/charge","trade":{"http":"/","ws":"/ws-trade/ws","tcp":"8511"},"quote":{"http":"/quote","ws":"/ws-quote/ws","tcp":{"android":"7111","ios":"7113"}}}
+]

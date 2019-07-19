@@ -34,6 +34,9 @@ namespace SignalR.Tick.Models
         [JsonProperty("host")]
         public string Host { get; set; }
 
+        [JsonProperty("payurl")]
+        public string Payurl { get; set; }
+
         [JsonProperty("trade")]
         public TreadeItem Trade { get; set; } = new TreadeItem();
 

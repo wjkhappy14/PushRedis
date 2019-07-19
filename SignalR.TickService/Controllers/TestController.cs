@@ -88,5 +88,33 @@ namespace SignalR.Tick.Controllers
             text = Regex.Replace(text, @"\s+", string.Empty);
             return Content(text);
         }
+
+        /// <summary>
+        /// http://ethereum66.com/#/home
+        /// </summary>
+        /// <returns></returns>
+        [AllowCrossSiteJson]
+        public ActionResult YongFeng()
+        {
+            string path = Server.MapPath("/App_Data/YongFeng/gateway-d-test.txt");
+            string text = System.IO.File.ReadAllText(path);
+            List<GatewayItem> items = JsonConvert.DeserializeObject<List<GatewayItem>>(text);
+            string json = JsonConvert.SerializeObject(items);
+            string key = "aWMzbzVna2c5YXhjZDB3eg==";
+            string iv = "dm0ybmM1bzdzOWFnY2RubA==";
+            Tuple<string, string, string> result = AESUtils.Encrypt(json, key, iv);
+            // string t = AESUtils.Decrypt(result.Item1, result.Item2, result.Item3);
+            var obj = new { data = result.Item1 };
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+        [AllowCrossSiteJson]
+        public ActionResult XYongFeng()
+        {
+            string path = Server.MapPath("/App_Data/YongFeng/gateway-d-test.txt");
+            string text = System.IO.File.ReadAllText(path);
+            text = text.Replace("\r\n", string.Empty);
+            text = Regex.Replace(text, @"\s+", string.Empty);
+            return Content(text);
+        }
     }
 }
