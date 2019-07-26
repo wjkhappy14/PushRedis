@@ -120,11 +120,5 @@ namespace SignalR.Tick.Controllers
             return Content(text);
         }
 
-        public ActionResult Pay()
-        {
-            var obj = new PayGateway();
-            return Json(obj, JsonRequestBehavior.AllowGet);
-        }
-
     }
 }

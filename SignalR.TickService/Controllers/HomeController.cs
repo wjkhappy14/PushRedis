@@ -22,12 +22,9 @@ namespace SignalR.Tick.Controllers
         }
 
         [HttpGet]
-        public JavaScriptResult Tmpl()
+        public ActionResult Vue()
         {
-            ElementTag tag = ElementTag.Create();
-            // string js = JsonConvert.SerializeObject(tag);
-            string js = "window.TPL={}";
-            return JavaScript(js);
+            return View();
         }
 
         public ActionResult Info(int t = 1)

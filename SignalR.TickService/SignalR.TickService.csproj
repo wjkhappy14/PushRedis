@@ -565,6 +565,7 @@
     <Content Include="Views\Hubs\StockTicker.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\WebSocket.cshtml" />
+    <Content Include="Views\Home\Vue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllowCrossSiteJsonAttribute.cs" />
