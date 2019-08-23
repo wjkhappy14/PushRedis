@@ -14,18 +14,14 @@ namespace SignalR.Tick.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return Json(new { }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Main()
         {
-            return View();
+            return Json(new { }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
-        public ActionResult Vue()
-        {
-            return View();
-        }
+       
 
         public ActionResult Info(int t = 1)
         {
